@@ -13,6 +13,7 @@ This file contains functions specific to
 
 import numpy as np
 import tensorflow as tf
+tf.compat.v1.disable_eager_execution()  # required: this codebase uses tf.compat.v1 placeholders
 import matplotlib.pyplot as plt
 import pickle
 import time
@@ -21,7 +22,7 @@ import time
 # Matplotlib parameters
 # =============================================================================
 
-plt.rc('text', usetex=True)
+plt.rc('text', usetex=False)
 plt.rc('font', family='serif')
 plt.rc('font', size=18)
 plt.rc('axes',titlesize=20)

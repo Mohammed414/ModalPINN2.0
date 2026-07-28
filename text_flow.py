@@ -33,7 +33,7 @@ def intIt(l):
 def read_flow(infile):
     f = open(infile, 'r')
 
-    t1 = time.clock()
+    t1 = time.process_time()
 
     print('Reading flow...')
 
@@ -76,7 +76,7 @@ def read_flow(infile):
         Vs.append(tmp_Vs)
         ps.append(tmp_ps)
 
-    cpu_time = time.clock() - t1
+    cpu_time = time.process_time() - t1
     print('Done!')
     print('CPU_TIME = %f seconds' % cpu_time)
 
@@ -89,7 +89,7 @@ def read_flow(infile):
 def write_flow(flow, outfile):
     f = open(outfile, 'w')
 
-    t1 = time.clock()
+    t1 = time.process_time()
 
     print('Writing flow...')
 
@@ -116,7 +116,7 @@ def write_flow(flow, outfile):
                      flow.Vs[n, k],
                      flow.ps[n, k]))
 
-    cpu_time = time.clock() - t1
+    cpu_time = time.process_time() - t1
     print('Done!')
     print('CPU_TIME = %f seconds' % cpu_time)
 

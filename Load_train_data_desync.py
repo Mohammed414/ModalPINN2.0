@@ -13,6 +13,7 @@ This file contains functionsspecific to
 
 import numpy as np
 import tensorflow as tf
+tf.compat.v1.disable_eager_execution()  # required: this codebase uses tf.compat.v1 placeholders
 import matplotlib.pyplot as plt
 from text_flow import read_flow
 from reactions_process import extract_reactions
@@ -21,7 +22,7 @@ from reactions_process import extract_reactions
 # matplotlib parameters
 # =============================================================================
 
-plt.rc('text', usetex=True)
+plt.rc('text', usetex=False)
 plt.rc('font', family='serif')
 plt.rc('font', size=18)
 plt.rc('axes',titlesize=20)
@@ -167,7 +168,7 @@ def cut_simu_cylinder_only(geom,nodes_X, nodes_Y, Us, Vs, Ps):
     y_points = y_c + r_c*np.sin(2*np.pi*s_lin)
     
     index_reduce = 0*x_points
-    index_reduce = np.asarray([np.int(i) for i in index_reduce])
+    index_reduce = np.asarray([int(i) for i in index_reduce])
     for k in range(len(x_points)):
         index_reduce[k] = np.argmin(np.square(nodes_X[0,:] - x_points[k])+np.square(nodes_Y[0,:] - y_points[k]))
    
@@ -206,7 +207,7 @@ def cut_simu_pitot_only(geom,nodes_X, nodes_Y, Us, Vs, Ps):
     
     # Step 3 : finding closest point in data
     index_pitot = 0*x_points
-    index_pitot = np.asarray([np.int(i) for i in index_pitot])
+    index_pitot = np.asarray([int(i) for i in index_pitot])
     for k in range(len(x_points)):
         index_pitot[k] = np.argmin(np.square(nodes_X[0,:] - x_points[k])+np.square(nodes_Y[0,:] - y_points[k]))
     
@@ -252,7 +253,7 @@ def read_cut_simulation_data_inlet_points(filename_data,geom):
     y_points = Lymin + s_lin*(Lymax-Lymin)
     
     index_reduce = 0*x_points
-    index_reduce = np.asarray([np.int(i) for i in index_reduce])
+    index_reduce = np.asarray([int(i) for i in index_reduce])
     for k in range(len(x_points)):
         index_reduce[k] = np.argmin(np.square(nodes_X[0,:] - x_points[k])+np.square(nodes_Y[0,:] - y_points[k]))
    

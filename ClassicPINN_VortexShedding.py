@@ -14,6 +14,7 @@ email : gaetan.raynaud (at) polymtl.ca
 
 import numpy as np
 import tensorflow as tf
+tf.compat.v1.disable_eager_execution()  # required: this codebase uses tf.compat.v1 placeholders
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
@@ -42,7 +43,7 @@ t0 = time.time()
 # matplotlib parameters
 # =============================================================================
 
-plt.rc('text', usetex=True)
+plt.rc('text', usetex=False)
 plt.rc('font', family='serif')
 plt.rc('font', size=18)
 plt.rc('axes',titlesize=20)
@@ -70,7 +71,7 @@ class Tee(object):
 # Here we create a folder containing all the data of this job
 # And we copy current python files to keep track of how the job was launched
 # =============================================================================
-r = np.int(np.ceil(1000*np.random.rand(1)[0])) # This random number is used in case 2 jobs are launched at the exact same time so that the newly created folders does not merge the one into the other
+r = int(np.ceil(1000*np.random.rand(1)[0])) # This random number is used in case 2 jobs are launched at the exact same time so that the newly created folders does not merge the one into the other
 d = datetime.datetime.now()
 pythonfile = os.path.basename(__file__)
 repertoire = 'OutputPythonScript/ClassicPINN_'+ d.strftime("%Y_%m_%d-%H_%M_%S") + '__' +str(r)
