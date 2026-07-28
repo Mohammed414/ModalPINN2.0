@@ -1,0 +1,17 @@
+# Pip-installable substitute for requirements.txt, for running smoke tests
+# off Compute Canada (e.g. on Google Colab or any generic Linux machine).
+#
+# The original requirements.txt points at Compute Canada's internal CVMFS
+# wheelhouse and pins a custom-built `tensorflow-gpu==1.14.1+computecanada`
+# wheel that isn't available on PyPI. This file pins the closest equivalent
+# public releases instead. tf.contrib.opt.ScipyOptimizerInterface (used for
+# L-BFGS-B training) only exists in TensorFlow 1.x, so a real TF1 install is
+# required - this needs Python <=3.7.
+#
+# CPU-only tensorflow is used deliberately: TF 1.14's GPU wheel requires
+# CUDA 10.0 / cuDNN 7.4, which modern Colab/cloud GPU images no longer ship.
+tensorflow==1.14.0
+numpy==1.17.4
+scipy==1.3.2
+matplotlib==3.1.1
+gputil
