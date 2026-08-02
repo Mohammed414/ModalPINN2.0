@@ -33,8 +33,11 @@ GEOM = [LXMIN, LXMAX, LYMIN, LYMAX, X_C, Y_C, R_C]
 OMEGA_0 = 1.036
 D = 2 * R_C  # cylinder diameter
 
-DEFAULT_DATA_FILE = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), '..', '..', 'Data', 'fixed_cylinder_atRe100')
+# Relative to the current working directory, matching the plain relative path
+# ModalPINN_VortexShedding.py itself uses (filename_data = 'Data/fixed_cylinder_atRe100').
+# Don't compute this from __file__ / repo structure - in the Colab notebook this
+# script and Data/ both sit flat in /content, not nested under src/pressure_only/.
+DEFAULT_DATA_FILE = 'Data/fixed_cylinder_atRe100'
 
 
 def main():
