@@ -18,6 +18,8 @@ import os
 import sys
 
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')  # must be set before NN_functions imports pyplot
 import tensorflow as tf
 tf.compat.v1.disable_eager_execution()
 
@@ -94,14 +96,21 @@ def main():
     sess.run(tf.compat.v1.global_variables_initializer())
 
     Nt, Nnode = Us_c.shape
-    x_flat = np.tile(nodes_x0, Nt).reshape(-1, 1).astype(np.float32)
-    y_flat = np.tile(nodes_y0, Nt).reshape(-1, 1).astype(np.float32)
-    t_flat = np.repeat(times, Nnode).reshape(-1, 1).astype(np.float32)
+    print(f'Reconstructing {Nt} timesteps x {Nnode} nodes (one timestep at a time, to keep memory bounded)...')
+    x_col = nodes_x0.reshape(-1, 1).astype(np.float32)
+    y_col = nodes_y0.reshape(-1, 1).astype(np.float32)
 
-    feed = {x_tf: x_flat, y_tf: y_flat, t_tf: t_flat}
-    u_pred = sess.run(u_pred_tf, feed_dict=feed).reshape(Nt, Nnode)
-    v_pred = sess.run(v_pred_tf, feed_dict=feed).reshape(Nt, Nnode)
-    p_pred = sess.run(p_pred_tf, feed_dict=feed).reshape(Nt, Nnode)
+    u_pred = np.zeros((Nt, Nnode), dtype=np.float32)
+    v_pred = np.zeros((Nt, Nnode), dtype=np.float32)
+    p_pred = np.zeros((Nt, Nnode), dtype=np.float32)
+    for k in range(Nt):
+        t_col = np.full((Nnode, 1), times[k], dtype=np.float32)
+        feed = {x_tf: x_col, y_tf: y_col, t_tf: t_col}
+        u_pred[k, :] = sess.run(u_pred_tf, feed_dict=feed)[:, 0]
+        v_pred[k, :] = sess.run(v_pred_tf, feed_dict=feed)[:, 0]
+        p_pred[k, :] = sess.run(p_pred_tf, feed_dict=feed)[:, 0]
+        if (k + 1) % 50 == 0 or k == Nt - 1:
+            print(f'  {k + 1}/{Nt} timesteps done')
 
     def rel_l2(pred, true, mask):
         if mask.sum() == 0:
