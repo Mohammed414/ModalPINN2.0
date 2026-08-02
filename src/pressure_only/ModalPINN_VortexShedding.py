@@ -155,6 +155,7 @@ parser.add_argument('--TwoZonesSampling',action="store_true",default=False,help=
 parser.add_argument('--PressureOnly',action="store_true",default=False,help="if activated (requires --SparseData), drop pitot (u,v) velocity measurements and train only on cylinder-surface pressure taps.")
 parser.add_argument('--NTaps',type=int,default=30,help="Number of pressure taps sampled uniformly around the cylinder border when --SparseData is used.")
 parser.add_argument('--Seed',type=int,default=0,help="Seed for numpy and TensorFlow RNGs, for reproducible comparisons across tap counts.")
+parser.add_argument('--FreestreamBC',action="store_true",default=False,help="Blend the network's mean velocity mode toward the known free-stream value (u=u_in, v=0) near the inlet, upstream of the cylinder. A second, independent prior alongside the existing cylinder no-slip encoding - not used downstream/in the wake, where the real flow is not free-stream.")
 
 
 args = parser.parse_args()
@@ -178,6 +179,7 @@ print('Desync Sparse Data : ' + str(args.DesyncSparseData))
 print('Pressure Only : ' + str(args.PressureOnly))
 print('NTaps : %d' % (args.NTaps))
 print('Seed : %d' % (args.Seed))
+print('Freestream BC : ' + str(args.FreestreamBC))
 
 if args.TwoZonesSampling:
     IntSampling = '2zones'
@@ -195,6 +197,8 @@ print('Random seed set to %d' % (args.Seed))
 
 if args.PressureOnly:
     repertoire_new = repertoire + '_Ponly_Ntap%d' % (args.NTaps)
+    if args.FreestreamBC:
+        repertoire_new = repertoire_new + '_FSBC'
     os.rename(repertoire, repertoire_new)
     repertoire = repertoire_new
     print('Repertoire renamed to '+repertoire)
@@ -361,13 +365,19 @@ w_p,b_p = nnf.initialize_NN(layers)
 # w_u,b_u,w_v,b_v,w_p,b_p = nnf.restore_NN(layers,filename_restore)
  
 
+# Known free-stream velocity, used as a prior near the inlet when
+# --FreestreamBC is set (see NN_functions.f_freestream_weight/out_nn_modes_uv).
+# None when the flag is off, so behaviour is unchanged by default.
+freestream_target_u = u_in if args.FreestreamBC else None
+freestream_target_v = 0. if args.FreestreamBC else None
+
 def fluid_u(x,y):
     '''
     Compute mode shapes of u
     Input : x,y TF tensors of shape [Nint,1]
     Return TF tensor of shape [1,Nint,Nmodes] with complex values
     '''
-    return nnf.out_nn_modes_uv(x,y,w_u,b_u,geom)
+    return nnf.out_nn_modes_uv(x,y,w_u,b_u,geom,freestream_target=freestream_target_u)
 
 def fluid_u_t(x,y,t):
     '''
@@ -375,7 +385,7 @@ def fluid_u_t(x,y,t):
     Input: x,y,t TF tensors of shape [Nint,1]
     Return TF tensor of shape [Nint,1] with real values
     '''
-    return nnf.NN_time_uv(x,y,t,w_u,b_u,geom,omega_0)
+    return nnf.NN_time_uv(x,y,t,w_u,b_u,geom,omega_0,freestream_target=freestream_target_u)
 
 def fluid_v(x,y):
     '''
@@ -383,7 +393,7 @@ def fluid_v(x,y):
     Input : x,y TF tensors of shape [Nint,1]
     Return TF tensor of shape [1,Nint,Nmodes] with complex values
     '''
-    return nnf.out_nn_modes_uv(x,y,w_v,b_v,geom)
+    return nnf.out_nn_modes_uv(x,y,w_v,b_v,geom,freestream_target=freestream_target_v)
 
 def fluid_v_t(x,y,t):
     '''
@@ -391,7 +401,7 @@ def fluid_v_t(x,y,t):
     Input: x,y,t TF tensors of shape [Nint,1]
     Return TF tensor of shape [Nint,1] with real values
     '''
-    return nnf.NN_time_uv(x,y,t,w_v,b_v,geom,omega_0)
+    return nnf.NN_time_uv(x,y,t,w_v,b_v,geom,omega_0,freestream_target=freestream_target_v)
 
 def fluid_p(x,y):
     '''
