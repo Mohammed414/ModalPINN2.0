@@ -17,6 +17,9 @@ import sys
 
 import numpy as np
 
+import matplotlib
+matplotlib.use('Agg')  # must happen before Load_train_data_desync's unconditional `import matplotlib.pyplot`
+
 _HERE = os.path.dirname(os.path.abspath(__file__))
 # Insert src/ first, then _HERE (src/pressure_only) on top of it, so that
 # for any module name present in both (e.g. Load_train_data_desync.py, which
