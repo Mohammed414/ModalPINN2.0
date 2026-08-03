@@ -209,6 +209,8 @@ if args.PressureOnly:
     repertoire_new = repertoire_new + '_Ponly_Ntap%d' % (args.NTaps)
 if args.FreestreamBC:
     repertoire_new = repertoire_new + '_FSBC'
+if args.TwoZonesSampling:
+    repertoire_new = repertoire_new + '_2zones'
 if args.BVF:
     repertoire_new = repertoire_new + '_BVF_lam%s' % (str(args.LambdaBVF).replace('.', 'p'))
 if repertoire_new != repertoire:
