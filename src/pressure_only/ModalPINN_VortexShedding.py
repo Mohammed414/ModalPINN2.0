@@ -684,13 +684,27 @@ def loss_mes_p(xmes,ymes,tmes,pmes):
     return tf.square(p_DNN-pmes)
 
 
-def loss_bvf(x,y,t,g):
+def loss_bvf(x,y,t,g,residual_clip=50.):
     '''
     Lighthill wall relation (see bvf.md): at a stationary no-slip wall, all
     nonlinear/unsteady terms in the momentum equation vanish exactly, leaving
     (1/Re)*d(omega)/dn = (1/R)*dp/dtheta, omega = v_x - u_y, n = (x,y)/R
     outward. x,y must lie exactly on r = R = r_c (bvf_targets.py's analytic
     wall grid, not the ~0.4999 mesh nodes).
+
+    Needs a third derivative through the network (omega is already a first
+    derivative of u,v; w_x,w_y are second), which can occasionally produce
+    very large - not NaN, just numerically extreme - values at a handful of
+    points once weights move away from their small random init (observed on
+    a real full-scale GPU run: a single L-BFGS step landed on a residual
+    large enough to spike the loss to ~1e6 and abnormally terminate the line
+    search - not reproduced in smaller-scale CPU checks, consistent with it
+    being a rare event that needs many collocation points to hit). The
+    residual is clipped before squaring so one such point can't dominate the
+    mean or blow up the gradient - it still contributes its full unclipped
+    gradient anywhere within a generous +-50 band (Phase 0 validation showed
+    the true LHS/RHS are both O(1) in magnitude), only saturating for
+    genuine outliers.
     Input x,y,t,g : [Nbvf,1] tf.float32 tensor
     Return [Nbvf,1] tf.float32 tensor of squared residuals
     '''
@@ -700,7 +714,9 @@ def loss_bvf(x,y,t,g):
     w_x = tf.gradients(w,x)[0]
     w_y = tf.gradients(w,y)[0]
     dwdn = (x*w_x + y*w_y) / r_c
-    return tf.square((1./Re)*dwdn - g)
+    residual = (1./Re)*dwdn - g
+    residual = tf.clip_by_value(residual, -residual_clip, residual_clip)
+    return tf.square(residual)
 
 
 def loss_BC(s):
