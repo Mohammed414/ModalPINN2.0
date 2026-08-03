@@ -156,12 +156,18 @@ parser.add_argument('--PressureOnly',action="store_true",default=False,help="if 
 parser.add_argument('--NTaps',type=int,default=30,help="Number of pressure taps sampled uniformly around the cylinder border when --SparseData is used.")
 parser.add_argument('--Seed',type=int,default=0,help="Seed for numpy and TensorFlow RNGs, for reproducible comparisons across tap counts.")
 parser.add_argument('--FreestreamBC',action="store_true",default=False,help="Blend the network's mean velocity mode toward the known free-stream value (u=u_in, v=0) near the inlet, upstream of the cylinder. A second, independent prior alongside the existing cylinder no-slip encoding - not used downstream/in the wake, where the real flow is not free-stream.")
+parser.add_argument('--BVF',action="store_true",default=False,help="Add the Lighthill boundary-vorticity-flux loss term: enforces (1/Re)*d(omega)/dn = (1/R)*dp/dtheta at the cylinder wall, using a target derived from the same pressure taps (see bvf_targets.py). Requires --BVFTargets.")
+parser.add_argument('--LambdaBVF',type=float,default=1.0,help="Weight of the BVF loss term when --BVF is set.")
+parser.add_argument('--BVFTargets',type=str,default=None,help="Path to the .npz file produced by bvf_targets.py, required when --BVF is set.")
 
 
 args = parser.parse_args()
 
 if args.PressureOnly and not args.SparseData:
     raise ValueError('--PressureOnly requires --SparseData to also be set.')
+
+if args.BVF and args.BVFTargets is None:
+    raise ValueError('--BVF requires --BVFTargets <path to the .npz file produced by bvf_targets.py>.')
 
 print('Args passed to python script')
 print('Tmax '+str(args.Tmax)+' (h)')
@@ -180,6 +186,9 @@ print('Pressure Only : ' + str(args.PressureOnly))
 print('NTaps : %d' % (args.NTaps))
 print('Seed : %d' % (args.Seed))
 print('Freestream BC : ' + str(args.FreestreamBC))
+print('BVF : ' + str(args.BVF))
+print('Lambda BVF : %.4g' % (args.LambdaBVF))
+print('BVF Targets : ' + str(args.BVFTargets))
 
 if args.TwoZonesSampling:
     IntSampling = '2zones'
@@ -195,10 +204,14 @@ np.random.seed(args.Seed)
 tf.compat.v1.set_random_seed(args.Seed)
 print('Random seed set to %d' % (args.Seed))
 
+repertoire_new = repertoire
 if args.PressureOnly:
-    repertoire_new = repertoire + '_Ponly_Ntap%d' % (args.NTaps)
-    if args.FreestreamBC:
-        repertoire_new = repertoire_new + '_FSBC'
+    repertoire_new = repertoire_new + '_Ponly_Ntap%d' % (args.NTaps)
+if args.FreestreamBC:
+    repertoire_new = repertoire_new + '_FSBC'
+if args.BVF:
+    repertoire_new = repertoire_new + '_BVF_lam%s' % (str(args.LambdaBVF).replace('.', 'p'))
+if repertoire_new != repertoire:
     os.rename(repertoire, repertoire_new)
     repertoire = repertoire_new
     print('Repertoire renamed to '+repertoire)
@@ -339,6 +352,14 @@ x_tf_mes_cyl = tf.compat.v1.placeholder(dtype=tf.float32,shape=[None,1])
 y_tf_mes_cyl = tf.compat.v1.placeholder(dtype=tf.float32,shape=[None,1])
 t_tf_mes_cyl = tf.compat.v1.placeholder(dtype=tf.float32,shape=[None,1])
 p_tf_mes_cyl = tf.compat.v1.placeholder(dtype=tf.float32,shape=[None,1])
+
+# Lighthill boundary-vorticity-flux enforcement grid (only fed when --BVF is
+# set; declaring these unconditionally is harmless since an unused
+# placeholder never needs feeding and doesn't affect any other tensor)
+x_tf_bvf = tf.compat.v1.placeholder(dtype=tf.float32,shape=[None,1])
+y_tf_bvf = tf.compat.v1.placeholder(dtype=tf.float32,shape=[None,1])
+t_tf_bvf = tf.compat.v1.placeholder(dtype=tf.float32,shape=[None,1])
+g_tf_bvf = tf.compat.v1.placeholder(dtype=tf.float32,shape=[None,1])
 
 
 # Border
@@ -661,6 +682,25 @@ def loss_mes_p(xmes,ymes,tmes,pmes):
     return tf.square(p_DNN-pmes)
 
 
+def loss_bvf(x,y,t,g):
+    '''
+    Lighthill wall relation (see bvf.md): at a stationary no-slip wall, all
+    nonlinear/unsteady terms in the momentum equation vanish exactly, leaving
+    (1/Re)*d(omega)/dn = (1/R)*dp/dtheta, omega = v_x - u_y, n = (x,y)/R
+    outward. x,y must lie exactly on r = R = r_c (bvf_targets.py's analytic
+    wall grid, not the ~0.4999 mesh nodes).
+    Input x,y,t,g : [Nbvf,1] tf.float32 tensor
+    Return [Nbvf,1] tf.float32 tensor of squared residuals
+    '''
+    u = fluid_u_t(x,y,t)
+    v = fluid_v_t(x,y,t)
+    w = tf.gradients(v,x)[0] - tf.gradients(u,y)[0]
+    w_x = tf.gradients(w,x)[0]
+    w_y = tf.gradients(w,y)[0]
+    dwdn = (x*w_x + y*w_y) / r_c
+    return tf.square((1./Re)*dwdn - g)
+
+
 def loss_BC(s):
     '''
     Return error on u=v=0 on cylinder border for each mode
@@ -697,6 +737,10 @@ Loss_mes_pitot_desync = tf.reduce_mean(loss_mes_uv(x_tf_mes_pitot,y_tf_mes_pitot
 # Wrap error on pressure measurement around cylindre border
 Loss_mes_cyl = tf.reduce_mean(loss_mes_p(x_tf_mes_cyl,y_tf_mes_cyl,t_tf_mes_cyl,p_tf_mes_cyl))
 
+# Wrap error on the Lighthill boundary-vorticity-flux identity (only built when --BVF is set)
+if args.BVF:
+    Loss_bvf_wrap = tf.reduce_mean(loss_bvf(x_tf_bvf,y_tf_bvf,t_tf_bvf,g_tf_bvf))
+
 # Simulated experimental losses
 if args.PressureOnly:
     # Pressure-only mode: cylinder-surface pressure taps only, pitot velocity dropped entirely
@@ -713,6 +757,9 @@ if args.LossModes:
     Loss = Loss_int_mode_wrap + Loss_mes
 else: #Physical equations are used instead of modal equations
     Loss = Loss_int_time_wrap + Loss_mes
+
+if args.BVF:
+    Loss = Loss + args.LambdaBVF * Loss_bvf_wrap
 
 # =============================================================================
 # Optimizer configuration
@@ -816,7 +863,32 @@ else:
               u_tf_mes : np.reshape(umes,(Nmes,1)),
               v_tf_mes : np.reshape(vmes,(Nmes,1))
               }
-    
+
+if args.BVF:
+    # Feed the same fixed wall grid + target into every entry of tf_dict
+    # (a plain dict in the non-multigrid case, a list of dicts otherwise),
+    # since Loss now depends on these placeholders whenever --BVF is set.
+    bvf_npz = np.load(args.BVFTargets)
+    x_bvf_wall = bvf_npz['x_wall'].astype(np.float32)
+    y_bvf_wall = bvf_npz['y_wall'].astype(np.float32)
+    t_bvf_grid = bvf_npz['t_grid'].astype(np.float32)
+    G_bvf = bvf_npz['G'].astype(np.float32)  # [Ntheta, Ntime]
+    Ntheta_bvf = len(x_bvf_wall)
+    Ntime_bvf = len(t_bvf_grid)
+    X_bvf = np.tile(x_bvf_wall.reshape(-1,1), (1,Ntime_bvf)).reshape(-1,1)
+    Y_bvf = np.tile(y_bvf_wall.reshape(-1,1), (1,Ntime_bvf)).reshape(-1,1)
+    T_bvf = np.tile(t_bvf_grid.reshape(1,-1), (Ntheta_bvf,1)).reshape(-1,1)
+    Gflat_bvf = G_bvf.reshape(-1,1)
+    bvf_feed = {x_tf_bvf: X_bvf, y_tf_bvf: Y_bvf, t_tf_bvf: T_bvf, g_tf_bvf: Gflat_bvf}
+
+    if isinstance(tf_dict, list):
+        for tf_dict_k in tf_dict:
+            tf_dict_k.update(bvf_feed)
+    else:
+        tf_dict.update(bvf_feed)
+    print('BVF targets loaded from %s: %d wall points x %d times = %d enforcement points' %
+          (args.BVFTargets, Ntheta_bvf, Ntime_bvf, Ntheta_bvf*Ntime_bvf))
+
 
 # Validation data set loading
 # We extract 10 times more points for both dense measurements and equation penalisation
@@ -892,7 +964,10 @@ nnf.tf_print('Loss mesures validation',Loss_dense_mes,sess,tf_dict_valid)
 if args.SparseData:
     nnf.tf_print('Loss mes pitot (component)',Loss_mes_pitot,sess,tf_dict[0])
     nnf.tf_print('Loss mes cyl (component)',Loss_mes_cyl,sess,tf_dict[0])
-    
+
+if args.BVF:
+    nnf.tf_print('Loss BVF (component)',Loss_bvf_wrap,sess,tf_dict[0])
+
 if args.DesyncSparseData:
     
     def r_div_eucli(a,b):
