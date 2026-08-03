@@ -48,7 +48,19 @@ def main():
     parser.add_argument('--WidthLayer', type=int, required=True)
     parser.add_argument('--Nmodes', type=int, required=True)
     parser.add_argument('--DataFile', default=DEFAULT_DATA_FILE)
+    parser.add_argument('--FreestreamBC', action='store_true', default=None,
+                         help="Force freestream_target on restore. Default: auto-detect from 'FSBC' in --RunDir.")
+    parser.add_argument('--FluctuationInletBC', action='store_true', default=None,
+                         help="Force damp_fluctuations on restore. Default: auto-detect from 'FIBC' in --RunDir.")
     args = parser.parse_args()
+
+    run_dir_name = os.path.basename(os.path.normpath(args.RunDir))
+    use_freestream = True if args.FreestreamBC else ('FSBC' in run_dir_name)
+    use_fluct_damp = True if args.FluctuationInletBC else ('FIBC' in run_dir_name)
+    freestream_target_u = 1.0 if use_freestream else None
+    freestream_target_v = 0.0 if use_freestream else None
+    print('Restoring with freestream_target=%s, damp_fluctuations=%s (run dir: %s)' %
+          (use_freestream, use_fluct_damp, run_dir_name))
 
     layers = [2, args.WidthLayer * args.Nmodes, args.WidthLayer * args.Nmodes, args.Nmodes]
 
@@ -88,8 +100,10 @@ def main():
     y_tf = tf.compat.v1.placeholder(tf.float32, shape=[None, 1])
     t_tf = tf.compat.v1.placeholder(tf.float32, shape=[None, 1])
 
-    u_pred_tf = nnf.NN_time_uv(x_tf, y_tf, t_tf, w_u, b_u, GEOM, OMEGA_0)
-    v_pred_tf = nnf.NN_time_uv(x_tf, y_tf, t_tf, w_v, b_v, GEOM, OMEGA_0)
+    u_pred_tf = nnf.NN_time_uv(x_tf, y_tf, t_tf, w_u, b_u, GEOM, OMEGA_0,
+                                freestream_target=freestream_target_u, damp_fluctuations=use_fluct_damp)
+    v_pred_tf = nnf.NN_time_uv(x_tf, y_tf, t_tf, w_v, b_v, GEOM, OMEGA_0,
+                                freestream_target=freestream_target_v, damp_fluctuations=use_fluct_damp)
     p_pred_tf = nnf.NN_time_p(x_tf, y_tf, t_tf, w_p, b_p, OMEGA_0)
 
     sess = tf.compat.v1.Session()

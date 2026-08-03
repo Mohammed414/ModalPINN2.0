@@ -186,13 +186,20 @@ def f_freestream_weight(x, x_transition=-2., gamma=3.):
     '''
     return 0.5 * (1. - tf.tanh(gamma * (x - x_transition)))
 
-def out_nn_modes_uv(x,y,weights,biases,geom,freestream_target=None):
+def out_nn_modes_uv(x,y,weights,biases,geom,freestream_target=None,damp_fluctuations=False):
     '''
     Return Nmode complex modes shapes of DNN defined with weights and biases
     Prior dictionary f_BC5 is applied so that each mode shape verifies =0 on cylinder's border
     If freestream_target is not None, the mean mode (k=0) is additionally blended
     toward that known constant near the inlet (see f_freestream_weight) - a second,
     independent prior alongside f_BC5, not a replacement for it.
+    If damp_fluctuations is True, the fluctuating modes (k>=1) are damped toward
+    zero at the inlet using the same ramp - physically, shedding is a wake
+    phenomenon, and reality kills any upstream-travelling fluctuation branch via
+    the inlet condition "no incoming fluctuations"; nothing previously encoded
+    that, which let a spurious oscillation appear upstream (see
+    "R3 fluctuation inlet bc plan.md"). Velocity only - pressure fluctuations
+    physically do reach the inlet, so out_nn_modes_p is untouched.
     Input x,y : [Nint,1] tf.float32 tensor
     Output shape : [1,Nint,Nmode] tf.complex64 tensor
     '''
@@ -201,12 +208,16 @@ def out_nn_modes_uv(x,y,weights,biases,geom,freestream_target=None):
     out_nn = neural_net(tf.transpose(tf.stack([xint,yint])),weights,biases)
     Nmode = int(out_nn[0,0,:].shape[0])
     fbc5c = tf.complex(f_BC5(x,y,geom)[:,0],0.)
+    w = None
+    if freestream_target is not None or damp_fluctuations:
+        w = tf.complex(f_freestream_weight(x)[:,0], 0.)
     modes = []
     for k in range(Nmode):
         mode_k = fbc5c*out_nn[:,:,k]
         if k == 0 and freestream_target is not None:
-            w = tf.complex(f_freestream_weight(x)[:,0], 0.)
             mode_k = w*tf.complex(freestream_target, 0.) + (1.-w)*mode_k
+        elif k >= 1 and damp_fluctuations:
+            mode_k = (1.-w)*mode_k          # fluctuations -> 0 at the inlet
         modes.append(mode_k)
     t_parts = tf.convert_to_tensor(modes)
     return tf.transpose(t_parts,perm=[1,2,0])
@@ -225,7 +236,7 @@ def out_nn_modes_p(x,y,weights,biases):
     return tf.transpose(t_parts,perm=[1,2,0])
 
 
-def NN_time_uv(x,y,t,weights,biases,geom,omega_0,trunc_mode=None,freestream_target=None):
+def NN_time_uv(x,y,t,weights,biases,geom,omega_0,trunc_mode=None,freestream_target=None,damp_fluctuations=False):
     '''
     x,y,t : [Nint,1] tf.float32 tensors, list of coordinates (x,t) where to compute u or v(x,y,t)
     omega_0 : fondamental frequency
@@ -233,8 +244,9 @@ def NN_time_uv(x,y,t,weights,biases,geom,omega_0,trunc_mode=None,freestream_targ
     trunc_mode : int (or None) : if an integer value is provided, select only
                 the trunc_mode first mode given. Else if trunc_mode=None, use all modes
     freestream_target : passed through to out_nn_modes_uv (see there)
+    damp_fluctuations : passed through to out_nn_modes_uv (see there)
     '''
-    out_NN = out_nn_modes_uv(x,y,weights,biases,geom,freestream_target=freestream_target)
+    out_NN = out_nn_modes_uv(x,y,weights,biases,geom,freestream_target=freestream_target,damp_fluctuations=damp_fluctuations)
     Nmode = int(out_NN[0,0,:].shape[0])
     if trunc_mode!=None and trunc_mode <= Nmode:
         Nmode = trunc_mode

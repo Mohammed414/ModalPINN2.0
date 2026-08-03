@@ -156,6 +156,7 @@ parser.add_argument('--PressureOnly',action="store_true",default=False,help="if 
 parser.add_argument('--NTaps',type=int,default=30,help="Number of pressure taps sampled uniformly around the cylinder border when --SparseData is used.")
 parser.add_argument('--Seed',type=int,default=0,help="Seed for numpy and TensorFlow RNGs, for reproducible comparisons across tap counts.")
 parser.add_argument('--FreestreamBC',action="store_true",default=False,help="Blend the network's mean velocity mode toward the known free-stream value (u=u_in, v=0) near the inlet, upstream of the cylinder. A second, independent prior alongside the existing cylinder no-slip encoding - not used downstream/in the wake, where the real flow is not free-stream.")
+parser.add_argument('--FluctuationInletBC',action="store_true",default=False,help="Damp the fluctuating velocity modes (k>=1) toward zero at the inlet, using the same ramp as --FreestreamBC. Shedding is a wake phenomenon; nothing previously stopped a spurious oscillation from leaking upstream. Velocity only - pressure fluctuations do reach the inlet.")
 parser.add_argument('--BVF',action="store_true",default=False,help="Add the Lighthill boundary-vorticity-flux loss term: enforces (1/Re)*d(omega)/dn = (1/R)*dp/dtheta at the cylinder wall, using a target derived from the same pressure taps (see bvf_targets.py). Requires --BVFTargets.")
 parser.add_argument('--LambdaBVF',type=float,default=1.0,help="Weight of the BVF loss term when --BVF is set.")
 parser.add_argument('--BVFTargets',type=str,default=None,help="Path to the .npz file produced by bvf_targets.py, required when --BVF is set.")
@@ -186,6 +187,7 @@ print('Pressure Only : ' + str(args.PressureOnly))
 print('NTaps : %d' % (args.NTaps))
 print('Seed : %d' % (args.Seed))
 print('Freestream BC : ' + str(args.FreestreamBC))
+print('Fluctuation Inlet BC : ' + str(args.FluctuationInletBC))
 print('BVF : ' + str(args.BVF))
 print('Lambda BVF : %.4g' % (args.LambdaBVF))
 print('BVF Targets : ' + str(args.BVFTargets))
@@ -209,6 +211,8 @@ if args.PressureOnly:
     repertoire_new = repertoire_new + '_Ponly_Ntap%d' % (args.NTaps)
 if args.FreestreamBC:
     repertoire_new = repertoire_new + '_FSBC'
+if args.FluctuationInletBC:
+    repertoire_new = repertoire_new + '_FIBC'
 if args.TwoZonesSampling:
     repertoire_new = repertoire_new + '_2zones'
 if args.BVF:
@@ -393,6 +397,12 @@ w_p,b_p = nnf.initialize_NN(layers)
 # None when the flag is off, so behaviour is unchanged by default.
 freestream_target_u = u_in if args.FreestreamBC else None
 freestream_target_v = 0. if args.FreestreamBC else None
+# Damps the fluctuating velocity modes (k>=1) toward zero at the inlet when set
+# (see NN_functions.out_nn_modes_uv). None of BVF/measurement/interior losses
+# call out_nn_modes_uv/NN_time_uv directly - they all go through these four
+# wrappers - so this one flag propagates everywhere automatically, including
+# the end-of-run mode plots.
+damp_fluct = bool(args.FluctuationInletBC)
 
 def fluid_u(x,y):
     '''
@@ -400,7 +410,7 @@ def fluid_u(x,y):
     Input : x,y TF tensors of shape [Nint,1]
     Return TF tensor of shape [1,Nint,Nmodes] with complex values
     '''
-    return nnf.out_nn_modes_uv(x,y,w_u,b_u,geom,freestream_target=freestream_target_u)
+    return nnf.out_nn_modes_uv(x,y,w_u,b_u,geom,freestream_target=freestream_target_u,damp_fluctuations=damp_fluct)
 
 def fluid_u_t(x,y,t):
     '''
@@ -408,7 +418,7 @@ def fluid_u_t(x,y,t):
     Input: x,y,t TF tensors of shape [Nint,1]
     Return TF tensor of shape [Nint,1] with real values
     '''
-    return nnf.NN_time_uv(x,y,t,w_u,b_u,geom,omega_0,freestream_target=freestream_target_u)
+    return nnf.NN_time_uv(x,y,t,w_u,b_u,geom,omega_0,freestream_target=freestream_target_u,damp_fluctuations=damp_fluct)
 
 def fluid_v(x,y):
     '''
@@ -416,7 +426,7 @@ def fluid_v(x,y):
     Input : x,y TF tensors of shape [Nint,1]
     Return TF tensor of shape [1,Nint,Nmodes] with complex values
     '''
-    return nnf.out_nn_modes_uv(x,y,w_v,b_v,geom,freestream_target=freestream_target_v)
+    return nnf.out_nn_modes_uv(x,y,w_v,b_v,geom,freestream_target=freestream_target_v,damp_fluctuations=damp_fluct)
 
 def fluid_v_t(x,y,t):
     '''
@@ -424,7 +434,7 @@ def fluid_v_t(x,y,t):
     Input: x,y,t TF tensors of shape [Nint,1]
     Return TF tensor of shape [Nint,1] with real values
     '''
-    return nnf.NN_time_uv(x,y,t,w_v,b_v,geom,omega_0,freestream_target=freestream_target_v)
+    return nnf.NN_time_uv(x,y,t,w_v,b_v,geom,omega_0,freestream_target=freestream_target_v,damp_fluctuations=damp_fluct)
 
 def fluid_p(x,y):
     '''
