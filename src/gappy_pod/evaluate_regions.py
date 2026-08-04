@@ -82,9 +82,9 @@ def main():
 
     lines = []
     lines.append('Gappy POD regional evaluation - held-out test snapshots only')
-    lines.append('(%d test snapshots, alternating with the %d snapshots used to build the POD basis - '
-                  'a held-out split the PINN itself does not get, see build_pod_basis.py)' %
-                  (len(test_idx), 201 - len(test_idx)))
+    lines.append('(%d held-out test snapshots forming a contiguous block at the end of the '
+                  'record, unseen by the POD basis - a held-out split the PINN itself does not '
+                  'get, see build_pod_basis.py)' % len(test_idx))
     lines.append('')
 
     summary_rows = []

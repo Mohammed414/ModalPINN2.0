@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
 Gappy POD baseline, step 1: build a joint (u,v,p) POD basis from a subset of
-the real dataset's snapshots ("basis" timesteps - every 2nd timestep, held-in
-for training the basis; the alternating timesteps are held out for testing
-gappy reconstruction, see gappy_reconstruct.py).
+the real dataset's snapshots ("basis" timesteps - a contiguous early block of
+the timeline, held-in for training the basis; a contiguous held-out block at
+the end is used for testing gappy reconstruction, see gappy_reconstruct.py).
 
 Plain numpy/scipy/matplotlib. No TensorFlow, no GPU - runs on the laptop.
 
@@ -30,6 +30,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--DataFile', default=DEFAULT_DATA_FILE)
     parser.add_argument('--RMax', type=int, default=R_MAX)
+    parser.add_argument('--NTestBlock', type=int, default=50, help='Size of the held-out contiguous test block at the end of the timeline.')
     parser.add_argument('--Out', default='pod_basis.npz')
     args = parser.parse_args()
 
@@ -48,16 +49,22 @@ def main():
     nodes_x0 = nodes_X[0, :]
     nodes_y0 = nodes_Y[0, :]
 
-    # Basis timesteps: every 2nd snapshot, starting at index 0. The alternating
-    # (odd-index) snapshots are held out entirely - never touched here, only
-    # used later in gappy_reconstruct.py for testing generalization. The PINN
-    # gets no equivalent held-out split (it trains on all 201 steps plus
-    # physics), so this is a genuinely different, and harder, evaluation
-    # protocol for POD - noted here and again in the eval step, not hidden.
-    basis_idx = np.arange(0, Nt, 2)
-    test_idx = np.arange(1, Nt, 2)
-    print('Basis snapshots: %d (indices 0,2,4,...) | held-out test snapshots: %d' %
-          (len(basis_idx), len(test_idx)))
+    # Block split: basis built from a contiguous early chunk of the timeline,
+    # tested on a held-out contiguous chunk that shares no immediate neighbor
+    # with any basis snapshot. An earlier version used an even/odd interleave
+    # (basis = even indices, test = odd), which let every test snapshot sit
+    # just Delta_t=0.1 - ~1.6% of the ~6.06-time-unit shedding period - from
+    # two bracketing basis snapshots. Since POD mode coefficients evolve
+    # smoothly in time, that made "reconstruction" close to trivial temporal
+    # interpolation rather than a real test of generalizing across the
+    # shedding phase, and produced implausibly good numbers. The PINN gets no
+    # equivalent held-out split at all (it trains on all 201 steps plus
+    # physics), so POD is still being tested under a harder protocol than the
+    # PINN - noted here and again in the eval step, not hidden.
+    basis_idx = np.arange(0, Nt - args.NTestBlock)
+    test_idx = np.arange(Nt - args.NTestBlock, Nt)
+    print('Basis snapshots: %d (indices 0..%d) | held-out test block: %d (indices %d..%d)' %
+          (len(basis_idx), basis_idx[-1], len(test_idx), test_idx[0], test_idx[-1]))
 
     # Snapshot matrix: stack [u; v; p] per timestep into one column of length
     # 3*Nnodes, assemble into X of shape [3*Nnodes, N_basis_snapshots].
