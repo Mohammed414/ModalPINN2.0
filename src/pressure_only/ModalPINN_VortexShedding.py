@@ -160,6 +160,11 @@ parser.add_argument('--FluctuationInletBC',action="store_true",default=False,hel
 parser.add_argument('--BVF',action="store_true",default=False,help="Add the Lighthill boundary-vorticity-flux loss term: enforces (1/Re)*d(omega)/dn = (1/R)*dp/dtheta at the cylinder wall, using a target derived from the same pressure taps (see bvf_targets.py). Requires --BVFTargets.")
 parser.add_argument('--LambdaBVF',type=float,default=1.0,help="Weight of the BVF loss term when --BVF is set.")
 parser.add_argument('--BVFTargets',type=str,default=None,help="Path to the .npz file produced by bvf_targets.py, required when --BVF is set.")
+parser.add_argument('--CausalWeighting',action="store_true",default=False,help="Reweight the physics-residual loss so points near x_front (starting near the cylinder) count for more early in training, expanding downstream over --CausalWarmupIters iterations. Addresses the PINN 'causality violation' pathology (Wang et al. 2022) where distant collocation points can score near-zero residual for a near-zero (wrong) field just as easily as for a correct one, removing any training-time incentive to propagate the wake downstream. No new loss term, no new derivative order - same NS residual, just reweighted.")
+parser.add_argument('--CausalSteepness',type=float,default=2.0,help="Sigmoid steepness of the causal weighting ramp (see --CausalWeighting).")
+parser.add_argument('--CausalStartX',type=float,default=-1.0,help="Starting x position of the causal weighting frontier (see --CausalWeighting).")
+parser.add_argument('--CausalEndX',type=float,default=8.0,help="Ending x position of the causal weighting frontier - the domain's downstream edge (see --CausalWeighting).")
+parser.add_argument('--CausalWarmupIters',type=int,default=3000,help="Number of L-BFGS/Adam iterations over which the causal weighting frontier sweeps from --CausalStartX to --CausalEndX (see --CausalWeighting). Deliberately an absolute iteration count, not a fraction of some assumed total iteration budget: L-BFGS's actual convergence point isn't known in advance (R3 converged at ~15452 iterations, far short of the 50000 cap), so anchoring to a fraction of maxit risks the frontier never finishing its sweep before ftol is satisfied. 3000 is comfortably smaller than that precedent, leaving most of training at full-domain weighting to consolidate.")
 
 
 args = parser.parse_args()
@@ -191,6 +196,11 @@ print('Fluctuation Inlet BC : ' + str(args.FluctuationInletBC))
 print('BVF : ' + str(args.BVF))
 print('Lambda BVF : %.4g' % (args.LambdaBVF))
 print('BVF Targets : ' + str(args.BVFTargets))
+print('Causal Weighting : ' + str(args.CausalWeighting))
+print('Causal Steepness : %.4g' % (args.CausalSteepness))
+print('Causal Start X : %.4g' % (args.CausalStartX))
+print('Causal End X : %.4g' % (args.CausalEndX))
+print('Causal Warmup Iters : %d' % (args.CausalWarmupIters))
 
 if args.TwoZonesSampling:
     IntSampling = '2zones'
@@ -217,6 +227,8 @@ if args.TwoZonesSampling:
     repertoire_new = repertoire_new + '_2zones'
 if args.BVF:
     repertoire_new = repertoire_new + '_BVF_lam%s' % (str(args.LambdaBVF).replace('.', 'p'))
+if args.CausalWeighting:
+    repertoire_new = repertoire_new + '_Causal_s%s' % (str(args.CausalSteepness).replace('.', 'p'))
 if repertoire_new != repertoire:
     os.rename(repertoire, repertoire_new)
     repertoire = repertoire_new
@@ -746,14 +758,66 @@ def loss_BC(s):
 
 
 # =============================================================================
+# Causal weighting of the physics residual (R4, see "R4 fluctuation..." plan
+# note: this addresses the PINN "causality violation" pathology (Wang et al.
+# 2022) - distant collocation points can score near-zero residual for a
+# near-zero (wrong) field just as easily as for a correct one, so nothing
+# forces the network to solve the harder far-field/wake problem before it's
+# "cheap" not to. x_front sweeps downstream over training so credit expands
+# outward - same NS residual (loss_int_time, unchanged), only reweighted.
+# =============================================================================
+
+# x_front is scheduled externally (see causal_step_hook below), not learned -
+# a plain tf.Variable(trainable=False) rather than a placeholder, so it never
+# needs to be threaded through the multigrid tf_dict list: TF reads a
+# variable's current graph-stored value on every sess.run automatically,
+# and trainable=False already excludes it from tf.trainable_variables(), so
+# neither declare_LBFGS's ScipyOptimizerInterface nor declare_Adam (both of
+# which default to optimizing tf.trainable_variables()) will try to learn it.
+x_front_var = tf.Variable(args.CausalStartX, dtype=tf.float32, trainable=False, name='x_front')
+x_front_new_ph = tf.compat.v1.placeholder(dtype=tf.float32, shape=[])
+x_front_assign_op = tf.compat.v1.assign(x_front_var, x_front_new_ph)
+
+def causal_weight_fn(x, x_front, steepness):
+    '''
+    1 near/upstream of the frontier, smoothly -> 0 well past it.
+    Input x : [Nint,1] tf.float32 tensor. x_front : scalar tf.Variable.
+    Output : [Nint,1] tf.float32 tensor in (0,1)
+    '''
+    return tf.sigmoid(-(x - x_front) * steepness)
+
+def causal_step_hook(it):
+    '''Advance x_front linearly in iteration count from CausalStartX to
+    CausalEndX over CausalWarmupIters, then hold at CausalEndX (full-domain
+    weighting) for the remainder of training. No-op unless --CausalWeighting.
+    Prints x_front's progress on its own line every 100 iterations (not
+    appended to the "Loss: %.3e" line, which several scripts in this project
+    parse via regex on that exact format) - for a loss-vs-iteration figure
+    annotated with frontier position.'''
+    if not args.CausalWeighting:
+        return
+    frac = min(1.0, it / max(1, args.CausalWarmupIters))
+    new_x_front = args.CausalStartX + frac * (args.CausalEndX - args.CausalStartX)
+    sess.run(x_front_assign_op, feed_dict={x_front_new_ph: new_x_front})
+    if it % 100 == 0:
+        print('Causal x_front @ it %d : %.4f' % (it, new_x_front))
+
+# =============================================================================
 # Training loss creation
 # =============================================================================
 
 # Wrap error on modal equations
 Loss_int_mode_wrap = tf.reduce_mean(loss_int_mode(x_tf_int, y_tf_int))
 
-# Wrap error on physical equations
-Loss_int_time_wrap = tf.reduce_mean(loss_int_time(x_tf_int, y_tf_int ,t_tf_int))
+# Wrap error on physical equations - unweighted mean by default (unchanged
+# behavior); when --CausalWeighting is set, a weighted mean that upweights
+# points near/upstream of x_front and downweights points still ahead of it.
+Loss_int_time_raw = loss_int_time(x_tf_int, y_tf_int, t_tf_int)
+if args.CausalWeighting:
+    causal_w = causal_weight_fn(x_tf_int, x_front_var, args.CausalSteepness)
+    Loss_int_time_wrap = tf.reduce_sum(causal_w * Loss_int_time_raw) / (tf.reduce_sum(causal_w) + 1e-8)
+else:
+    Loss_int_time_wrap = tf.reduce_mean(Loss_int_time_raw)
 
 # Wrap error on (u,v,p) measurements
 Loss_dense_mes = tf.reduce_mean(loss_mes(x_tf_mes,y_tf_mes,t_tf_mes,u_tf_mes,v_tf_mes,p_tf_mes))
@@ -953,7 +1017,7 @@ t1 = time.time()
 print('Start training after %d s'%(t1-t0))
 
 print('Start L-BFGS-B training')
-List_it_loss_LBFGS,List_it_loss_valid_LBFGS = nnf.model_train_scipy(opt_LBFGS,sess,Loss,tf_dict[0],List_loss = True,tf_dict_valid=tf_dict_valid,loss_valid = Loss_dense_mes)
+List_it_loss_LBFGS,List_it_loss_valid_LBFGS = nnf.model_train_scipy(opt_LBFGS,sess,Loss,tf_dict[0],List_loss = True,tf_dict_valid=tf_dict_valid,loss_valid = Loss_dense_mes,step_hook=causal_step_hook)
 
 t2 = time.time()
 print('L-BFGS-B training ended after %d s'%(t2-t1))
@@ -961,7 +1025,7 @@ print('L-BFGS-B training ended after %d s'%(t2-t1))
 print('Start Adam training')
 # Here Adam training is stopped if it reaches a time limit AdamTmax, or number of iterations Nit or if training loss goes under tolAdam
 AdamTmax = Tmax-(t2-t0)
-List_it_loss_Adam,List_it_loss_valid_Adam = nnf.model_train_Adam(opt_Adam,sess,Loss,liste_tf_dict=tf_dict,Nit=1e5,tolAdam=1e-5,it=it,itdisp=100,maxTime=AdamTmax,multigrid=multigrid,NgridTurn=NgridTurn,List_loss = True,tf_dict_valid=tf_dict_valid,loss_valid = Loss_dense_mes)
+List_it_loss_Adam,List_it_loss_valid_Adam = nnf.model_train_Adam(opt_Adam,sess,Loss,liste_tf_dict=tf_dict,Nit=1e5,tolAdam=1e-5,it=it,itdisp=100,maxTime=AdamTmax,multigrid=multigrid,NgridTurn=NgridTurn,List_loss = True,tf_dict_valid=tf_dict_valid,loss_valid = Loss_dense_mes,step_hook=causal_step_hook)
 t3 = time.time()
 print('Adam training ended after %d s'%(t3-t2))
 
@@ -995,6 +1059,9 @@ if args.SparseData:
 
 if args.BVF:
     nnf.tf_print('Loss BVF (component)',Loss_bvf_wrap,sess,tf_dict[0])
+
+if args.CausalWeighting:
+    print('Causal x_front final value : %.4f (target was %.4f)' % (sess.run(x_front_var), args.CausalEndX))
 
 if args.DesyncSparseData:
     

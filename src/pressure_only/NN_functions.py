@@ -331,16 +331,22 @@ def simple_callback(loss):
 
 
 
-def model_train_scipy(optimizer,sess,loss,tf_dict=None,fn_callback=simple_callback,List_loss = False, loss_valid = None, tf_dict_valid=None):
+def model_train_scipy(optimizer,sess,loss,tf_dict=None,fn_callback=simple_callback,List_loss = False, loss_valid = None, tf_dict_valid=None, step_hook=None):
+    '''
+    step_hook : optional callable(it) invoked once per L-BFGS iteration, after
+    incrementing the iteration counter - for side effects only (e.g. R4's
+    causal-weighting schedule advancing x_front). None (default) = no-op,
+    identical behavior to before this parameter existed.
+    '''
     global it
     it = 0
     global List_it_loss_LBFGS
     List_it_loss_LBFGS = []
     global List_it_loss_valid_LBFGS
     List_it_loss_valid_LBFGS = []
-    
+
     if List_loss == True and tf_dict_valid != None:
-    
+
         def callback(loss,List_loss=List_loss):
             global it
             global List_it_loss_LBFGS
@@ -351,9 +357,11 @@ def model_train_scipy(optimizer,sess,loss,tf_dict=None,fn_callback=simple_callba
                 loss_valid_value = sess.run(loss_valid,feed_dict=tf_dict_valid)
                 List_it_loss_valid_LBFGS.append([it,loss_valid_value])
             print('Loss: %.3e' % (loss))
+            if step_hook is not None:
+                step_hook(it)
             # global it
             # it += 1
-        
+
         fn_callback=callback
     
     if tf_dict != None:
@@ -367,7 +375,11 @@ def model_train_scipy(optimizer,sess,loss,tf_dict=None,fn_callback=simple_callba
                 loss_callback = fn_callback) 
     return List_it_loss_LBFGS,List_it_loss_valid_LBFGS
 
-def model_train_Adam(optimizer,sess,loss,liste_tf_dict=None,Nit=1e4,tolAdam=1e-4,it=0,itdisp=1000,maxTime=None,multigrid=False,NgridTurn=1000,List_loss = False, loss_valid = None, tf_dict_valid=None):
+def model_train_Adam(optimizer,sess,loss,liste_tf_dict=None,Nit=1e4,tolAdam=1e-4,it=0,itdisp=1000,maxTime=None,multigrid=False,NgridTurn=1000,List_loss = False, loss_valid = None, tf_dict_valid=None, step_hook=None):
+    '''
+    step_hook : optional callable(it) invoked once per Adam iteration - see
+    model_train_scipy's docstring. None (default) = no-op.
+    '''
     List_it_loss_Adam = []
     List_it_loss_valid_Adam = []
     if not(multigrid):
@@ -396,8 +408,10 @@ def model_train_Adam(optimizer,sess,loss,liste_tf_dict=None,Nit=1e4,tolAdam=1e-4
             loss_valid_value = sess.run(loss_valid,feed_dict=tf_dict_valid)
             List_it_loss_valid_Adam.append([it,loss_valid_value])
         List_it_loss_Adam.append([it,loss_value])
-        
-        
+
+        if step_hook is not None:
+            step_hook(it)
+
         it += 1
         conditionTime = (maxTime==None) or ((time.time()-t0)<maxTime)
         
