@@ -186,7 +186,7 @@ def f_freestream_weight(x, x_transition=-2., gamma=3.):
     '''
     return 0.5 * (1. - tf.tanh(gamma * (x - x_transition)))
 
-def out_nn_modes_uv(x,y,weights,biases,geom,freestream_target=None,damp_fluctuations=False):
+def out_nn_modes_uv(x,y,weights,biases,geom,freestream_target=None,damp_fluctuations=False,kill_k0_imag=False,hard_sym=False,is_v=False):
     '''
     Return Nmode complex modes shapes of DNN defined with weights and biases
     Prior dictionary f_BC5 is applied so that each mode shape verifies =0 on cylinder's border
@@ -200,6 +200,24 @@ def out_nn_modes_uv(x,y,weights,biases,geom,freestream_target=None,damp_fluctuat
     that, which let a spurious oscillation appear upstream (see
     "R3 fluctuation inlet bc plan.md"). Velocity only - pressure fluctuations
     physically do reach the inlet, so out_nn_modes_p is untouched.
+    If kill_k0_imag is True, the k=0 (mean) mode is hard-projected onto its real
+    part. The mean of a real signal is real, and NN_time_uv/NN_time_p only ever
+    take tf.real(...) of the time reconstruction, so Im(mode_0) is otherwise an
+    unconstrained null direction invisible to every pointwise/measurement loss -
+    it drifted to +-4 in R2 (see v_mode_0.png). Harmless by default; only matters
+    once a loss that actually reads the complex k=0 mode (R5's --K0Loss) exists,
+    which is the only place this flag is set True (see "R5 measured best
+    candidates plan.md").
+    If hard_sym is True, each mode is reflection-symmetrized in y to hard-enforce
+    the Karman-street parity: u_k,p_k are even in y (parity (-1)^k, is_v=False),
+    v_k is odd/even the opposite way (parity (-1)^(k+1), is_v=True). Applied
+    right after the f_BC5 mask (which is itself even in y since the cylinder is
+    centered at y_c=0, so fbc5(x,-y)=fbc5(x,y) - no need for a second f_BC5
+    evaluation) and before the freestream/damp_fluctuations/kill_k0_imag
+    adjustments below, which only depend on x and so compose safely with it.
+    Roughly doubles this function's cost (a second neural_net forward pass at
+    the reflected point). See "R5 measured best candidates plan.md" - optional,
+    go/no-go at the smoke test.
     Input x,y : [Nint,1] tf.float32 tensor
     Output shape : [1,Nint,Nmode] tf.complex64 tensor
     '''
@@ -208,23 +226,36 @@ def out_nn_modes_uv(x,y,weights,biases,geom,freestream_target=None,damp_fluctuat
     out_nn = neural_net(tf.transpose(tf.stack([xint,yint])),weights,biases)
     Nmode = int(out_nn[0,0,:].shape[0])
     fbc5c = tf.complex(f_BC5(x,y,geom)[:,0],0.)
+    if hard_sym:
+        yint_neg = tf.complex(-y,0.)
+        out_nn_neg = neural_net(tf.transpose(tf.stack([xint,yint_neg])),weights,biases)
     w = None
     if freestream_target is not None or damp_fluctuations:
         w = tf.complex(f_freestream_weight(x)[:,0], 0.)
     modes = []
     for k in range(Nmode):
         mode_k = fbc5c*out_nn[:,:,k]
+        if hard_sym:
+            parity = -1. if ((k % 2 == 0) == is_v) else 1.  # is_v: (-1)^(k+1); else (-1)^k
+            mode_k = 0.5*(mode_k + tf.complex(parity,0.)*fbc5c*out_nn_neg[:,:,k])
         if k == 0 and freestream_target is not None:
             mode_k = w*tf.complex(freestream_target, 0.) + (1.-w)*mode_k
         elif k >= 1 and damp_fluctuations:
             mode_k = (1.-w)*mode_k          # fluctuations -> 0 at the inlet
+        if k == 0 and kill_k0_imag:
+            mode_k = tf.complex(tf.real(mode_k), 0.*tf.real(mode_k))
         modes.append(mode_k)
     t_parts = tf.convert_to_tensor(modes)
     return tf.transpose(t_parts,perm=[1,2,0])
 
-def out_nn_modes_p(x,y,weights,biases):
+def out_nn_modes_p(x,y,weights,biases,kill_k0_imag=False,hard_sym=False):
     '''
     Return Nm complex modes of dnn defined with weights and biases
+    If kill_k0_imag is True, the k=0 (mean pressure) mode is hard-projected onto
+    its real part - see out_nn_modes_uv's docstring for why.
+    If hard_sym is True, each mode is reflection-symmetrized in y with parity
+    (-1)^k (p_k is even/odd the same way as u_k) - see out_nn_modes_uv's
+    docstring for why/cost.
     Input x,y : [Nint,1] real tf.float32 tensor
     Output shape : [1,Nint,Nmode] tf.complex64 tensor
     '''
@@ -232,11 +263,23 @@ def out_nn_modes_p(x,y,weights,biases):
     yint = tf.complex(y,0.)
     out_nn = neural_net(tf.transpose(tf.stack([xint,yint])),weights,biases)
     Nmode = int(out_nn[0,0,:].shape[0])
-    t_parts = tf.convert_to_tensor([out_nn[:,:,k] for k in range(Nmode)])
+    if hard_sym:
+        yint_neg = tf.complex(-y,0.)
+        out_nn_neg = neural_net(tf.transpose(tf.stack([xint,yint_neg])),weights,biases)
+    modes = []
+    for k in range(Nmode):
+        mode_k = out_nn[:,:,k]
+        if hard_sym:
+            parity = 1. if k % 2 == 0 else -1.  # (-1)^k
+            mode_k = 0.5*(mode_k + tf.complex(parity,0.)*out_nn_neg[:,:,k])
+        if k == 0 and kill_k0_imag:
+            mode_k = tf.complex(tf.real(mode_k), 0.*tf.real(mode_k))
+        modes.append(mode_k)
+    t_parts = tf.convert_to_tensor(modes)
     return tf.transpose(t_parts,perm=[1,2,0])
 
 
-def NN_time_uv(x,y,t,weights,biases,geom,omega_0,trunc_mode=None,freestream_target=None,damp_fluctuations=False):
+def NN_time_uv(x,y,t,weights,biases,geom,omega_0,trunc_mode=None,freestream_target=None,damp_fluctuations=False,kill_k0_imag=False,hard_sym=False,is_v=False):
     '''
     x,y,t : [Nint,1] tf.float32 tensors, list of coordinates (x,t) where to compute u or v(x,y,t)
     omega_0 : fondamental frequency
@@ -245,8 +288,10 @@ def NN_time_uv(x,y,t,weights,biases,geom,omega_0,trunc_mode=None,freestream_targ
                 the trunc_mode first mode given. Else if trunc_mode=None, use all modes
     freestream_target : passed through to out_nn_modes_uv (see there)
     damp_fluctuations : passed through to out_nn_modes_uv (see there)
+    kill_k0_imag : passed through to out_nn_modes_uv (see there)
+    hard_sym, is_v : passed through to out_nn_modes_uv (see there)
     '''
-    out_NN = out_nn_modes_uv(x,y,weights,biases,geom,freestream_target=freestream_target,damp_fluctuations=damp_fluctuations)
+    out_NN = out_nn_modes_uv(x,y,weights,biases,geom,freestream_target=freestream_target,damp_fluctuations=damp_fluctuations,kill_k0_imag=kill_k0_imag,hard_sym=hard_sym,is_v=is_v)
     Nmode = int(out_NN[0,0,:].shape[0])
     if trunc_mode!=None and trunc_mode <= Nmode:
         Nmode = trunc_mode
@@ -255,13 +300,15 @@ def NN_time_uv(x,y,t,weights,biases,geom,omega_0,trunc_mode=None,freestream_targ
     t_real = tf.real(tf.reduce_sum(t_parts,axis=0))
     return tf.transpose(tf.convert_to_tensor([t_real])) # retrait de perm=[1,0]
 
-def NN_time_p(x,y,t,weights,biases,omega_0,trunc_mode=None):
+def NN_time_p(x,y,t,weights,biases,omega_0,trunc_mode=None,kill_k0_imag=False,hard_sym=False):
     '''
     x,y,t : [Nint,1] tf.float32 tensors, list of coordinates (x,t) where to compute p(x,y,t)
     omega_0 : fondamental frequency
     Output [Nint,1] tf.float32 tensor
+    kill_k0_imag : passed through to out_nn_modes_p (see there)
+    hard_sym : passed through to out_nn_modes_p (see there)
     '''
-    out_NN = out_nn_modes_p(x,y,weights,biases) 
+    out_NN = out_nn_modes_p(x,y,weights,biases,kill_k0_imag=kill_k0_imag,hard_sym=hard_sym)
     Nmode = int(out_NN[0,0,:].shape[0])
     if trunc_mode!=None and trunc_mode <= Nmode:
         Nmode = trunc_mode

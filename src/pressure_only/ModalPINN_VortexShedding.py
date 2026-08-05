@@ -66,12 +66,23 @@ from shutil import copyfile
 import sys
 import GPUtil
 import time
-import argparse 
+import argparse
+import resource
 from tensorflow.python.client import device_lib
 
 # Code parts
 import NN_functions as nnf
 import Load_train_data_desync as ltd
+
+def print_mem(tag):
+    '''Peak resident memory so far (KB on Linux), printed on its own line at
+    a few key checkpoints - added while diagnosing an OOM traced to R5's
+    --K0Loss/--CV1Loss graph construction (see PROJECT_LOG.md). Cheap
+    (a single getrusage syscall), left in permanently since colab-cli
+    sessions have a hard 12GB memcg limit and future loss terms may hit it
+    again - this makes the next one fast to diagnose instead of another
+    multi-hour trial-and-error round.'''
+    print('MEM %s : %d MB' % (tag, resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // 1024))
 
 # Link to simulations data 
 # In the paper, we used those from Boudina et al. (2020) that can be downloaded 
@@ -165,6 +176,11 @@ parser.add_argument('--CausalSteepness',type=float,default=2.0,help="Sigmoid ste
 parser.add_argument('--CausalStartX',type=float,default=-1.0,help="Starting x position of the causal weighting frontier (see --CausalWeighting).")
 parser.add_argument('--CausalEndX',type=float,default=8.0,help="Ending x position of the causal weighting frontier - the domain's downstream edge (see --CausalWeighting).")
 parser.add_argument('--CausalWarmupIters',type=int,default=3000,help="Number of L-BFGS/Adam iterations over which the causal weighting frontier sweeps from --CausalStartX to --CausalEndX (see --CausalWeighting). Deliberately an absolute iteration count, not a fraction of some assumed total iteration budget: L-BFGS's actual convergence point isn't known in advance (R3 converged at ~15452 iterations, far short of the 50000 cap), so anchoring to a fraction of maxit risks the frontier never finishing its sweep before ftol is satisfied. 3000 is comfortably smaller than that precedent, leaving most of training at full-domain weighting to consolidate.")
+parser.add_argument('--K0Loss',action="store_true",default=False,help="Add the k=0 harmonic momentum residual (mean-flow / Reynolds-stress balance, from the existing modal-equation machinery) as a separate weighted loss term. A dead (zero-amplitude) wake cannot satisfy this equation, since it needs the quadratic Reynolds-stress divergence that only a live oscillating wake supplies (Noack 2003 / Mantic-Lugo 2014 mean-field coupling). Also hard-projects the k=0 (mean) mode onto its real part in out_nn_modes_uv/out_nn_modes_p (see NN_functions), removing an otherwise-unconstrained imaginary gauge direction that would poison this loss (see 'R5 measured best candidates plan.md').")
+parser.add_argument('--LambdaK0',type=float,default=0.025,help="Weight of the k=0 harmonic momentum residual loss term when --K0Loss is set. Calibrated via audit_r5_losses.py --Mode checkpoint against R3's early/mid-training loss magnitude (~0.1-0.3, the iteration range where R3's wake-collapse decision actually got locked in), not its tiny converged value (1.4e-4) - a lambda calibrated against the converged loss would be ~1000x smaller and make this term negligible during the exact training window where it needs to matter.")
+parser.add_argument('--CV1Loss',action="store_true",default=False,help="Add the k=1 control-volume integral momentum balance (six fixed wake boxes) as a separate weighted loss term - a first-derivative-only, integral form of the k=1 momentum equation that measured strong (and adversarially robust) sensitivity to wake collapse in the diagnostic loss study. See 'R5 measured best candidates plan.md'.")
+parser.add_argument('--LambdaCV1',type=float,default=0.0075,help="Weight of the k=1 control-volume integral loss term when --CV1Loss is set. Calibrated the same way as --LambdaK0 (see there) - against R3's early/mid-training loss magnitude, not its converged value.")
+parser.add_argument('--HardSym',action="store_true",default=False,help="Hard-enforce the Karman-street mode parity (u_k,p_k even/odd, v_k odd/even in y per (-1)^k) by reflection-symmetrizing each mode's output in out_nn_modes_uv/out_nn_modes_p. Roughly doubles mode-network forward evaluations (graph size/step time). Optional, go/no-go at the smoke test (see plan).")
 
 
 args = parser.parse_args()
@@ -174,6 +190,9 @@ if args.PressureOnly and not args.SparseData:
 
 if args.BVF and args.BVFTargets is None:
     raise ValueError('--BVF requires --BVFTargets <path to the .npz file produced by bvf_targets.py>.')
+
+if args.CV1Loss and not args.SparseData:
+    raise ValueError('--CV1Loss requires --SparseData to also be set (the Vin-append anti-escape-hatch mechanism is only wired into the sparse-data collocation path).')
 
 print('Args passed to python script')
 print('Tmax '+str(args.Tmax)+' (h)')
@@ -201,6 +220,11 @@ print('Causal Steepness : %.4g' % (args.CausalSteepness))
 print('Causal Start X : %.4g' % (args.CausalStartX))
 print('Causal End X : %.4g' % (args.CausalEndX))
 print('Causal Warmup Iters : %d' % (args.CausalWarmupIters))
+print('K0 Loss : ' + str(args.K0Loss))
+print('Lambda K0 : %.4g' % (args.LambdaK0))
+print('CV1 Loss : ' + str(args.CV1Loss))
+print('Lambda CV1 : %.4g' % (args.LambdaCV1))
+print('Hard Sym : ' + str(args.HardSym))
 
 if args.TwoZonesSampling:
     IntSampling = '2zones'
@@ -215,6 +239,7 @@ print('Sampling of V_in : '+IntSampling)
 np.random.seed(args.Seed)
 tf.compat.v1.set_random_seed(args.Seed)
 print('Random seed set to %d' % (args.Seed))
+print_mem('startup (before graph construction)')
 
 repertoire_new = repertoire
 if args.PressureOnly:
@@ -229,6 +254,12 @@ if args.BVF:
     repertoire_new = repertoire_new + '_BVF_lam%s' % (str(args.LambdaBVF).replace('.', 'p'))
 if args.CausalWeighting:
     repertoire_new = repertoire_new + '_Causal_s%s' % (str(args.CausalSteepness).replace('.', 'p'))
+if args.K0Loss:
+    repertoire_new = repertoire_new + '_K0RS_lam%s' % (str(args.LambdaK0).replace('.', 'p'))
+if args.CV1Loss:
+    repertoire_new = repertoire_new + '_CV1_lam%s' % (str(args.LambdaCV1).replace('.', 'p'))
+if args.HardSym:
+    repertoire_new = repertoire_new + '_SYM'
 if repertoire_new != repertoire:
     os.rename(repertoire, repertoire_new)
     repertoire = repertoire_new
@@ -415,6 +446,13 @@ freestream_target_v = 0. if args.FreestreamBC else None
 # wrappers - so this one flag propagates everywhere automatically, including
 # the end-of-run mode plots.
 damp_fluct = bool(args.FluctuationInletBC)
+# Hard-kills the k=0 (mean) mode's imaginary part in every u/v/p wrapper below
+# (see NN_functions.out_nn_modes_uv/out_nn_modes_p) - only matters once --K0Loss
+# actually reads the complex k=0 mode; a no-op change in behaviour otherwise.
+kill_k0 = bool(args.K0Loss)
+# Hard-enforces Karman-street mode parity in every u/v/p wrapper below (see
+# NN_functions.out_nn_modes_uv/out_nn_modes_p) when --HardSym is set.
+hard_sym = bool(args.HardSym)
 
 def fluid_u(x,y):
     '''
@@ -422,7 +460,7 @@ def fluid_u(x,y):
     Input : x,y TF tensors of shape [Nint,1]
     Return TF tensor of shape [1,Nint,Nmodes] with complex values
     '''
-    return nnf.out_nn_modes_uv(x,y,w_u,b_u,geom,freestream_target=freestream_target_u,damp_fluctuations=damp_fluct)
+    return nnf.out_nn_modes_uv(x,y,w_u,b_u,geom,freestream_target=freestream_target_u,damp_fluctuations=damp_fluct,kill_k0_imag=kill_k0,hard_sym=hard_sym,is_v=False)
 
 def fluid_u_t(x,y,t):
     '''
@@ -430,7 +468,7 @@ def fluid_u_t(x,y,t):
     Input: x,y,t TF tensors of shape [Nint,1]
     Return TF tensor of shape [Nint,1] with real values
     '''
-    return nnf.NN_time_uv(x,y,t,w_u,b_u,geom,omega_0,freestream_target=freestream_target_u,damp_fluctuations=damp_fluct)
+    return nnf.NN_time_uv(x,y,t,w_u,b_u,geom,omega_0,freestream_target=freestream_target_u,damp_fluctuations=damp_fluct,kill_k0_imag=kill_k0,hard_sym=hard_sym,is_v=False)
 
 def fluid_v(x,y):
     '''
@@ -438,7 +476,7 @@ def fluid_v(x,y):
     Input : x,y TF tensors of shape [Nint,1]
     Return TF tensor of shape [1,Nint,Nmodes] with complex values
     '''
-    return nnf.out_nn_modes_uv(x,y,w_v,b_v,geom,freestream_target=freestream_target_v,damp_fluctuations=damp_fluct)
+    return nnf.out_nn_modes_uv(x,y,w_v,b_v,geom,freestream_target=freestream_target_v,damp_fluctuations=damp_fluct,kill_k0_imag=kill_k0,hard_sym=hard_sym,is_v=True)
 
 def fluid_v_t(x,y,t):
     '''
@@ -446,7 +484,7 @@ def fluid_v_t(x,y,t):
     Input: x,y,t TF tensors of shape [Nint,1]
     Return TF tensor of shape [Nint,1] with real values
     '''
-    return nnf.NN_time_uv(x,y,t,w_v,b_v,geom,omega_0,freestream_target=freestream_target_v,damp_fluctuations=damp_fluct)
+    return nnf.NN_time_uv(x,y,t,w_v,b_v,geom,omega_0,freestream_target=freestream_target_v,damp_fluctuations=damp_fluct,kill_k0_imag=kill_k0,hard_sym=hard_sym,is_v=True)
 
 def fluid_p(x,y):
     '''
@@ -454,7 +492,7 @@ def fluid_p(x,y):
     Input : x,y TF tensors of shape [Nint,1]
     Return TF tensor of shape [1,Nint,Nmodes] with complex values
     '''
-    return nnf.out_nn_modes_p(x,y,w_p,b_p)
+    return nnf.out_nn_modes_p(x,y,w_p,b_p,kill_k0_imag=kill_k0,hard_sym=hard_sym)
 
 def fluid_p_t(x,y,t):
     '''
@@ -462,7 +500,7 @@ def fluid_p_t(x,y,t):
     Input: x,y,t TF tensors of shape [Nint,1]
     Return TF tensor of shape [Nint,1] with real values
     '''
-    return nnf.NN_time_p(x,y,t,w_p,b_p,omega_0)
+    return nnf.NN_time_p(x,y,t,w_p,b_p,omega_0,kill_k0_imag=kill_k0,hard_sym=hard_sym)
 
 # =============================================================================
 # Forces on cylinder
@@ -528,15 +566,20 @@ def force_cylinder_flatten(t):
 # Definition of functions for loss
 # =============================================================================
 
-def loss_int_mode(x,y):
+def loss_int_mode_per_k(x,y):
     '''
     Parameters
     ----------
     x,y : float 32 tensor [Nint,1]
-    
+
     Returns
     -------
-    Return a tf.float32 tensor of shape [Nint,1] computing squared errors on modal equations
+    Return a tf.float32 tensor of shape [1,Nint,Nmodes]: the per-mode combined
+    squared residual (x-momentum + y-momentum + continuity), NOT reduced over
+    the mode axis - unlike loss_int_mode (below), which sums this over k and
+    is otherwise unchanged. Split out so a single mode's contribution (e.g.
+    k=0, the mean-flow/Reynolds-stress balance - see --K0Loss) can be used as
+    its own loss term without re-deriving or duplicating this computation.
     '''
     all_u = fluid_u(x,y)
     all_v = fluid_v(x,y)
@@ -595,11 +638,11 @@ def loss_int_mode(x,y):
     
     f_u_5d = [tf.reduce_sum(tf.convert_to_tensor([tf.conj(all_v[:,:,l-k])*all_u_y[:,:,l] for l in range(k+1,Nmodes)]),axis=0) for k in range(Nmodes)]
     f_u_5d[-1] = f_u_5d[-2]*0.
-    f_u += tf.transpose(tf.convert_to_tensor(f_u_5d), perm=[1,2,0])    
-    
-    
-    f_u = tf.reduce_sum(nnf.square_norm(f_u), axis=2)
-    
+    f_u += tf.transpose(tf.convert_to_tensor(f_u_5d), perm=[1,2,0])
+
+
+    f_u_sq = nnf.square_norm(f_u)
+
     # y axis Momentum equation
     f_v = tf.transpose(tf.convert_to_tensor([tf.complex(0.,k*omega_0)*all_v[:,:,k] for k in range(Nmodes)]), perm=[1,2,0])
     f_v += all_p_y
@@ -625,17 +668,339 @@ def loss_int_mode(x,y):
     
     f_v_5d = [tf.reduce_sum(tf.convert_to_tensor([tf.conj(all_v[:,:,l-k])*all_v_y[:,:,l] for l in range(k+1,Nmodes)]),axis=0) for k in range(Nmodes)]
     f_v_5d[-1] = f_v_5d[-2]*0.
-    f_v += tf.transpose(tf.convert_to_tensor(f_v_5d), perm=[1,2,0])    
-    
+    f_v += tf.transpose(tf.convert_to_tensor(f_v_5d), perm=[1,2,0])
 
-    f_v = tf.reduce_sum(nnf.square_norm(f_v), axis=2)
-    
-    
+
+    f_v_sq = nnf.square_norm(f_v)
+
+
     # Mass conservation equation
     div_u = all_u_x + all_v_y
-    div_u = tf.reduce_sum(nnf.square_norm(div_u), axis=2)
-    
-    return div_u + f_u + f_v
+    div_u_sq = nnf.square_norm(div_u)
+
+    return div_u_sq + f_u_sq + f_v_sq
+
+
+def loss_int_mode(x,y):
+    '''
+    Parameters
+    ----------
+    x,y : float 32 tensor [Nint,1]
+
+    Returns
+    -------
+    Return a tf.float32 tensor of shape [Nint,1] computing squared errors on
+    modal equations - bit-identical to the pre-refactor implementation, now
+    just the mode-axis sum of loss_int_mode_per_k (see there).
+    '''
+    return tf.reduce_sum(loss_int_mode_per_k(x,y), axis=2)
+
+
+# =============================================================================
+# k=1 control-volume integral momentum balance (R5, --CV1Loss) - see
+# "R5 measured best candidates plan.md". Integral (not pointwise) form of the
+# k=1 momentum equation over six fixed wake boxes: for the true field,
+# momentum in = momentum out, i.e. R_j ~ 0. A dead wake was measured (in the
+# diagnostic loss study this plan is based on) to satisfy the *pointwise*
+# k>=1 equations almost as well as the true field (they are nearly
+# homogeneous in amplitude), but not this integral form - it stayed
+# adversarially robust. Explicitly NOT implementing a k=2 version: the same
+# study measured the k=2 CV balance at 0.47x sensitivity - the dead wake
+# satisfies it *better* than the truth, i.e. it is actively harmful as a
+# training signal. Do not add one.
+# =============================================================================
+
+def conv_mode_k(a, b, k, Nmodes_local):
+    '''
+    Complex convolution at harmonic k of two per-mode complex tensors a,b
+    (each [1,Npts,Nmodes], the same truncated-Fourier convention used by
+    loss_int_mode_per_k's f_u_4a/4b + 5a-5d terms - the direct sum over
+    l in [0,k] plus the two conjugate sums over l in (k,Nmodes) that account
+    for the negative-frequency image of a real signal's higher harmonics).
+    No derivative and no extra factor: this is the raw (a*b)-product's k-th
+    Fourier coefficient (the momentum-flux tensor for --CV1Loss), not the
+    pointwise NS residual (which multiplies one factor by its gradient).
+    Written generically in Nmodes_local rather than as a fixed-length formula:
+    a literal k=1 flux written out for 4 harmonics (k=0..3) silently drops two
+    of its terms whenever, as in every run so far including R5's own planned
+    command, --Nmodes 3 means only k=0,1,2 exist (Nmodes is the network's
+    actual output width, confirmed against ModalPINN_VortexShedding.py's own
+    layer construction - not assumed).
+    Returns a tf.complex64 tensor of shape [1,Npts].
+    '''
+    direct = tf.reduce_sum(tf.convert_to_tensor([a[:,:,l]*b[:,:,k-l] for l in range(k+1)]), axis=0)
+    if k+1 < Nmodes_local:
+        conj_a = tf.reduce_sum(tf.convert_to_tensor([a[:,:,l]*tf.conj(b[:,:,l-k]) for l in range(k+1,Nmodes_local)]), axis=0)
+        conj_b = tf.reduce_sum(tf.convert_to_tensor([tf.conj(a[:,:,l-k])*b[:,:,l] for l in range(k+1,Nmodes_local)]), axis=0)
+        return direct + conj_a + conj_b
+    else:
+        return direct
+
+def conv_deriv_k(a, ad, k, Nmodes_local):
+    '''
+    TF twin of audit_r5_losses.py's conv_deriv_k_np - the derivative-
+    convolution pattern used by loss_int_mode_per_k's f_u_4a/4b + 5a/5b
+    terms (one raw factor a, one derivative factor ad), factored out here
+    for reuse by k0_residual's targeted mode-0 computation (see there for
+    why this needs to exist separately from loss_int_mode_per_k).
+    Returns a tf.complex64 tensor of shape [1,Npts].
+    '''
+    direct = tf.reduce_sum(tf.convert_to_tensor([a[:,:,l]*ad[:,:,k-l] for l in range(k+1)]), axis=0)
+    if k+1 < Nmodes_local:
+        conj_a = tf.reduce_sum(tf.convert_to_tensor([a[:,:,l]*tf.conj(ad[:,:,l-k]) for l in range(k+1,Nmodes_local)]), axis=0)
+        conj_b = tf.reduce_sum(tf.convert_to_tensor([tf.conj(a[:,:,l-k])*ad[:,:,l] for l in range(k+1,Nmodes_local)]), axis=0)
+        return direct + conj_a + conj_b
+    return direct
+
+def k0_residual(x, y):
+    '''
+    Minimal, mode-0-targeted computation of the k=0 harmonic momentum
+    residual - mathematically equivalent to loss_int_mode_per_k(x,y)[:,:,0],
+    but deliberately NOT built by calling that function.
+
+    loss_int_mode_per_k computes 2nd derivatives (customgrad applied twice)
+    and p_x/p_y for EVERY mode (0,1,2), because the full all-modes residual
+    needs that. The k=0 slice specifically only ever reads mode 0's 2nd
+    derivatives and mode 0's pressure gradient (modes 1,2 only enter k=0's
+    formula through their FIRST derivatives, via the Reynolds-stress
+    convolution sums) - the other ~24 gradient ops loss_int_mode_per_k would
+    build are pure waste for this purpose on a forward evaluation, and
+    actively harmful once backpropagated: --K0Loss puts this inside the
+    optimized Loss, so declare_LBFGS's tf.gradients(Loss, weights) call has
+    to differentiate whatever graph this function builds a SECOND time.
+    Sharing loss_int_mode_per_k's full ~60-gradient-op graph for that OOM-
+    killed a gate smoke test at ~11.7GB RSS on a 12GB colab-cli session -
+    confirmed (by testing with as few as 10 collocation points, no change in
+    peak memory) to be a fixed graph-topology cost, not a data-volume one,
+    so trimming Nmodes-per-array here (not point count) is what actually
+    matters. See PROJECT_LOG.md's R5 entry for the full diagnosis.
+
+    Returns a tf.float32 tensor of shape [1,Npts]: |f_u|^2+|f_v|^2+|div_u|^2 at k=0.
+    '''
+    all_u = fluid_u(x, y)
+    all_v = fluid_v(x, y)
+    all_p = fluid_p(x, y)
+
+    one = tf.transpose(0.*x + 1.)
+
+    def cgrad_all(fgrad, xgrad):
+        parts = [tf.complex(tf.gradients(tf.real(fgrad[:,:,k]), xgrad, grad_ys=one)[0],tf.gradients(tf.imag(fgrad[:,:,k]), xgrad, grad_ys=one)[0]) for k in range(Nmodes)]
+        return tf.transpose(tf.convert_to_tensor(parts), perm=[2,1,0])
+
+    def cgrad_mode0(fgrad_mode0, xgrad):
+        return tf.complex(tf.gradients(tf.real(fgrad_mode0), xgrad, grad_ys=one)[0], tf.gradients(tf.imag(fgrad_mode0), xgrad, grad_ys=one)[0])
+
+    # 1st derivatives - genuinely needed for all Nmodes (the convolution
+    # sums read u_x/u_y/v_x/v_y at every mode, not just mode 0).
+    all_u_x = cgrad_all(all_u, x)
+    all_u_y = cgrad_all(all_u, y)
+    all_v_x = cgrad_all(all_v, x)
+    all_v_y = cgrad_all(all_v, y)
+
+    # Mode-0-only: pressure gradient and 2nd derivatives.
+    p0_x = cgrad_mode0(all_p[:,:,0], x)
+    p0_y = cgrad_mode0(all_p[:,:,0], y)
+    u0_xx = cgrad_mode0(all_u_x[:,:,0], x)
+    u0_yy = cgrad_mode0(all_u_y[:,:,0], y)
+    v0_xx = cgrad_mode0(all_v_x[:,:,0], x)
+    v0_yy = cgrad_mode0(all_v_y[:,:,0], y)
+
+    k = 0
+    f_u = tf.complex(0., k*omega_0)*all_u[:,:,k] + p0_x - (1./Re)*(u0_xx + u0_yy)
+    f_u = f_u + conv_deriv_k(all_u, all_u_x, k, Nmodes)
+    f_u = f_u + conv_deriv_k(all_v, all_u_y, k, Nmodes)
+
+    f_v = tf.complex(0., k*omega_0)*all_v[:,:,k] + p0_y - (1./Re)*(v0_xx + v0_yy)
+    f_v = f_v + conv_deriv_k(all_u, all_v_x, k, Nmodes)
+    f_v = f_v + conv_deriv_k(all_v, all_v_y, k, Nmodes)
+
+    div_u = all_u_x[:,:,k] + all_v_y[:,:,k]
+
+    return nnf.square_norm(f_u) + nnf.square_norm(f_v) + nnf.square_norm(div_u)
+
+def grad_mode1(fgrad,xgrad):
+    '''
+    1st derivative of JUST the k=1 mode slice w.r.t. xgrad - used by the k=1
+    control-volume loss (--CV1Loss), which only ever needs mode 1's
+    derivative on box faces. Deliberately NOT a loop over all Nmodes like
+    loss_int_mode_per_k's internal customgrad (which needs every mode):
+    an earlier version reused that all-modes pattern here, computing and
+    discarding gradients for modes 0 and 2 at every one of the 4
+    derivatives (u1_x,u1_y,v1_x,v1_y) x 4 faces x 4 boxes - 3x more
+    tf.gradients calls than necessary, which OOM-killed a gate smoke test
+    (see PROJECT_LOG.md, R5 entry) on a 12GB colab-cli CPU session before
+    training even started. Fixed by only ever differentiating mode 1.
+    Input fgrad,xgrad : tf.complex64 [1,Npts,Nmodes] and tf.float32 [Npts,1] resp.
+    Return tf.complex64 tensor d(mode 1)/dx of shape [1,Npts]
+    '''
+    one = tf.transpose(0.*xgrad + 1.)
+    f1 = fgrad[:,:,1]
+    return tf.complex(tf.gradients(tf.real(f1), xgrad, grad_ys=one)[0], tf.gradients(tf.imag(f1), xgrad, grad_ys=one)[0])
+
+# Four fixed boxes, |y|<=2, clear of the cylinder (r_c=0.5) and strictly
+# inside the domain (Lxmin=-4,Lxmax=8,Lymin=-4,Lymax=4): three paired
+# (upstream x, downstream x) boxes sweeping into the near/mid wake, plus one
+# full-wake box spanning all of them. The plan originally specified five
+# paired boxes (x_up in {0.5,1,2,3,4}, x_down in {2,3,4,5,6}) plus the
+# full-wake box (six total); Phase 0's R3-checkpoint audit
+# (audit_r5_losses.py --Mode checkpoint) found the two furthest-downstream
+# boxes (x in [3,5] and [4,6]) had INVERTED sensitivity - the dead R3 wake
+# scored *better* on them than the true field (ratios 0.13x and 0.08x) - the
+# same pathology the plan explicitly forbade for the k=2 harmonic (there
+# measured at 0.47x). Dropped for the same reason: a box scoring the dead
+# wake as more correct than the truth would train against wake revival in
+# exactly the region R5 is trying to fix.
+#
+# Down to a single box (from the four survivors above) for an unrelated,
+# later reason: --CV1Loss's memory cost turned out to be a FIXED graph-
+# topology cost per box (confirmed by testing quadrature resolution from
+# 64pts/face, 32x16 area down to 16pts/face, 8x8 area with ZERO change in
+# peak memory - 10459MB vs 10406MB), not a data-volume cost, so cutting
+# point density doesn't help but cutting box count does. Two boxes still
+# OOM-killed a combined --K0Loss --CV1Loss smoke test at ~11.8GB on the
+# 12GB colab-cli session (reached the multigrid/first-training-iteration
+# step, which needs its own headroom on top of the ~10.9GB already used
+# just building the graph and loading data) - down to one box for a real
+# safety margin. Kept the full-wake box [0.5,6] (7.7x correct-sign
+# discrimination in the R3-checkpoint audit) over the numerically stronger
+# but narrower [0.5,2] box (16.5x): R5's primary acceptance criterion is
+# far-wake E_v revival, and the full-wake box spans both near and far wake
+# while [0.5,2] sits entirely in the near-cylinder region - see
+# PROJECT_LOG.md for the full audit numbers and memory-debugging trace.
+CV1_X_UP   = [0.5]
+CV1_X_DOWN = [6. ]
+CV1_YMIN, CV1_YMAX = -2., 2.
+CV1_N_FACE_PTS = 64   # quadrature points per face (surface integrals) - resolution isn't the memory driver (see above), kept high for integration accuracy
+CV1_N_AREA_X, CV1_N_AREA_Y = 32, 16  # quadrature grid (area/volume integral)
+
+# Per-box normalizer for Loss_cv1 (see loss_cv1 below) - the full-wake
+# box's R3-checkpoint |R_j|^2 from audit_r5_losses.py --Mode checkpoint, so
+# it contributes ~O(1) to Loss_cv1 at the R3 checkpoint.
+CV1_NORMALIZERS = [1.70640340664987e-2]
+
+def _cv1_trapz_nodes_weights(a, b, n):
+    '''Uniform trapezoid quadrature nodes+weights on [a,b], n points.'''
+    nodes = np.linspace(a, b, n)
+    w = np.full(n, (b - a) / (n - 1))
+    w[0] *= 0.5
+    w[-1] *= 0.5
+    return nodes, w
+
+def _build_cv1_boxes():
+    '''Precompute, per box, the fixed numpy quadrature node coordinates +
+    trapezoid weights for the 4 faces (surface integral) and the area grid
+    (volume/storage integral). Pure numpy constants - the boxes do not move
+    over training, so this only needs to run once at import time.'''
+    boxes = []
+    for x_up, x_down in zip(CV1_X_UP, CV1_X_DOWN):
+        y_face, wy_face = _cv1_trapz_nodes_weights(CV1_YMIN, CV1_YMAX, CV1_N_FACE_PTS)
+        x_face, wx_face = _cv1_trapz_nodes_weights(x_up, x_down, CV1_N_FACE_PTS)
+        xa, wxa = _cv1_trapz_nodes_weights(x_up, x_down, CV1_N_AREA_X)
+        ya, wya = _cv1_trapz_nodes_weights(CV1_YMIN, CV1_YMAX, CV1_N_AREA_Y)
+        Xa, Ya = np.meshgrid(xa, ya, indexing='ij')
+        Wa = np.outer(wxa, wya)
+        boxes.append(dict(
+            left_x=np.full(CV1_N_FACE_PTS, x_up, dtype=np.float32), left_y=y_face.astype(np.float32),
+            left_w=wy_face.astype(np.float32), left_n=(-1., 0.),
+            right_x=np.full(CV1_N_FACE_PTS, x_down, dtype=np.float32), right_y=y_face.astype(np.float32),
+            right_w=wy_face.astype(np.float32), right_n=(1., 0.),
+            bottom_x=x_face.astype(np.float32), bottom_y=np.full(CV1_N_FACE_PTS, CV1_YMIN, dtype=np.float32),
+            bottom_w=wx_face.astype(np.float32), bottom_n=(0., -1.),
+            top_x=x_face.astype(np.float32), top_y=np.full(CV1_N_FACE_PTS, CV1_YMAX, dtype=np.float32),
+            top_w=wx_face.astype(np.float32), top_n=(0., 1.),
+            area_x=Xa.flatten().astype(np.float32), area_y=Ya.flatten().astype(np.float32),
+            area_w=Wa.flatten().astype(np.float32),
+        ))
+    return boxes
+
+CV1_BOXES = _build_cv1_boxes()
+
+def _cv1_all_quadrature_xy():
+    '''All quadrature node (x,y) coordinates across all six boxes and all
+    five sub-integrals (4 faces + area), concatenated and deduplicated by
+    (x,y) pair. Used to append these exact points to the interior
+    collocation set (Vin) so the ordinary pointwise physics loss also polices
+    them every iteration - the anti-escape-hatch rule: every point the CV
+    integral reads must also be physics-policed elsewhere, so the network
+    cannot satisfy the box balance via a field that is only locally
+    pathological exactly at the quadrature nodes.'''
+    xs, ys = [], []
+    for box in CV1_BOXES:
+        for face in ['left', 'right', 'bottom', 'top']:
+            xs.append(box[face + '_x']); ys.append(box[face + '_y'])
+        xs.append(box['area_x']); ys.append(box['area_y'])
+    x_all = np.concatenate(xs).astype(np.float32)
+    y_all = np.concatenate(ys).astype(np.float32)
+    xy = np.unique(np.stack([x_all, y_all], axis=1), axis=0)
+    return xy[:, 0], xy[:, 1]
+
+CV1_VIN_X, CV1_VIN_Y = _cv1_all_quadrature_xy()
+
+def _cv1_box_residual(box):
+    '''
+    Complex 2-vector (Rx,Ry) k=1 control-volume momentum residual for one
+    box (see module docstring above): the standard control-volume momentum
+    balance, i*omega_0*integral(u1)dA (storage) + surface flux + pressure -
+    viscous traction, matching sign conventions exactly against loss_int_time
+    (pressure enters as +grad(p), viscous as -(1/Re)*Laplacian) and against
+    force_cylinder_flatten's already-existing stress-tensor construction
+    (fx_local = -p*nx + 2*(1/Re)*u_x*nx + (1/Re)*(u_y+v_x)*ny) for the
+    viscous traction term, just evaluated on the k=1 complex mode instead of
+    the real time-domain field.
+    Returns (Rx, Ry) : two tf.complex64 scalar tensors.
+    '''
+    def col(a):
+        return tf.constant(a.reshape(-1, 1), dtype=tf.float32)
+
+    xa, ya = col(box['area_x']), col(box['area_y'])
+    wa_c = tf.complex(tf.constant(box['area_w'], dtype=tf.float32), 0.)
+    u1_a = fluid_u(xa, ya)[0, :, 1]
+    v1_a = fluid_v(xa, ya)[0, :, 1]
+    Rx = tf.complex(0., omega_0) * tf.reduce_sum(wa_c * u1_a)
+    Ry = tf.complex(0., omega_0) * tf.reduce_sum(wa_c * v1_a)
+
+    Re_c = tf.complex(Re, 0.)
+    for face in ['left', 'right', 'bottom', 'top']:
+        xf, yf = col(box[face + '_x']), col(box[face + '_y'])
+        wf_c = tf.complex(tf.constant(box[face + '_w'], dtype=tf.float32), 0.)
+        nx, ny = box[face + '_n']
+        nx_c, ny_c = tf.complex(nx, 0.), tf.complex(ny, 0.)
+
+        all_u = fluid_u(xf, yf)
+        all_v = fluid_v(xf, yf)
+        all_p = fluid_p(xf, yf)
+        p1 = all_p[0, :, 1]
+        Qxx = conv_mode_k(all_u, all_u, 1, Nmodes)[0, :]
+        Qxy = conv_mode_k(all_u, all_v, 1, Nmodes)[0, :]
+        Qyy = conv_mode_k(all_v, all_v, 1, Nmodes)[0, :]
+        u1_x = grad_mode1(all_u, xf)[0, :]
+        u1_y = grad_mode1(all_u, yf)[0, :]
+        v1_x = grad_mode1(all_v, xf)[0, :]
+        v1_y = grad_mode1(all_v, yf)[0, :]
+
+        flux_x = Qxx*nx_c + Qxy*ny_c
+        flux_y = Qxy*nx_c + Qyy*ny_c
+        visc_x = (1./Re_c)*(2.*u1_x*nx_c + (u1_y+v1_x)*ny_c)
+        visc_y = (1./Re_c)*((u1_y+v1_x)*nx_c + 2.*v1_y*ny_c)
+
+        Rx = Rx + tf.reduce_sum(wf_c * (flux_x + p1*nx_c - visc_x))
+        Ry = Ry + tf.reduce_sum(wf_c * (flux_y + p1*ny_c - visc_y))
+
+    return Rx, Ry
+
+def loss_cv1():
+    '''
+    Sum over all six k=1 control-volume boxes of |Rx|^2+|Ry|^2, each
+    normalized by a fixed per-box constant (CV1_NORMALIZERS - see there;
+    must be calibrated by audit_r5_losses.py before a real run) so no single
+    box dominates purely from its size.
+    Returns a tf.float32 scalar tensor.
+    '''
+    total = 0.
+    for j, box in enumerate(CV1_BOXES):
+        Rx, Ry = _cv1_box_residual(box)
+        total = total + (nnf.square_norm(Rx) + nnf.square_norm(Ry)) / CV1_NORMALIZERS[j]
+    return total
 
 
 def loss_int_time(x,y,t):
@@ -806,8 +1171,40 @@ def causal_step_hook(it):
 # Training loss creation
 # =============================================================================
 
-# Wrap error on modal equations
+# Wrap error on modal equations - the existing all-modes diagnostic, unchanged
+# (Nint=50000 points, forward-evaluated once at the end for the "Loss eqs.
+# modes" print; never part of the optimized Loss unless --LossModes, which no
+# run uses, so this never gets differentiated a second time).
 Loss_int_mode_wrap = tf.reduce_mean(loss_int_mode(x_tf_int, y_tf_int))
+
+# k=0 harmonic residual (R5's --K0Loss - see the CLI arg docstring): the
+# mean-flow/Reynolds-stress balance. A dead wake cannot satisfy this - it
+# needs the quadratic Reynolds-stress divergence that only a live oscillating
+# (k>=1) wake supplies. Uses k0_residual (see there), NOT
+# loss_int_mode_per_k(x,y)[:,:,0] - mathematically the same k=0 formula, but
+# built without the ~24 wasted 2nd-derivative/pressure-gradient ops
+# loss_int_mode_per_k computes for modes 1,2 (never read by k=0's formula).
+# That waste is harmless for a forward-only evaluation (e.g. the diagnostic
+# above), but --K0Loss puts this INSIDE the optimized Loss, so
+# declare_LBFGS's tf.gradients(Loss, weights) call has to differentiate
+# whatever graph this builds a SECOND time - confirmed (by testing with as
+# few as 10 collocation points, no change in peak memory) to be a fixed
+# graph-topology cost, not a data-volume one, so K0_N_POINTS below is kept
+# small mainly for per-iteration runtime, not as the OOM fix - see
+# PROJECT_LOG.md's R5 entry for the full diagnosis (this OOM-killed a gate
+# smoke test at ~11.7GB RSS on a 12GB colab-cli session before this fix).
+K0_N_POINTS = 2000
+_k0_rng = np.random.RandomState(42)
+def _build_k0_points():
+    x = _k0_rng.uniform(Lxmin + 0.5, Lxmax - 0.5, K0_N_POINTS * 2).astype(np.float32)
+    y = _k0_rng.uniform(Lymin + 0.5, Lymax - 0.5, K0_N_POINTS * 2).astype(np.float32)
+    r = np.sqrt((x - x_c) ** 2 + (y - y_c) ** 2)
+    keep = r > 1.5 * r_c
+    return x[keep][:K0_N_POINTS].reshape(-1, 1), y[keep][:K0_N_POINTS].reshape(-1, 1)
+K0_X, K0_Y = _build_k0_points()
+x_tf_k0 = tf.constant(K0_X, dtype=tf.float32)
+y_tf_k0 = tf.constant(K0_Y, dtype=tf.float32)
+Loss_k0_wrap = tf.reduce_mean(k0_residual(x_tf_k0, y_tf_k0))
 
 # Wrap error on physical equations - unweighted mean by default (unchanged
 # behavior); when --CausalWeighting is set, a weighted mean that upweights
@@ -853,15 +1250,27 @@ else: #Physical equations are used instead of modal equations
 if args.BVF:
     Loss = Loss + args.LambdaBVF * Loss_bvf_wrap
 
+if args.K0Loss:
+    Loss = Loss + args.LambdaK0 * Loss_k0_wrap
+
+if args.CV1Loss:
+    Loss_cv1_wrap = loss_cv1()
+    Loss = Loss + args.LambdaCV1 * Loss_cv1_wrap
+
+print_mem('after Loss assembly (forward graph built)')
+
 # =============================================================================
 # Optimizer configuration
 # =============================================================================
 
 opt_LBFGS = nnf.declare_LBFGS(Loss)
+print_mem('after declare_LBFGS (d(Loss)/d(weights) graph built)')
 
 opt_Adam = nnf.declare_Adam(Loss, lr=1e-5)
+print_mem('after declare_Adam')
 
 sess = nnf.declare_init_session()
+print_mem('after session init')
 
 
 # =============================================================================
@@ -882,14 +1291,33 @@ if args.SparseData:
     Ncyl = len(xmes_cyl)
     Npitot = len(xmes_pitot)
     Tmin = 400.
-    
-    
+
+    if args.CV1Loss:
+        # Anti-escape-hatch (see "R5 measured best candidates plan.md"):
+        # append the k=1 CV integral's own fixed quadrature nodes to the
+        # interior collocation set, so the ordinary pointwise physics loss
+        # also polices these exact points every iteration, not just the CV
+        # loss's own dedicated evaluation of them. Random times, same scale
+        # as the rest of t_int (Tintmax=1e2 above) - a physically valid
+        # periodic solution's NS residual should hold at any time.
+        n_cv1 = len(CV1_VIN_X)
+        if multigrid:
+            for k in range(Ngrid):
+                x_int[k] = np.concatenate([np.asarray(x_int[k]).flatten(), CV1_VIN_X])
+                y_int[k] = np.concatenate([np.asarray(y_int[k]).flatten(), CV1_VIN_Y])
+                t_int[k] = np.concatenate([np.asarray(t_int[k]).flatten(), np.random.uniform(0., 1e2, size=n_cv1).astype(np.float32)])
+        else:
+            x_int = np.concatenate([np.asarray(x_int).flatten(), CV1_VIN_X])
+            y_int = np.concatenate([np.asarray(y_int).flatten(), CV1_VIN_Y])
+            t_int = np.concatenate([np.asarray(t_int).flatten(), np.random.uniform(0., 1e2, size=n_cv1).astype(np.float32)])
+        print('CV1: appended %d quadrature nodes to the interior collocation set (Vin)' % n_cv1)
+
     if multigrid:
         tf_dict = []
         for k in range(Ngrid):
-            tf_dict_temp = {x_tf_int : np.reshape(x_int[k],(Nint,1)),
-             y_tf_int : np.reshape(y_int[k],(Nint,1)),
-             t_tf_int : np.reshape(t_int[k],(Nint,1)),
+            tf_dict_temp = {x_tf_int : np.reshape(x_int[k],(-1,1)),
+             y_tf_int : np.reshape(y_int[k],(-1,1)),
+             t_tf_int : np.reshape(t_int[k],(-1,1)),
              s_tf : np.reshape(s_train,(Nbc,1)),
              x_tf_mes_cyl : np.reshape(xmes_cyl,(Ncyl,1)),
              y_tf_mes_cyl : np.reshape(ymes_cyl,(Ncyl,1)),
@@ -904,10 +1332,10 @@ if args.SparseData:
              }
             tf_dict.append(tf_dict_temp)
         
-    else:      
-        tf_dict = {x_tf_int : np.reshape(x_int,(Nint,1)),
-             y_tf_int : np.reshape(y_int,(Nint,1)),
-             t_tf_int : np.reshape(t_int,(Nint,1)),
+    else:
+        tf_dict = {x_tf_int : np.reshape(x_int,(-1,1)),
+             y_tf_int : np.reshape(y_int,(-1,1)),
+             t_tf_int : np.reshape(t_int,(-1,1)),
              s_tf : np.reshape(s_train,(Nbc,1)),
              x_tf_mes_cyl : np.reshape(xmes_cyl,(Ncyl,1)),
              y_tf_mes_cyl : np.reshape(ymes_cyl,(Ncyl,1)),
@@ -1006,6 +1434,7 @@ tf_dict_valid = {x_tf_int : np.reshape(x_int_valid,(10*Nint,1)),
 # =============================================================================
 print('GPU use after loading data')
 GPUtil.showUtilization()
+print_mem('after data loading')
 
 
 # =============================================================================
@@ -1059,6 +1488,12 @@ if args.SparseData:
 
 if args.BVF:
     nnf.tf_print('Loss BVF (component)',Loss_bvf_wrap,sess,tf_dict[0])
+
+if args.K0Loss:
+    nnf.tf_print('Loss k0 harmonic (component)',Loss_k0_wrap,sess,tf_dict[0])
+
+if args.CV1Loss:
+    nnf.tf_print('Loss cv1 (component)',Loss_cv1_wrap,sess,tf_dict[0])
 
 if args.CausalWeighting:
     print('Causal x_front final value : %.4f (target was %.4f)' % (sess.run(x_front_var), args.CausalEndX))

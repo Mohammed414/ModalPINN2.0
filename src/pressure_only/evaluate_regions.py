@@ -52,15 +52,18 @@ def main():
                          help="Force freestream_target on restore. Default: auto-detect from 'FSBC' in --RunDir.")
     parser.add_argument('--FluctuationInletBC', action='store_true', default=None,
                          help="Force damp_fluctuations on restore. Default: auto-detect from 'FIBC' in --RunDir.")
+    parser.add_argument('--HardSym', action='store_true', default=None,
+                         help="Force hard mode-parity symmetrization on restore. Default: auto-detect from 'SYM' in --RunDir. Third occurrence of this bug class (see R3/R4) - a run trained with --HardSym computes a genuinely different field, not just a different training-time regularizer, so restoring without it evaluates the wrong function.")
     args = parser.parse_args()
 
     run_dir_name = os.path.basename(os.path.normpath(args.RunDir))
     use_freestream = True if args.FreestreamBC else ('FSBC' in run_dir_name)
     use_fluct_damp = True if args.FluctuationInletBC else ('FIBC' in run_dir_name)
+    use_hard_sym = True if args.HardSym else ('_SYM' in run_dir_name)
     freestream_target_u = 1.0 if use_freestream else None
     freestream_target_v = 0.0 if use_freestream else None
-    print('Restoring with freestream_target=%s, damp_fluctuations=%s (run dir: %s)' %
-          (use_freestream, use_fluct_damp, run_dir_name))
+    print('Restoring with freestream_target=%s, damp_fluctuations=%s, hard_sym=%s (run dir: %s)' %
+          (use_freestream, use_fluct_damp, use_hard_sym, run_dir_name))
 
     layers = [2, args.WidthLayer * args.Nmodes, args.WidthLayer * args.Nmodes, args.Nmodes]
 
@@ -101,10 +104,12 @@ def main():
     t_tf = tf.compat.v1.placeholder(tf.float32, shape=[None, 1])
 
     u_pred_tf = nnf.NN_time_uv(x_tf, y_tf, t_tf, w_u, b_u, GEOM, OMEGA_0,
-                                freestream_target=freestream_target_u, damp_fluctuations=use_fluct_damp)
+                                freestream_target=freestream_target_u, damp_fluctuations=use_fluct_damp,
+                                hard_sym=use_hard_sym, is_v=False)
     v_pred_tf = nnf.NN_time_uv(x_tf, y_tf, t_tf, w_v, b_v, GEOM, OMEGA_0,
-                                freestream_target=freestream_target_v, damp_fluctuations=use_fluct_damp)
-    p_pred_tf = nnf.NN_time_p(x_tf, y_tf, t_tf, w_p, b_p, OMEGA_0)
+                                freestream_target=freestream_target_v, damp_fluctuations=use_fluct_damp,
+                                hard_sym=use_hard_sym, is_v=True)
+    p_pred_tf = nnf.NN_time_p(x_tf, y_tf, t_tf, w_p, b_p, OMEGA_0, hard_sym=use_hard_sym)
 
     sess = tf.compat.v1.Session()
     sess.run(tf.compat.v1.global_variables_initializer())

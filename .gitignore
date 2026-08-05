@@ -5,6 +5,7 @@ __pycache__/
 PROJECT_LOG.md
 PLAN_E3_pressure_only.md
 R3 fluctuation inlet bc plan.md
+R5 measured best candidates plan.md
 
 # Large, regenerable gappy-POD intermediates (re-run build_pod_basis.py /
 # gappy_reconstruct.py to recreate - pod_basis.npz is ~33MB,
