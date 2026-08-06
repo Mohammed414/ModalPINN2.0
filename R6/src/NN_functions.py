@@ -88,22 +88,39 @@ def restore_one_NN(layers,w_value,b_value,tf_as_constant=False):
             b = tf.constant(b_value[l],dtype=tf.complex64,shape=[1,layers[l+1]])
         
         else:
+            # R6: w_value[l]/b_value[l] are raw numpy complex64 arrays
+            # (straight out of pickle.load - never a TF tensor). Explicitly
+            # converting to a tf.constant first, rather than handing the raw
+            # numpy array straight to tf.math.angle/tf.math.imag, is required
+            # here: this tf_as_constant=False branch was never exercised by
+            # anything before R6 (every prior use of restore_NN, e.g.
+            # evaluate_regions.py, uses tf_as_constant=True, and
+            # ModalPINN_VortexShedding.py's own warm-start template was
+            # commented out until now) - it turns out tf.math.angle on this
+            # TF/numpy version combination crashes on a raw numpy array
+            # (AttributeError: 'numpy.dtype' object has no attribute
+            # 'is_complex' - it skips the ops.convert_to_tensor step
+            # tf.math.abs's codepath apparently does not need), confirmed via
+            # the R6 smoke test. tf.math.abs happened to work either way, but
+            # converting unconditionally first is the robust fix for both.
+            w_tensor = tf.constant(w_value[l], dtype=tf.complex64)
+            b_tensor = tf.constant(b_value[l], dtype=tf.complex64)
             if complex_value_exp:
-                W_1 = tf.Variable(tf.math.abs(w_value[l]),dtype=tf.float32,shape=[layers[l],layers[l+1]])
-                W_2 = tf.Variable(tf.math.angle(w_value[l]),dtype=tf.float32,shape=[layers[l],layers[l+1]])
-                W = tf.complex(W_1, 0.)*tf.exp(tf.complex(0., W_2)) 
-                
-                b_1 = tf.Variable(tf.math.abs(b_value[l]),dtype=tf.float32,shape=[1,layers[l+1]])
-                b_2 = tf.Variable(tf.math.angle(b_value[l]),dtype=tf.float32,shape=[1,layers[l+1]])
+                W_1 = tf.Variable(tf.math.abs(w_tensor),dtype=tf.float32,shape=[layers[l],layers[l+1]])
+                W_2 = tf.Variable(tf.math.angle(w_tensor),dtype=tf.float32,shape=[layers[l],layers[l+1]])
+                W = tf.complex(W_1, 0.)*tf.exp(tf.complex(0., W_2))
+
+                b_1 = tf.Variable(tf.math.abs(b_tensor),dtype=tf.float32,shape=[1,layers[l+1]])
+                b_2 = tf.Variable(tf.math.angle(b_tensor),dtype=tf.float32,shape=[1,layers[l+1]])
                 b = tf.complex(b_1, 0.)*tf.exp(tf.complex(0., b_2))
-                
+
             else:
-                W_1 = tf.Variable(tf.math.real(w_value[l]),dtype=tf.float32,shape=[layers[l],layers[l+1]])
-                W_2 = tf.Variable(tf.math.imag(w_value[l]),dtype=tf.float32,shape=[layers[l],layers[l+1]])
+                W_1 = tf.Variable(tf.math.real(w_tensor),dtype=tf.float32,shape=[layers[l],layers[l+1]])
+                W_2 = tf.Variable(tf.math.imag(w_tensor),dtype=tf.float32,shape=[layers[l],layers[l+1]])
                 W = tf.complex(W_1,W_2)
-    
-                b_1 = tf.Variable(tf.math.real(b_value[l]),dtype=tf.float32,shape=[1,layers[l+1]])
-                b_2 = tf.Variable(tf.math.imag(b_value[l]),dtype=tf.float32,shape=[1,layers[l+1]])
+
+                b_1 = tf.Variable(tf.math.real(b_tensor),dtype=tf.float32,shape=[1,layers[l+1]])
+                b_2 = tf.Variable(tf.math.imag(b_tensor),dtype=tf.float32,shape=[1,layers[l+1]])
                 b = tf.complex(b_1,b_2)
         weights.append(W)
         biases.append(b)
