@@ -12,3 +12,7 @@ R5 measured best candidates plan.md
 # gappy_reconstructions.npz is ~1.2GB, neither belongs in git)
 src/gappy_pod/pod_basis.npz
 src/gappy_pod/gappy_reconstructions.npz
+
+# Large, regenerable parsed-flow cache (re-run extras/parse_flow.py against
+# data/fixed_cylinder_atRe100 to recreate - ~170MB, not source data)
+extras/flow_cache.npz
