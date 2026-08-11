@@ -24,3 +24,8 @@ extras/flow_cache.npz
 # and reference_truth_modal.npz are small and stay committed.
 enkf_pressure_only/evaluation/_flow_cache.npz
 enkf_pressure_only/data/reference_truth_full.npz
+
+# EnKF pressure-only project: regenerable solver spin-up cache (re-run
+# enkf_pressure_only/experiments/spin_up_solver.py to recreate - ~134MB,
+# pure function of the validated Stage B solver config).
+enkf_pressure_only/experiments/spinup_snapshots.npz
