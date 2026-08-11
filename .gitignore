@@ -1,4 +1,4 @@
-Data/
+/Data/
 __pycache__/
 .DS_Store
 *.zip
@@ -16,3 +16,11 @@ src/gappy_pod/gappy_reconstructions.npz
 # Large, regenerable parsed-flow cache (re-run extras/parse_flow.py against
 # data/fixed_cylinder_atRe100 to recreate - ~170MB, not source data)
 extras/flow_cache.npz
+
+# EnKF pressure-only project: large, regenerable, evaluation-only ground
+# truth (re-run enkf_pressure_only/evaluation/build_reference_truth.py to
+# recreate - reference_truth_full.npz is ~110MB raw scattered CFD truth,
+# used ONLY by evaluation/ code, never by the estimator). tap_observations.npz
+# and reference_truth_modal.npz are small and stay committed.
+enkf_pressure_only/evaluation/_flow_cache.npz
+enkf_pressure_only/data/reference_truth_full.npz
