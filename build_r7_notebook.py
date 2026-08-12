@@ -155,7 +155,7 @@ passing run. Runs in an isolated `smoke_test/` subfolder so it can never be conf
 run's output. Checks: process exits cleanly, no Python traceback, `Loss phase (component)` is
 printed and is a finite number (not NaN/Inf), L-BFGS produced its `disp=True` termination message
 (i.e. it actually ran, not just crashed before the first iteration)."""))
-cells.append(code(r"""import os, re, shutil, subprocess
+cells.append(code(r"""import os, re, shutil, subprocess, time, threading, queue
 
 os.makedirs('smoke_test', exist_ok=True)
 
@@ -203,22 +203,71 @@ cmd = [
     '--multigrid', '--Ngrid', '5', '--NgridTurn', '200',
     '--WidthLayer', '25', '--Nmodes', '3',
 ]
-print('Running smoke test (R6''s equivalent gate took a while at full Nint=50000 - allowing up to 1h)...')
-try:
-    r = subprocess.run(cmd, cwd='smoke_test', env=env, capture_output=True, text=True,
-                        timeout=3600)
-    smoke_stdout, smoke_stderr, smoke_returncode = r.stdout, r.stderr, r.returncode
-except subprocess.TimeoutExpired as e:
-    smoke_stdout = (e.stdout or b'').decode() if isinstance(e.stdout, bytes) else (e.stdout or '')
-    smoke_stderr = (e.stderr or b'').decode() if isinstance(e.stderr, bytes) else (e.stderr or '')
-    smoke_returncode = -1
-    print('Smoke test TIMED OUT after 1h - treating as a failure (see partial output below).')
+print('Running smoke test (R6''s equivalent gate took a while at full Nint=50000 - allowing up to 1h).')
+print('Streaming output live below (unlike the first version of this cell, which buffered')
+print('everything silently until the process exited - impossible to tell "slow" from "stuck").')
+print('If no new line appears for STALL_LIMIT seconds, this is flagged explicitly, not just silent.')
+print('=' * 70)
 
-print('--- last 3000 chars of stdout ---')
-print(smoke_stdout[-3000:])
-if smoke_returncode != 0:
-    print('--- stderr (nonzero exit) ---')
-    print(smoke_stderr[-3000:])
+STALL_LIMIT = 600  # seconds with zero new output before flagging a likely hang
+HARD_LIMIT = 3600  # total wall-clock budget
+
+# NOTE: proc.stdout.readline() BLOCKS until a line is available or the stream
+# closes - polling it directly in the same loop as the stall/hard-limit checks
+# would mean those checks never run while nothing is being printed, i.e. a
+# genuine hang would hang THIS cell too, silently, exactly the failure mode
+# this is meant to catch. Verified locally with a mock hanging subprocess
+# before trusting this: a naive single-threaded readline() loop hung
+# indefinitely; a background reader thread + Queue.get(timeout=...) polling
+# loop (below) correctly detected the stall in ~2s in that test.
+proc = subprocess.Popen(cmd, cwd='smoke_test', env=env, stdout=subprocess.PIPE,
+                         stderr=subprocess.STDOUT, text=True, bufsize=1)
+line_queue = queue.Queue()
+
+def _reader():
+    for line in iter(proc.stdout.readline, ''):
+        line_queue.put(line)
+    line_queue.put(None)  # sentinel: stream closed
+
+threading.Thread(target=_reader, daemon=True).start()
+
+lines = []
+start = time.time()
+last_line_time = start
+stalled = False
+stream_closed = False
+while True:
+    try:
+        line = line_queue.get(timeout=1.0)
+        if line is None:
+            stream_closed = True
+        else:
+            print(line, end='', flush=True)
+            lines.append(line)
+            last_line_time = time.time()
+    except queue.Empty:
+        pass
+    now = time.time()
+    if stream_closed and proc.poll() is not None:
+        break
+    if now - last_line_time > STALL_LIMIT:
+        print('\n[[[ NO NEW OUTPUT FOR %ds - likely hung, killing the process ]]]' % STALL_LIMIT)
+        proc.kill()
+        stalled = True
+        break
+    if now - start > HARD_LIMIT:
+        print('\n[[[ HARD TIME LIMIT (%ds) REACHED - killing the process ]]]' % HARD_LIMIT)
+        proc.kill()
+        stalled = True
+        break
+
+proc.wait()
+smoke_stdout = ''.join(lines)
+smoke_stderr = ''  # merged into stdout above (stderr=subprocess.STDOUT)
+smoke_returncode = -1 if stalled else proc.returncode
+
+print('=' * 70)
+print('process finished: returncode=%s, stalled=%s, wall_time=%.0fs' % (smoke_returncode, stalled, time.time() - start))
 """))
 
 cells.append(md("### 10.1 Smoke test verdict - hard stop if this fails"))
@@ -226,7 +275,7 @@ cells.append(code(r"""import re
 
 checks = {}
 checks['exit_code_zero'] = (smoke_returncode == 0)
-checks['no_traceback'] = ('Traceback' not in smoke_stderr and 'Traceback' not in smoke_stdout)
+checks['no_traceback'] = ('Traceback' not in smoke_stdout)
 m = re.search(r'Loss phase \(component\)\s*[:=]?\s*([-\d.eE+]+)', smoke_stdout)
 checks['phase_loss_printed'] = m is not None
 if m is not None:
