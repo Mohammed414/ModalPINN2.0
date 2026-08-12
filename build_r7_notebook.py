@@ -159,6 +159,18 @@ cells.append(code(r"""import os, re, shutil, subprocess
 
 os.makedirs('smoke_test', exist_ok=True)
 
+# ModalPINN_VortexShedding.py hardcodes filename_data = 'Data/fixed_cylinder_atRe100'
+# (no --DataFile override exists), resolved relative to the process's cwd - since the
+# smoke test runs with cwd='smoke_test', it would otherwise look for
+# smoke_test/Data/fixed_cylinder_atRe100 and fail with FileNotFoundError (this is
+# exactly what happened on the first real run of this notebook). Symlink rather than
+# copy - the dataset is ~1.17GB and duplicating it would be slow and wasteful.
+os.makedirs('smoke_test/Data', exist_ok=True)
+smoke_data_link = 'smoke_test/Data/fixed_cylinder_atRe100'
+if not os.path.exists(smoke_data_link):
+    os.symlink(os.path.abspath('Data/fixed_cylinder_atRe100'), smoke_data_link)
+    print('Symlinked dataset into smoke_test/Data/')
+
 def patch(src_path, dst_path, replacements):
     with open(src_path) as f:
         content = f.read()
