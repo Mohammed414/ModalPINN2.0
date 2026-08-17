@@ -1,0 +1,36 @@
+[seed_1] omega=1.0357 G=2.53 xf=1.2 r0=0.4 corr=0.745
+/Users/mohammedhilal/Desktop/try/ModalPINN2.0/R9_wake_rescue/src/modal_pinn.py:598: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/miniforge3/conda-bld/libtorch_1786372171945/work/torch/csrc/autograd/generated/python_variable_methods.cpp:823.)
+  parts = dict(total=float(total), phys=float(L_phys),
+[adam     0] total=3.360e+01 phys=1.740e-01 tap=1.450e-01 bc=1.893e+00 rzif=0.000e+00 cv=0.000e+00
+[adam   400] total=1.422e-01 phys=1.231e-01 tap=1.433e-04 bc=4.756e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs     0] total=9.562e-02 phys=8.565e-02 tap=7.026e-05 bc=2.938e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   400] total=3.435e-02 phys=2.916e-02 tap=2.632e-05 bc=2.557e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   800] total=2.706e-02 phys=2.402e-02 tap=1.351e-05 bc=1.687e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1200] total=2.300e-02 phys=2.129e-02 tap=4.703e-06 bc=1.241e-04 rzif=0.000e+00 cv=0.000e+00
+[final] total=2.259e-02 phys=2.097e-02 tap=4.116e-06 bc=1.209e-04 rzif=0.000e+00 cv=0.000e+00
+--- seed_1 ---
+Region                      n_nodes       E_u       E_v       E_p
+-----------------------------------------------------------------
+near-cylinder                 13715    0.8840    0.9797    0.2687
+near-wake                     15248    0.4901    0.6905    0.8277
+far-wake                      16393    0.1847    0.3841    3.5494
+other (upstream/off-axis)      6298    0.4809    0.8431    2.2363
+whole domain                  51654    0.4529    0.7143    0.9771
+[seed_2] omega=1.0357 G=2.53 xf=1.2 r0=0.4 corr=0.745
+[adam     0] total=2.908e+01 phys=2.244e-01 tap=1.640e-01 bc=1.245e+00 rzif=0.000e+00 cv=0.000e+00
+[adam   400] total=1.512e-01 phys=1.277e-01 tap=1.500e-04 bc=8.512e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs     0] total=1.025e-01 phys=9.087e-02 tap=7.391e-05 bc=4.272e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   400] total=3.494e-02 phys=3.031e-02 tap=2.160e-05 bc=2.474e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   800] total=2.778e-02 phys=2.487e-02 tap=1.007e-05 bc=1.903e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1200] total=2.441e-02 phys=2.221e-02 tap=5.837e-06 bc=1.611e-04 rzif=0.000e+00 cv=0.000e+00
+[final] total=2.404e-02 phys=2.196e-02 tap=5.371e-06 bc=1.536e-04 rzif=0.000e+00 cv=0.000e+00
+--- seed_2 ---
+Region                      n_nodes       E_u       E_v       E_p
+-----------------------------------------------------------------
+near-cylinder                 13715    0.8765    0.9735    0.2158
+near-wake                     15248    0.4824    0.7248    0.8164
+far-wake                      16393    0.1735    0.3765    3.6223
+other (upstream/off-axis)      6298    0.4668    0.8384    2.0558
+whole domain                  51654    0.4444    0.7170    0.9574
+saved robustness_seeds.json

@@ -1,0 +1,20 @@
+[taps16] omega=1.0357 G=2.53 xf=1.2 r0=0.4 corr=0.744
+/Users/mohammedhilal/Desktop/try/ModalPINN2.0/R9_wake_rescue/src/modal_pinn.py:598: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/miniforge3/conda-bld/libtorch_1786372171945/work/torch/csrc/autograd/generated/python_variable_methods.cpp:823.)
+  parts = dict(total=float(total), phys=float(L_phys),
+[adam     0] total=3.977e+01 phys=3.389e-01 tap=1.575e-01 bc=2.368e+00 rzif=0.000e+00 cv=0.000e+00
+[adam   400] total=1.624e-01 phys=1.183e-01 tap=3.579e-04 bc=8.302e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs     0] total=1.037e-01 phys=8.649e-02 tap=1.215e-04 bc=5.074e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   400] total=3.325e-02 phys=2.943e-02 tap=1.625e-05 bc=2.190e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   800] total=2.673e-02 phys=2.433e-02 tap=7.669e-06 bc=1.631e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1200] total=2.330e-02 phys=2.167e-02 tap=3.266e-06 bc=1.305e-04 rzif=0.000e+00 cv=0.000e+00
+[final] total=2.279e-02 phys=2.131e-02 tap=2.772e-06 bc=1.203e-04 rzif=0.000e+00 cv=0.000e+00
+--- taps16 ---
+Region                      n_nodes       E_u       E_v       E_p
+-----------------------------------------------------------------
+near-cylinder                 13715    0.8807    0.9745    0.2268
+near-wake                     15248    0.4757    0.6957    0.7523
+far-wake                      16393    0.1750    0.3817    3.3509
+other (upstream/off-axis)      6298    0.4702    0.8538    1.9929
+whole domain                  51654    0.4432    0.7140    0.8985
+saved robustness_taps16.json

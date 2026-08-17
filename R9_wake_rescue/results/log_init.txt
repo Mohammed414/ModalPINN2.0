@@ -1,0 +1,46 @@
+/Users/mohammedhilal/Desktop/try/ModalPINN2.0/R9_wake_rescue/src/run_arm.py:68: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/miniforge3/conda-bld/libtorch_1786372171945/work/torch/csrc/autograd/generated/python_variable_methods.cpp:823.)
+  print(f'[pretrain {it:4d}] street-match {float(L):.3e}',
+[pretrain    0] street-match 6.718e+00
+[pretrain  200] street-match 1.417e-02
+[pretrain  400] street-match 1.170e-02
+[pretrain done] street-match 1.076e-02
+[adam     0] total=3.987e+01 phys=2.248e-01 tap=1.301e-01 bc=2.664e+00 rzif=0.000e+00 cv=0.000e+00
+[adam   100] total=6.994e+00 phys=1.142e-01 tap=6.075e-02 bc=8.043e-02 rzif=0.000e+00 cv=0.000e+00
+[adam   200] total=5.981e-01 phys=3.085e-01 tap=2.480e-03 bc=4.166e-03 rzif=0.000e+00 cv=0.000e+00
+[adam   300] total=3.298e-01 phys=2.657e-01 tap=3.990e-04 bc=2.412e-03 rzif=0.000e+00 cv=0.000e+00
+[adam   400] total=2.502e-01 phys=2.041e-01 tap=3.039e-04 bc=1.576e-03 rzif=0.000e+00 cv=0.000e+00
+[adam   500] total=2.012e-01 phys=1.671e-01 tap=2.314e-04 bc=1.097e-03 rzif=0.000e+00 cv=0.000e+00
+[adam   600] total=1.669e-01 phys=1.406e-01 tap=1.798e-04 bc=8.299e-04 rzif=0.000e+00 cv=0.000e+00
+[adam   700] total=1.420e-01 phys=1.211e-01 tap=1.412e-04 bc=6.729e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs     0] total=1.301e-01 phys=1.080e-01 tap=1.312e-04 bc=9.031e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   100] total=7.675e-02 phys=6.660e-02 tap=6.694e-05 bc=3.451e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   200] total=5.651e-02 phys=4.954e-02 tap=4.826e-05 bc=2.140e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   300] total=4.633e-02 phys=4.201e-02 tap=2.663e-05 bc=1.656e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   400] total=4.047e-02 phys=3.717e-02 tap=2.100e-05 bc=1.204e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   500] total=3.586e-02 phys=3.280e-02 tap=1.889e-05 bc=1.173e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   600] total=3.304e-02 phys=3.055e-02 tap=1.456e-05 bc=1.034e-04 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   700] total=3.061e-02 phys=2.856e-02 tap=1.073e-05 bc=9.789e-05 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   800] total=2.843e-02 phys=2.674e-02 tap=7.896e-06 bc=9.010e-05 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   900] total=2.718e-02 phys=2.581e-02 tap=5.779e-06 bc=7.948e-05 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1000] total=2.600e-02 phys=2.469e-02 tap=5.760e-06 bc=7.335e-05 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1100] total=2.488e-02 phys=2.371e-02 tap=5.493e-06 bc=6.227e-05 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1200] total=2.396e-02 phys=2.285e-02 tap=4.842e-06 bc=6.246e-05 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1300] total=2.321e-02 phys=2.214e-02 tap=4.083e-06 bc=6.547e-05 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1400] total=2.253e-02 phys=2.156e-02 tap=3.440e-06 bc=6.304e-05 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1500] total=2.189e-02 phys=2.094e-02 tap=3.449e-06 bc=6.078e-05 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1600] total=2.132e-02 phys=2.039e-02 tap=3.403e-06 bc=5.821e-05 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1700] total=2.081e-02 phys=1.987e-02 tap=3.323e-06 bc=6.078e-05 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1800] total=2.036e-02 phys=1.946e-02 tap=3.079e-06 bc=5.844e-05 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1900] total=1.995e-02 phys=1.907e-02 tap=2.974e-06 bc=5.862e-05 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  2000] total=1.959e-02 phys=1.874e-02 tap=2.719e-06 bc=5.838e-05 rzif=0.000e+00 cv=0.000e+00
+[final] total=1.942e-02 phys=1.856e-02 tap=2.601e-06 bc=6.014e-05 rzif=0.000e+00 cv=0.000e+00
+train time 1349s
+--- init_w40_s0 ---
+Region                      n_nodes       E_u       E_v       E_p
+-----------------------------------------------------------------
+near-cylinder                 13715    0.9253    0.9821    0.2068
+near-wake                     15248    0.6092    1.0293    0.8162
+far-wake                      16393    0.5664    1.0000    3.4165
+other (upstream/off-axis)      6298    0.5677    0.9291    2.3017
+whole domain                  51654    0.6200    0.9947    0.9537

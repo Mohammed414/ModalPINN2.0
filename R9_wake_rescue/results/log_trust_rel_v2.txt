@@ -1,0 +1,42 @@
+/Users/mohammedhilal/Desktop/try/ModalPINN2.0/R9_wake_rescue/src/modal_pinn.py:598: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/miniforge3/conda-bld/libtorch_1786372171945/work/torch/csrc/autograd/generated/python_variable_methods.cpp:823.)
+  parts = dict(total=float(total), phys=float(L_phys),
+[adam     0] total=4.736e+01 phys=7.958e+00 tap=1.572e-01 bc=2.368e+00 rzif=0.000e+00 cv=0.000e+00
+[adam   100] total=7.993e+00 phys=9.477e-01 tap=6.351e-02 bc=6.943e-02 rzif=0.000e+00 cv=0.000e+00
+[adam   200] total=4.741e+00 phys=7.266e-01 tap=3.941e-02 bc=7.283e-03 rzif=0.000e+00 cv=0.000e+00
+[adam   300] total=9.425e-01 phys=8.155e-01 tap=7.615e-04 bc=5.083e-03 rzif=0.000e+00 cv=0.000e+00
+[adam   400] total=8.152e-01 phys=7.039e-01 tap=6.390e-04 bc=4.738e-03 rzif=0.000e+00 cv=0.000e+00
+[adam   500] total=7.335e-01 phys=6.407e-01 tap=4.709e-04 bc=4.566e-03 rzif=0.000e+00 cv=0.000e+00
+[adam   600] total=6.816e-01 phys=6.003e-01 tap=3.621e-04 bc=4.502e-03 rzif=0.000e+00 cv=0.000e+00
+[adam   700] total=6.561e-01 phys=5.803e-01 tap=3.118e-04 bc=4.458e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs     0] total=6.224e-01 phys=5.506e-01 tap=2.752e-04 bc=4.428e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   100] total=5.405e-01 phys=4.721e-01 tap=1.790e-04 bc=5.046e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   200] total=4.829e-01 phys=4.162e-01 tap=1.353e-04 bc=5.322e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   300] total=4.470e-01 phys=3.830e-01 tap=1.369e-04 bc=5.036e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   400] total=4.168e-01 phys=3.547e-01 tap=1.382e-04 bc=4.823e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   500] total=3.912e-01 phys=3.362e-01 tap=1.251e-04 bc=4.248e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   600] total=3.713e-01 phys=3.203e-01 tap=1.198e-04 bc=3.903e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   700] total=3.568e-01 phys=3.090e-01 tap=1.178e-04 bc=3.607e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   800] total=3.437e-01 phys=2.982e-01 tap=1.112e-04 bc=3.437e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs   900] total=3.314e-01 phys=2.897e-01 tap=1.056e-04 bc=3.116e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1000] total=3.214e-01 phys=2.826e-01 tap=1.030e-04 bc=2.853e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1100] total=3.118e-01 phys=2.755e-01 tap=9.542e-05 bc=2.673e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1200] total=3.018e-01 phys=2.670e-01 tap=8.838e-05 bc=2.596e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1300] total=2.919e-01 phys=2.594e-01 tap=9.134e-05 bc=2.339e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1400] total=2.836e-01 phys=2.521e-01 tap=9.252e-05 bc=2.224e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1500] total=2.761e-01 phys=2.460e-01 tap=8.245e-05 bc=2.184e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1600] total=2.696e-01 phys=2.406e-01 tap=8.202e-05 bc=2.084e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1700] total=2.637e-01 phys=2.354e-01 tap=8.073e-05 bc=2.019e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1800] total=2.576e-01 phys=2.305e-01 tap=7.817e-05 bc=1.926e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  1900] total=2.516e-01 phys=2.255e-01 tap=7.375e-05 bc=1.876e-03 rzif=0.000e+00 cv=0.000e+00
+[lbfgs  2000] total=2.456e-01 phys=2.201e-01 tap=7.347e-05 bc=1.818e-03 rzif=0.000e+00 cv=0.000e+00
+[final] total=2.424e-01 phys=2.169e-01 tap=7.204e-05 bc=1.821e-03 rzif=0.000e+00 cv=0.000e+00
+train time 1474s
+--- trust_rel_v2 ---
+Region                      n_nodes       E_u       E_v       E_p
+-----------------------------------------------------------------
+near-cylinder                 13715    0.9028    0.9709    0.1266
+near-wake                     15248    0.4726    0.6651    0.8776
+far-wake                      16393    0.2147    0.4494    3.9756
+other (upstream/off-axis)      6298    0.4997    0.7893    1.7686
+whole domain                  51654    0.4574    0.7150    0.9883

@@ -1,0 +1,23 @@
+/Users/mohammedhilal/Desktop/try/ModalPINN2.0/R9_wake_rescue/src/landscape_probe.py:48: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/miniforge3/conda-bld/libtorch_1786372171945/work/torch/csrc/autograd/generated/python_variable_methods.cpp:823.)
+  print(f'[{note} {it:5d}] fit {float(L):.3e}', flush=True)
+[street     0] fit 7.875e+00
+[street   500] fit 1.657e-02
+[street  1000] fit 1.252e-02
+[street  1500] fit 1.058e-02
+[street  2000] fit 8.457e-03
+[street  2500] fit 7.290e-03
+[street done] fit 6.629e-03
+[truth     0] fit 8.377e+00
+[truth   500] fit 4.352e-02
+[truth  1000] fit 3.015e-02
+[truth  1500] fit 2.354e-02
+[truth  2000] fit 1.858e-02
+[truth  2500] fit 1.750e-02
+[truth done] fit 1.341e-02
+ baseline: dead 1.8946e-02  street 1.0542e+01  truth 8.1765e+00  ratio dead/truth 0.00232
+      rel: dead 5.3372e+00  street 1.9083e+01  truth 2.2324e+01  ratio dead/truth 0.239
+     rzif: dead 2.0932e+00  street 1.2028e+01  truth 1.1278e+01  ratio dead/truth 0.186
+       cv: dead 2.5821e+00  street 5.2689e+01  truth 4.6039e+01  ratio dead/truth 0.0561
+    combo: dead 9.9746e+00  street 6.2716e+01  truth 6.3288e+01  ratio dead/truth 0.158
+saved landscape_probe.json
