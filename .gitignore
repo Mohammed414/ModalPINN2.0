@@ -17,15 +17,10 @@ src/gappy_pod/gappy_reconstructions.npz
 # data/fixed_cylinder_atRe100 to recreate - ~170MB, not source data)
 extras/flow_cache.npz
 
-# EnKF pressure-only project: large, regenerable, evaluation-only ground
-# truth (re-run enkf_pressure_only/evaluation/build_reference_truth.py to
-# recreate - reference_truth_full.npz is ~110MB raw scattered CFD truth,
-# used ONLY by evaluation/ code, never by the estimator). tap_observations.npz
-# and reference_truth_modal.npz are small and stay committed.
-enkf_pressure_only/evaluation/_flow_cache.npz
-enkf_pressure_only/data/reference_truth_full.npz
+# Same cache, shared by src/pressure_only/audit_r7_*.py (re-run either to
+# recreate via src/fast_flow_parser.py - ~180MB, not source data)
+src/pressure_only/_flow_cache.npz
 
-# EnKF pressure-only project: regenerable solver spin-up cache (re-run
-# enkf_pressure_only/experiments/spin_up_solver.py to recreate - ~134MB,
-# pure function of the validated Stage B solver config).
-enkf_pressure_only/experiments/spinup_snapshots.npz
+# R9_wake_rescue: regenerable truth-field cache (re-run any script that
+# calls src/common.py::load_truth_fields() to recreate)
+R9_wake_rescue/cache/

@@ -51,10 +51,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, '..', '..')
 
 sys.path.insert(0, HERE)
-sys.path.insert(0, os.path.join(ROOT, 'enkf_pressure_only', 'evaluation'))
+sys.path.insert(0, os.path.join(ROOT, 'src'))
 import audit_r5_losses as audit  # noqa: E402
-from _fast_flow_parser import load_flow  # noqa: E402
-FLOW_CACHE = os.path.join(ROOT, 'enkf_pressure_only', 'evaluation', '_flow_cache.npz')
+from fast_flow_parser import load_flow  # noqa: E402
+FLOW_CACHE = os.path.join(HERE, '_flow_cache.npz')
 RAW_FLOW = os.path.join(ROOT, 'data', 'fixed_cylinder_atRe100')
 
 NMODES = audit.NMODES

@@ -38,24 +38,23 @@ def load_truth_fields():
     """Scattered truth fields cropped to the training box.
 
     Returns (x, y (N,), times (201,), U, V, P (201, N) float32).
-    Cached in cache/truth_box.npz; built from the enkf evaluation flow cache
-    (read-only). Raises FileNotFoundError if that cache is absent — re-parse
-    the raw text file with enkf_pressure_only/evaluation/_fast_flow_parser.py
-    first (no automatic fallback is implemented here).
+    Cached in cache/truth_box.npz. Falls back to src/fast_flow_parser.py
+    (the project's shared fast CFD-file parser — previously this fell back
+    to a cache inside enkf_pressure_only/, which no longer exists; parsing
+    the raw file directly takes ~15-20s, same cost either way after the
+    first run since the result is cached here regardless).
     """
     box_cache = os.path.join(CACHE, 'truth_box.npz')
     if os.path.exists(box_cache):
         d = np.load(box_cache)
         return d['x'], d['y'], d['times'], d['U'], d['V'], d['P']
 
-    flow_cache = os.path.join(ROOT, 'enkf_pressure_only', 'evaluation',
-                              '_flow_cache.npz')
-    if os.path.exists(flow_cache):
-        d = np.load(flow_cache)
-        times, X, Y, U, V, P = (d['times'], d['X'], d['Y'],
-                                d['U'], d['V'], d['p'])
-    else:
-        raise FileNotFoundError('flow cache missing; parse raw file first')
+    import sys
+    sys.path.insert(0, os.path.join(ROOT, 'src'))
+    from fast_flow_parser import load_flow
+    raw_flow = os.path.join(ROOT, 'data', 'fixed_cylinder_atRe100')
+    parser_cache = os.path.join(ROOT, 'src', 'pressure_only', '_flow_cache.npz')
+    _, _, times, X, Y, U, V, P = load_flow(raw_flow, cache=parser_cache)
 
     in_box = (X < LXMAX) & (X > LXMIN) & (Y > LYMIN) & (Y < LYMAX)
     x, y = X[in_box], Y[in_box]

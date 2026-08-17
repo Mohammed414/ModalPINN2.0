@@ -1,16 +1,16 @@
 """
-Self-contained fast parser for the raw CFD flow file (../../data/fixed_cylinder_atRe100).
+Fast parser for the raw CFD flow file (../data/fixed_cylinder_atRe100).
 
-Deliberately duplicated (not imported) from extras/parse_flow.py: this folder
-is kept fully isolated from every other part of the repo, per the same
-"separate folder, don't touch the rest" policy used for R6. The format is
-documented in src/text_flow.py; that reference reader parses one Python
-float() at a time, which is far too slow at this file's scale
-(Nt=201, N_nodes=82872, ~16.6M data lines) -- this reads each per-timestep
-block with a single np.loadtxt(f, max_rows=N_nodes) call instead.
+Canonical shared copy (previously duplicated separately in extras/,
+enkf_pressure_only/evaluation/, and effectively depended on by
+src/pressure_only/audit_r7_*.py and R9_wake_rescue/src/common.py via that
+enkf copy - consolidated here when enkf_pressure_only/ was removed, so nothing
+outside that folder depends on it anymore).
 
-This module belongs to the EVALUATION side only. It is never imported by
-estimator/ code (see docs/anti_leakage.py for the enforced guard).
+text_flow.py's read_flow parses one Python float() at a time, which is far
+too slow at this file's scale (Nt=201, N_nodes=82872, ~16.6M data lines) -
+this reads each per-timestep block with a single
+np.loadtxt(f, max_rows=N_nodes) call instead (~15-20s total vs. many minutes).
 """
 import os
 import numpy as np

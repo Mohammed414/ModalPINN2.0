@@ -45,7 +45,7 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, '..', '..')
 sys.path.insert(0, HERE)
-sys.path.insert(0, os.path.join(ROOT, 'enkf_pressure_only', 'evaluation'))
+sys.path.insert(0, os.path.join(ROOT, 'src'))
 import audit_r5_losses as audit  # noqa: E402
 from audit_r7_mistimed_vs_deleted import make_scaled_interp_dict  # noqa: E402
 
@@ -55,7 +55,7 @@ X_C, Y_C, R_C = audit.X_C, audit.Y_C, audit.R_C
 GEOM = [LXMIN, LXMAX, LYMIN, LYMAX, X_C, Y_C, R_C]
 
 X_WINDOW_MIN = 3.0  # exclude the recirculation bubble, per the validated breakdown region
-FLOW_CACHE = os.path.join(ROOT, 'enkf_pressure_only', 'evaluation', '_flow_cache.npz')
+FLOW_CACHE = os.path.join(HERE, '_flow_cache.npz')  # shared with audit_r7_mistimed_vs_deleted.py
 CKPT_PATH = os.path.join(
     ROOT, 'runs', 'R5_extracted',
     'R5_k0_cv1_pressure_only_Re100_Nm3_Nint50000_Nmes5000_WL25_Ntap32_FSBC_FIBC_BVF_lam0p1_K0_0p025_CV1_0p0075_seed0_20260806',
