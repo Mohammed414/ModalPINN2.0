@@ -1,0 +1,23 @@
+Ensemble ICs: [316.1  316.02 315.94 315.98 315.86 315.88 316.06 316.04 316.04 315.96
+ 316.14 316.14 316.06 316.04 316.06 315.96] (10 distinct of 16)
+max|div| interior: pre-perturbation 2.776e-15 -> post-perturbation 4.441e-15
+gamma_0: mean 0.9814 std 0.0636 range [0.8372, 1.0913]
+initial ensemble n_eff = 3.292  (energy frac [0.5265 0.0998 0.0832 0.0495 0.047 ])
+NEGATIVE CONTROL: sensor identity scrambled (seed=0)
+sigma_p = 0.047200  (explicit);  std(tap_p)=0.338434  unsteady_rms=0.047198
+bias window n=61: |resid| 0.51573 -> 0.05353 (per-tap) / 0.51543 (global scalar)
+per-tap bias b: mean -0.01774, std over taps 0.51264, range [-1.0376, 1.2491]
+k= 61 t=6.10 |innov|=0.1458 gain=0.3796 spread_p=0.03575 NIS=3.75 gamma=0.9538+-0.0344
+k= 81 t=8.10 |innov|=0.3034 gain=0.1362 spread_p=0.01814 NIS=39.74 gamma=0.9124+-0.0200
+k=101 t=10.10 |innov|=0.2670 gain=0.1734 spread_p=0.02093 NIS=28.72 gamma=0.8802+-0.0200
+k=121 t=12.10 |innov|=0.1264 gain=0.1703 spread_p=0.02071 NIS=6.04 gamma=0.7950+-0.0201
+k=141 t=14.10 |innov|=0.3210 gain=0.0867 spread_p=0.01408 NIS=45.01 gamma=0.7904+-0.0203
+k=161 t=16.10 |innov|=0.2507 gain=0.0860 spread_p=0.01402 NIS=27.27 gamma=0.7802+-0.0200
+k=181 t=18.10 |innov|=0.1545 gain=0.0760 spread_p=0.01311 NIS=10.31 gamma=0.7283+-0.0200
+k=200 t=20.00 |innov|=0.3448 gain=0.1235 spread_p=0.01716 NIS=50.90 gamma=0.7586+-0.0200
+
+innovation decomposition over the assimilation window:
+  total MS 0.001982 | static 3.5% | time-varying 96.5% | global const 0.0%
+gain fraction: first 0.3796 median 0.1210 last 0.1235  (Stage D was ~2.4e-4)
+gamma: start 0.9538 -> end 0.7586 (min 0.7128 max 0.9538); clip hits 38
+Wrote /Users/mohammedhilal/Desktop/try/ModalPINN2.0/enkf_pressure_only/experiments/stage_d2_enkf_scrambled_sensors.npz  (240.2 s)

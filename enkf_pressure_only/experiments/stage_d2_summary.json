@@ -1,0 +1,141 @@
+{
+  "purpose": "Stage D2: repair the pressure-only EnKF (Stage D gain fraction was 2e-4, i.e. a free run) and re-test wake observability from 32 wall pressure taps.",
+  "headline": {
+    "gain_fraction_stage_d": 0.0002395,
+    "gain_fraction_stage_d2": 0.12054617392269262,
+    "gain_fraction_ratio": 503.32431700497966,
+    "filter_assimilates": true,
+    "Ev_vs_free_run_percent_stage_d": 7.17,
+    "Ev_vs_free_run_percent_stage_d2": -54.12,
+    "Eu_vs_free_run_percent_stage_d": 4.48,
+    "Eu_vs_free_run_percent_stage_d2": -24.52,
+    "gamma_observable_from_pressure": false
+  },
+  "fix1_per_tap_bias": {
+    "window_cycles": 61,
+    "window_time_units": 6.1,
+    "window_shedding_periods": 1.006,
+    "leakage_of_unsteady_into_b_fraction": 0.084,
+    "resid_rms_before": 0.10221383151285747,
+    "resid_rms_after_per_tap": 0.019723835733253568,
+    "resid_rms_after_global_scalar": 0.1006631166680869,
+    "b_mean": -0.01773708812646366,
+    "b_std_over_taps": 0.09871187041739463,
+    "b_min": -0.17851192049366552,
+    "b_max": 0.2067303348283029,
+    "innovation_static_fraction_stage_d": 0.88,
+    "innovation_static_fraction_per_tap": 0.039765948275592065,
+    "continuous_reestimation_innovation_rms": 3.989e-17,
+    "continuous_reestimation_kalman_correction": 3.131e-16,
+    "continuous_verdict": "confirmed: continuous re-estimation drives innovation to machine zero, filter assimilates nothing"
+  },
+  "fix2_sigma_p": {
+    "stage_d_sigma_p": 0.10153,
+    "stage_d2_sigma_p": 0.0472,
+    "std_tap_p": 0.338434,
+    "unsteady_tap_rms": 0.047198381908927764,
+    "sweep": {
+      "0.0072": {
+        "gain": 0.8007,
+        "NIS_over_ntaps": 0.963,
+        "seed_stable": false
+      },
+      "0.0143": {
+        "gain": 0.5152,
+        "NIS_over_ntaps": 0.39,
+        "seed_stable": false
+      },
+      "0.0236": {
+        "gain": 0.3035,
+        "NIS_over_ntaps": 0.178,
+        "seed_stable": null
+      },
+      "0.0472": {
+        "gain": 0.1205,
+        "NIS_over_ntaps": 0.054,
+        "seed_stable": true
+      }
+    },
+    "chosen": 0.0472,
+    "chosen_because": "NIS favours 0.0072 (NIS/n_taps=0.96) but that setting produced seed-unstable runaway gamma with clip hits in 2 of 4 seeds; 0.0472 is the mandated unsteady-RMS value and is reproducible across 10 seeds",
+    "diagnostic_trusted": "gain fraction + cross-seed reproducibility + negative-control separation, not NIS alone"
+  },
+  "fix3_ensemble": {
+    "n_eff_phase_jitter_only": 1.013,
+    "n_eff_initial": 3.291726520995915,
+    "n_eff_sustained_median": 5.863432922348521,
+    "perturbation_amplitude": 0.04,
+    "perturbation_length_scale": 0.8,
+    "max_div_perturbation": 4.440892098500626e-16,
+    "max_div_member_after": 4.440892098500626e-15,
+    "tap_spread_achieved": 0.0426,
+    "tap_spread_target_unsteady_rms": 0.0472,
+    "latent_bug_found": "Stage D BASE_IC_TIME=310.0 was the FIRST spinup snapshot; negative jitters clamped to index 0, so only 8 of 16 members were distinct (6 byte-identical). Fixed by centring at 316.0.",
+    "additive_inflation_amp": 0.01,
+    "additive_required_because": "multiplicative inflation cannot regenerate collapsed spread on a contracting attractor: alpha=1.00/1.02/1.05/1.10 gave median gain 0.0039/0.0041/0.0043/0.0047",
+    "max_div_perturbation_at_amp_0p05": 8.881784197001252e-16,
+    "max_div_member_before": 2.7755575615628914e-15,
+    "div_note": "perturbation field alone 4.44e-16; perturbed members 4.44e-15 vs unperturbed baseline 2.78e-15 (factor 1.6 higher, both O(1e-15) = round-off on this grid)"
+  },
+  "fix4_gamma": {
+    "init_mean": 1.0,
+    "init_spread": 0.07,
+    "truth_consistent_value": 0.885,
+    "clip_range": [
+      0.7,
+      1.3
+    ],
+    "spread_floor": 0.02,
+    "nominal_gamma_end_mean": 0.9247,
+    "nominal_gamma_end_std": 0.0574,
+    "n_seeds": 10,
+    "shuffled_gamma_end_mean": 0.9537,
+    "shuffled_gamma_end_std": 0.1903,
+    "scrambled_gamma_end_mean": 0.9647,
+    "scrambled_gamma_end_std": 0.1194,
+    "p_nominal_vs_shuffled": 0.688,
+    "p_nominal_vs_scrambled": 0.405,
+    "levene_p_variance_nominal_vs_shuffled": 0.017,
+    "clip_hits_nominal": 0,
+    "clip_hits_shuffled_total": 550,
+    "clip_hits_scrambled_total": 38,
+    "gamma_receives_signal": true,
+    "verdict": "NEGATIVE: gamma does not converge to 0.885. Mean drift is toward it (0.956->0.925) but is not significant against either control. gamma is not swamped by dimensionality (K is row-wise); the covariance is simply too noisy at q=16."
+  },
+  "negative_controls": {
+    "innovation_rms_nominal": 0.015518351997887878,
+    "innovation_rms_shuffled": 0.06224461205236438,
+    "innovation_rms_scrambled": 0.04666059320777924,
+    "p_innov_nominal_vs_shuffled": 4.39e-15,
+    "p_innov_nominal_vs_scrambled": 1.17e-13,
+    "verdict": "pass: nominal innovation is 3-4x lower than both controls at p~1e-14"
+  },
+  "stage_f2_field_error": {
+    "window": "cycles 61-200",
+    "free_run": {
+      "Eu": 0.1303,
+      "Ev": 0.5279,
+      "mean_abs_dphi": 0.6181
+    },
+    "enkf_d1": {
+      "Eu": 0.1362,
+      "Ev": 0.5658,
+      "mean_abs_dphi": 0.7045
+    },
+    "enkf_d2": {
+      "Eu": 0.0984,
+      "Ev": 0.2422,
+      "mean_abs_dphi": 0.0574
+    },
+    "d2_shuffled": {
+      "Eu": 0.1564,
+      "Ev": 0.4619,
+      "mean_abs_dphi": 1.4507
+    },
+    "d2_scrambled": {
+      "Eu": 0.1446,
+      "Ev": 0.61,
+      "mean_abs_dphi": 0.1214
+    }
+  }
+}

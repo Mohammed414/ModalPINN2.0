@@ -1,0 +1,22 @@
+Ensemble ICs: [316.1  316.02 315.94 315.98 315.86 315.88 316.06 316.04 316.04 315.96
+ 316.14 316.14 316.06 316.04 316.06 315.96] (10 distinct of 16)
+max|div| interior: pre-perturbation 2.776e-15 -> post-perturbation 4.441e-15
+gamma_0: mean 0.9814 std 0.0636 range [0.8372, 1.0913]
+initial ensemble n_eff = 3.292  (energy frac [0.5265 0.0998 0.0832 0.0495 0.047 ])
+sigma_p = 0.047200  (explicit);  std(tap_p)=0.338434  unsteady_rms=0.047198
+bias window n=61: |resid| 0.10221 -> 0.01972 (per-tap) / 0.10066 (global scalar)
+per-tap bias b: mean -0.01774, std over taps 0.09871, range [-0.1785, 0.2067]
+k= 61 t=6.10 |innov|=0.1378 gain=0.3796 spread_p=0.03575 NIS=1.59 gamma=0.9481+-0.0344
+k= 81 t=8.10 |innov|=0.0518 gain=0.1369 spread_p=0.01820 NIS=0.94 gamma=0.9250+-0.0200
+k=101 t=10.10 |innov|=0.0811 gain=0.1693 spread_p=0.02064 NIS=1.96 gamma=0.9085+-0.0200
+k=121 t=12.10 |innov|=0.0703 gain=0.1680 spread_p=0.02053 NIS=1.84 gamma=0.8981+-0.0213
+k=141 t=14.10 |innov|=0.0447 gain=0.0855 spread_p=0.01398 NIS=0.85 gamma=0.9010+-0.0200
+k=161 t=16.10 |innov|=0.0665 gain=0.0809 spread_p=0.01356 NIS=1.73 gamma=0.8476+-0.0200
+k=181 t=18.10 |innov|=0.1069 gain=0.0772 spread_p=0.01322 NIS=4.68 gamma=0.8629+-0.0200
+k=200 t=20.00 |innov|=0.1118 gain=0.1185 spread_p=0.01676 NIS=5.12 gamma=0.8599+-0.0200
+
+innovation decomposition over the assimilation window:
+  total MS 0.000205 | static 4.0% | time-varying 96.0% | global const 0.6%
+gain fraction: first 0.3796 median 0.1205 last 0.1185  (Stage D was ~2.4e-4)
+gamma: start 0.9481 -> end 0.8599 (min 0.8404 max 0.9481); clip hits 0
+Wrote experiments/stage_d2_enkf_nominal_repro.npz  (85.5 s)
