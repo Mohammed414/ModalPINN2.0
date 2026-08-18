@@ -5,7 +5,7 @@ import re
 import uuid
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.join(ROOT, 'R8', 'src')
+SRC = os.path.join(ROOT, 'src', 'R8')
 OUT = os.path.join(ROOT, 'notebooks', 'R8_phase_fixed_no_warmstart_32taps.ipynb')
 
 

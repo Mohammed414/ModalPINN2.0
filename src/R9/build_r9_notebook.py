@@ -18,10 +18,10 @@ import json
 import os
 import uuid
 
-ROOT = os.path.dirname(os.path.abspath(__file__))          # .../R9
-REPO = os.path.dirname(ROOT)
+ROOT = os.path.dirname(os.path.abspath(__file__))          # .../src/R9
+REPO = os.path.dirname(os.path.dirname(ROOT))
 SRC = os.path.join(ROOT, 'src')
-OUT = os.path.join(ROOT, 'notebooks', 'R9_trust_street_32taps.ipynb')
+OUT = os.path.join(REPO, 'notebooks', 'R9_trust_street_32taps.ipynb')
 
 
 def md(src):

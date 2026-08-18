@@ -5,7 +5,7 @@ import re
 import uuid
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.join(ROOT, 'R7', 'src')
+SRC = os.path.join(ROOT, 'src', 'R7')
 OUT = os.path.join(ROOT, 'notebooks', 'R7_phase_loss_32taps.ipynb')
 
 
