@@ -1,0 +1,22 @@
+{
+  "method": "second-order one-sided finite-difference modal BVF",
+  "H_over_D": 0.02,
+  "raw_normalized_modal_bvf_loss": 0.6094477003511513,
+  "modes": [
+    {
+      "k": 0,
+      "relative_L2": 0.6693011413244736,
+      "normalized_squared_error": 0.4479640006292897
+    },
+    {
+      "k": 1,
+      "relative_L2": 0.7781784472236396,
+      "normalized_squared_error": 0.6055616889605518
+    },
+    {
+      "k": 2,
+      "relative_L2": 0.8802371375198703,
+      "normalized_squared_error": 0.7748174114636124
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "N": 20000,
+  "seed": 19001,
+  "source_counts": {
+    "whole_domain": 6000,
+    "formation_wake": 7000,
+    "far_wake": 5000,
+    "annulus": 2000
+  },
+  "spatial_sampler": "exact R15 wake_biased_grid"
+}

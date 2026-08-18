@@ -1,0 +1,16 @@
+{
+  "N_total": 12000,
+  "N_active": 12000,
+  "rho": 0.6,
+  "seed": 86131,
+  "prior_deviation_rel_L2": 0.10663299200027154,
+  "corr_to_prior": 0.9943901251304117,
+  "amp_ratio_to_prior": 1.0059996034795495,
+  "radius_usage_mean": 0.154786616563797,
+  "radius_usage_p50": 0.13612819463014603,
+  "radius_usage_p90": 0.23037399649620055,
+  "radius_usage_p95": 0.2941533520817756,
+  "radius_usage_max": 0.44509315490722656,
+  "frac_usage_gt_0p9": 0.0,
+  "frac_usage_gt_0p99": 0.0
+}

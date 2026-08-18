@@ -1,0 +1,32 @@
+{
+  "raw_normalized_modal_loss": 0.48252288527265635,
+  "modes": [
+    {
+      "k": 0,
+      "relative_L2": 0.7539251590825433,
+      "amplitude_ratio": 0.557043501986829,
+      "correlation": 0.6659213463239125,
+      "normalized_squared_error": 0.5684031454976383,
+      "target_energy": 0.17066530368094224
+    },
+    {
+      "k": 1,
+      "relative_L2": 0.8256037018734474,
+      "amplitude_ratio": 0.48021177806407433,
+      "correlation": 0.9688105986712446,
+      "normalized_squared_error": 0.6816214725471402,
+      "target_energy": 0.004459380531126619
+    },
+    {
+      "k": 2,
+      "relative_L2": 0.44445926446997436,
+      "amplitude_ratio": 0.8379295956614551,
+      "correlation": 0.8983828642118267,
+      "normalized_squared_error": 0.1975440377731906,
+      "target_energy": 1.3276236263662439e-05
+    }
+  ],
+  "time_domain_mse_to_raw_taps": 0.09843909849045149,
+  "time_domain_mse_to_projected_taps": 0.0984390617583034,
+  "target_truncation_mse": 3.673214808391383e-08
+}

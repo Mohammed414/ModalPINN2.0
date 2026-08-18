@@ -1,0 +1,35 @@
+{
+  "run_dir": "/content/R18b_modal_BVF_FD_run/OutputPythonScript/ModalPINN_2026_08_16-12_03_26__715_Ponly_Ntap32_FSBC_FIBC_WAKEGRID_MODALBVF_FD_h0p02_V1RAD_rho0p6_x3p0_WARM/lbfgs_checkpoints/iter_04000",
+  "regions": {
+    "near-cylinder": {
+      "n_nodes": 13715,
+      "E_u": 0.06295794251145341,
+      "E_v": 0.05299590862027716,
+      "E_p": 0.019793538668971142
+    },
+    "near-wake": {
+      "n_nodes": 15248,
+      "E_u": 0.1642049119422749,
+      "E_v": 0.5445482330574016,
+      "E_p": 0.33674557174014647
+    },
+    "far-wake": {
+      "n_nodes": 16393,
+      "E_u": 0.22852305466061282,
+      "E_v": 0.46031287315888375,
+      "E_p": 0.9401211179942772
+    },
+    "other (upstream/off-axis)": {
+      "n_nodes": 6298,
+      "E_u": 0.08194235810348524,
+      "E_v": 0.37889123508615985,
+      "E_p": 0.26487751271304255
+    },
+    "whole domain": {
+      "n_nodes": 51654,
+      "E_u": 0.17728321202102051,
+      "E_v": 0.4025294011895865,
+      "E_p": 0.2627214510678831
+    }
+  }
+}

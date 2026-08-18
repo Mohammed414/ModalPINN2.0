@@ -1,0 +1,35 @@
+{
+  "run_dir": "/content/R19_stage_C/OutputPythonScript/ModalPINN_2026_08_16-10_13_59__666_Ponly_Ntap32_FSBC_FIBC_WAKEGRID_R19CUSTOMVIN_V1RAD_rho0p6_x3p0_WARM/lbfgs_checkpoints/iter_04000",
+  "regions": {
+    "near-cylinder": {
+      "n_nodes": 13715,
+      "E_u": 0.06327144933922331,
+      "E_v": 0.07877932469049069,
+      "E_p": 0.01942108864186713
+    },
+    "near-wake": {
+      "n_nodes": 15248,
+      "E_u": 0.22890638090223725,
+      "E_v": 0.6579860788749041,
+      "E_p": 0.45703952850565605
+    },
+    "far-wake": {
+      "n_nodes": 16393,
+      "E_u": 0.34885649074668307,
+      "E_v": 0.5790467509801032,
+      "E_p": 1.3176711271956965
+    },
+    "other (upstream/off-axis)": {
+      "n_nodes": 6298,
+      "E_u": 0.1142055473081604,
+      "E_v": 0.6271483370194353,
+      "E_p": 0.28928660486928137
+    },
+    "whole domain": {
+      "n_nodes": 51654,
+      "E_u": 0.261719989119801,
+      "E_v": 0.5146269355023243,
+      "E_p": 0.3590293381547821
+    }
+  }
+}

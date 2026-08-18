@@ -1,0 +1,103 @@
+{
+  "verdict": "NO_GO_WAKE_DEGRADED",
+  "checks": {
+    "wake_alive_amp_ratio_ge_0p60": true,
+    "wake_phase_shape_corr_ge_0p90": true,
+    "farwake_error_not_worse_than_0p35": false,
+    "beats_R10_farwake_error": false,
+    "beats_R10_farcore_error": false,
+    "beats_raw_prior_farcore_error": false,
+    "beats_raw_prior_farcore_corr": false
+  },
+  "budget": {
+    "Nint": 25000,
+    "Nmes": 5000,
+    "Ngrid": 4,
+    "LBFGS_maxit": 6000,
+    "LBFGS_maxfun": 7500,
+    "Tmax_hours": 1.5,
+    "warm_start_from_R10": true
+  },
+  "radial_config": {
+    "rho": 0.7,
+    "xstart": 3.0,
+    "xwidth": 0.3,
+    "ymax": 2.0,
+    "ywidth": 0.2
+  },
+  "R10_smoke_far_wake": {
+    "n": 16393,
+    "rel_L2": 0.2935087251019264,
+    "corr": 0.9696674535638012,
+    "amp_ratio": 0.827507334728106
+  },
+  "R10_smoke_far_core": {
+    "n": 12460,
+    "rel_L2": 0.28673878593397334,
+    "corr": 0.9720517821698281,
+    "amp_ratio": 0.8259089472459887
+  },
+  "R11_medium_far_wake": {
+    "n": 16393,
+    "rel_L2": 0.391296718667973,
+    "corr": 0.9438150419168956,
+    "amp_ratio": 0.7378161639687857
+  },
+  "R11_medium_far_core": {
+    "n": 12460,
+    "rel_L2": 0.3865068613128593,
+    "corr": 0.9465877712350889,
+    "amp_ratio": 0.736174310886801
+  },
+  "raw_prior_far_core": {
+    "n": 12460,
+    "rel_L2": 0.28192872219569404,
+    "corr": 0.9775460437294204,
+    "amp_ratio": 0.8082260065535708
+  },
+  "training_loss_summary": {
+    "total_loss": 0.0009658695198595524,
+    "physics_loss": 0.0009369128965772688,
+    "pressure_tap_loss": 2.8956648748135194e-05,
+    "warm_started": true,
+    "restore_model": "R10_initial.pickle",
+    "Nint": 25000,
+    "Nmes": 5000,
+    "LBFGS_maxit": 6000,
+    "LBFGS_maxfun": 7500,
+    "adam_skipped": false
+  },
+  "wall_minutes": 90.58814272880554,
+  "regional_errors": {
+    "near-cylinder": {
+      "n_nodes": 13715,
+      "E_u": 0.08448273383415023,
+      "E_v": 0.07413230930908525,
+      "E_p": 0.025857000425475896
+    },
+    "near-wake": {
+      "n_nodes": 15248,
+      "E_u": 0.18754235026777002,
+      "E_v": 0.5453413141974581,
+      "E_p": 0.3252964989620105
+    },
+    "far-wake": {
+      "n_nodes": 16393,
+      "E_u": 0.25403892786574567,
+      "E_v": 0.5801673614057423,
+      "E_p": 1.2902218442107691
+    },
+    "other (upstream/off-axis)": {
+      "n_nodes": 6298,
+      "E_u": 0.04818164561553513,
+      "E_v": 0.1912170035720695,
+      "E_p": 0.2830332644489778
+    },
+    "whole domain": {
+      "n_nodes": 51654,
+      "E_u": 0.19684917739802793,
+      "E_v": 0.4499070514785759,
+      "E_p": 0.3120203595840612
+    }
+  }
+}

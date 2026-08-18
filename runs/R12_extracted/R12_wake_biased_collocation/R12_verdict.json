@@ -1,0 +1,153 @@
+{
+  "verdict": "STRONG_PASS_WAKE_BIAS_HELPED",
+  "experiment": "matched R10 warm-start; uniform vs wake-biased; 25k; L-BFGS only",
+  "wake_biased_source_mixture": {
+    "whole_domain": 0.3,
+    "formation_wake": 0.35,
+    "far_wake": 0.25,
+    "near_cylinder_annulus": 0.1,
+    "importance_corrected": false
+  },
+  "R10_start_far_wake": {
+    "n": 16393,
+    "rel_L2": 0.2935087251019264,
+    "corr": 0.9696674535638012,
+    "amp_ratio": 0.827507334728106
+  },
+  "uniform_far_wake": {
+    "n": 16393,
+    "rel_L2": 0.38555677444354436,
+    "corr": 0.944749400037258,
+    "amp_ratio": 0.7453748552491478
+  },
+  "wake_biased_far_wake": {
+    "n": 16393,
+    "rel_L2": 0.3119082231726489,
+    "corr": 0.9661365092049093,
+    "amp_ratio": 0.8084235093953684
+  },
+  "uniform_far_core": {
+    "n": 12460,
+    "rel_L2": 0.38052595315763577,
+    "corr": 0.9475533905193149,
+    "amp_ratio": 0.7437738920201219
+  },
+  "wake_biased_far_core": {
+    "n": 12460,
+    "rel_L2": 0.3035494713307163,
+    "corr": 0.9692060720202811,
+    "amp_ratio": 0.8068296395458658
+  },
+  "raw_karman_far_core": {
+    "n": 12460,
+    "rel_L2": 0.28192872219569404,
+    "corr": 0.9775460437294204,
+    "amp_ratio": 0.8082260065535708
+  },
+  "delta_far_wake_rel_L2_uniform_minus_wake": 0.07364855127089548,
+  "delta_far_core_rel_L2_uniform_minus_wake": 0.07697648182691946,
+  "wake_bias_beats_raw_karman_far_core": false,
+  "fixed_uniform_physics_audit": {
+    "whole_domain_NS_MSE_uniform_arm": 0.003940613260299258,
+    "whole_domain_NS_MSE_wake_arm": 0.002343027185823971,
+    "far_core_NS_MSE_uniform_arm": 0.0010815770694290474,
+    "far_core_NS_MSE_wake_arm": 0.002373358381537574
+  },
+  "regional_errors": {
+    "uniform": {
+      "near-cylinder": {
+        "n_nodes": 13715,
+        "E_u": 0.13103135295878732,
+        "E_v": 0.09538565690001581,
+        "E_p": 0.04416614529178919
+      },
+      "near-wake": {
+        "n_nodes": 15248,
+        "E_u": 0.19320232857394598,
+        "E_v": 0.5290628240570128,
+        "E_p": 0.32899951345542994
+      },
+      "far-wake": {
+        "n_nodes": 16393,
+        "E_u": 0.2513865405823002,
+        "E_v": 0.5789553180362181,
+        "E_p": 1.3550754291924463
+      },
+      "other (upstream/off-axis)": {
+        "n_nodes": 6298,
+        "E_u": 0.04988414157578453,
+        "E_v": 0.20305643262463324,
+        "E_p": 0.28093191046832816
+      },
+      "whole domain": {
+        "n_nodes": 51654,
+        "E_u": 0.19975766971328177,
+        "E_v": 0.44678206084899375,
+        "E_p": 0.3245633894936649
+      }
+    },
+    "wake_biased": {
+      "near-cylinder": {
+        "n_nodes": 13715,
+        "E_u": 0.0880799555770318,
+        "E_v": 0.1007488496433023,
+        "E_p": 0.02369469052708624
+      },
+      "near-wake": {
+        "n_nodes": 15248,
+        "E_u": 0.17871536057014276,
+        "E_v": 0.5448705960925831,
+        "E_p": 0.36229021228356534
+      },
+      "far-wake": {
+        "n_nodes": 16393,
+        "E_u": 0.20788138213284524,
+        "E_v": 0.4404044118913834,
+        "E_p": 0.8848668964030373
+      },
+      "other (upstream/off-axis)": {
+        "n_nodes": 6298,
+        "E_u": 0.054622312885244974,
+        "E_v": 0.22967126320989803,
+        "E_p": 0.3420837192589818
+      },
+      "whole domain": {
+        "n_nodes": 51654,
+        "E_u": 0.1719061642940364,
+        "E_v": 0.38544326008315427,
+        "E_p": 0.26924044742808084
+      }
+    }
+  },
+  "training_loss_note": "Raw physics losses are not directly comparable because the training sampling PDFs differ.",
+  "training_loss_uniform": {
+    "total_loss": 0.0007559909136034548,
+    "physics_loss": 0.0007441935013048351,
+    "pressure_tap_loss": 1.1797440492955502e-05,
+    "warm_started": true,
+    "restore_model": "R10_initial.pickle",
+    "Nint": 25000,
+    "Nmes": 5000,
+    "LBFGS_maxit": 6000,
+    "LBFGS_maxfun": 7500,
+    "adam_skipped": true,
+    "int_sampling": "uniform"
+  },
+  "training_loss_wake_biased": {
+    "total_loss": 0.002620805986225605,
+    "physics_loss": 0.002557366853579879,
+    "pressure_tap_loss": 6.343922723317519e-05,
+    "warm_started": true,
+    "restore_model": "R10_initial.pickle",
+    "Nint": 25000,
+    "Nmes": 5000,
+    "LBFGS_maxit": 6000,
+    "LBFGS_maxfun": 7500,
+    "adam_skipped": true,
+    "int_sampling": "wake_biased"
+  },
+  "wall_minutes": {
+    "uniform": 51.04205005963643,
+    "wake_biased": 25.969464246431986
+  }
+}

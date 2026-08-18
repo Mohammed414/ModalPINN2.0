@@ -1,0 +1,44 @@
+{
+  "run_dir": "OutputPythonScript/ModalPINN_2026_08_16-04_08_06__744_Ponly_Ntap32_PMODBAL_FSBC_FIBC_WAKEGRID_V1RAD_rho0p6_x3p0_WARM/lbfgs_checkpoints/iter_00500",
+  "v1_radial": true,
+  "rho": 0.6,
+  "xstart": 3.0,
+  "regions": {
+    "near-cylinder": {
+      "n": 13715,
+      "rel_L2": 0.8816798276567508,
+      "corr": 0.6456975077103804,
+      "amp_ratio": 0.2051298951400095
+    },
+    "near-wake": {
+      "n": 15248,
+      "rel_L2": 0.5254121884859434,
+      "corr": 0.866104176528663,
+      "amp_ratio": 0.7487004822121154
+    },
+    "far-wake": {
+      "n": 16393,
+      "rel_L2": 0.30045205818839815,
+      "corr": 0.9693276926656396,
+      "amp_ratio": 0.8067856602000517
+    },
+    "far-core": {
+      "n": 12460,
+      "rel_L2": 0.294721026744035,
+      "corr": 0.9712553349581783,
+      "amp_ratio": 0.8061863879001222
+    },
+    "whole-domain": {
+      "n": 51654,
+      "rel_L2": 0.39821296067117185,
+      "corr": 0.9284063018864608,
+      "amp_ratio": 0.7854091369424497
+    }
+  },
+  "raw_prior_far_core": {
+    "n": 12460,
+    "rel_L2": 0.28192872219569404,
+    "corr": 0.9775460437294204,
+    "amp_ratio": 0.8082260065535708
+  }
+}

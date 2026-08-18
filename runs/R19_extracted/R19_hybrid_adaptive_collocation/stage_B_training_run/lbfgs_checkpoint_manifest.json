@@ -1,0 +1,38 @@
+{
+  "accepted_iterations_final": 500,
+  "requested_iterations": [
+    250,
+    500
+  ],
+  "packed_variable_count": 36,
+  "packed_parameter_count": 36918,
+  "checkpoints": [
+    {
+      "accepted_iter": 0,
+      "is_final": false,
+      "model_dir": "/content/R19_stage_B/OutputPythonScript/ModalPINN_2026_08_16-09_59_30__544_Ponly_Ntap32_FSBC_FIBC_WAKEGRID_R19CUSTOMVIN_V1RAD_rho0p6_x3p0_WARM/lbfgs_checkpoints/iter_00000",
+      "model_file": "/content/R19_stage_B/OutputPythonScript/ModalPINN_2026_08_16-09_59_30__544_Ponly_Ntap32_FSBC_FIBC_WAKEGRID_R19CUSTOMVIN_V1RAD_rho0p6_x3p0_WARM/lbfgs_checkpoints/iter_00000/DNN2_75_75_3_tanh.pickle",
+      "training_total_loss": 0.03943201154470444,
+      "training_physics_loss": 0.03897085785865784,
+      "training_pressure_tap_loss": 0.0004611522308550775
+    },
+    {
+      "accepted_iter": 250,
+      "is_final": false,
+      "model_dir": "/content/R19_stage_B/OutputPythonScript/ModalPINN_2026_08_16-09_59_30__544_Ponly_Ntap32_FSBC_FIBC_WAKEGRID_R19CUSTOMVIN_V1RAD_rho0p6_x3p0_WARM/lbfgs_checkpoints/iter_00250",
+      "model_file": "/content/R19_stage_B/OutputPythonScript/ModalPINN_2026_08_16-09_59_30__544_Ponly_Ntap32_FSBC_FIBC_WAKEGRID_R19CUSTOMVIN_V1RAD_rho0p6_x3p0_WARM/lbfgs_checkpoints/iter_00250/DNN2_75_75_3_tanh.pickle",
+      "training_total_loss": 0.008732316084206104,
+      "training_physics_loss": 0.008316888473927975,
+      "training_pressure_tap_loss": 0.000415427319239825
+    },
+    {
+      "accepted_iter": 500,
+      "is_final": true,
+      "model_dir": "/content/R19_stage_B/OutputPythonScript/ModalPINN_2026_08_16-09_59_30__544_Ponly_Ntap32_FSBC_FIBC_WAKEGRID_R19CUSTOMVIN_V1RAD_rho0p6_x3p0_WARM/lbfgs_checkpoints/iter_00500",
+      "model_file": "/content/R19_stage_B/OutputPythonScript/ModalPINN_2026_08_16-09_59_30__544_Ponly_Ntap32_FSBC_FIBC_WAKEGRID_R19CUSTOMVIN_V1RAD_rho0p6_x3p0_WARM/lbfgs_checkpoints/iter_00500/DNN2_75_75_3_tanh.pickle",
+      "training_total_loss": 0.00592136662453413,
+      "training_physics_loss": 0.005760663654655218,
+      "training_pressure_tap_loss": 0.00016070296987891197
+    }
+  ]
+}

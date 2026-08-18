@@ -1,0 +1,22 @@
+{
+  "total_loss": 0.0018038691487163305,
+  "physics_loss": 0.0017269126838073134,
+  "pressure_tap_loss": 1.9034830984310247e-05,
+  "warm_started": true,
+  "restore_model": "R10_initial.pickle",
+  "Nint": 25000,
+  "Nmes": 5000,
+  "LBFGS_maxit": 6000,
+  "LBFGS_maxfun": 7500,
+  "adam_skipped": true,
+  "int_sampling": "wake_biased_grid",
+  "modal_bvf": true,
+  "modal_bvf_raw": 0.008268776349723339,
+  "modal_bvf_per_mode": [
+    0.013429003767669201,
+    0.009714777581393719,
+    0.0016625461867079139
+  ],
+  "modal_bvf_lambda": 0.0070048607885837555,
+  "modal_bvf_weighted": 5.792162846773863e-05
+}

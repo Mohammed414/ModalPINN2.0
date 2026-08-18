@@ -6,7 +6,7 @@ import uuid
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(ROOT, 'R7', 'src')
-OUT = os.path.join(ROOT, 'R7', 'notebooks', 'R7_phase_loss_32taps.ipynb')
+OUT = os.path.join(ROOT, 'notebooks', 'R7_phase_loss_32taps.ipynb')
 
 
 def md(src):

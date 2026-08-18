@@ -1,0 +1,12 @@
+{
+  "total_loss": 0.0009658695198595524,
+  "physics_loss": 0.0009369128965772688,
+  "pressure_tap_loss": 2.8956648748135194e-05,
+  "warm_started": true,
+  "restore_model": "R10_initial.pickle",
+  "Nint": 25000,
+  "Nmes": 5000,
+  "LBFGS_maxit": 6000,
+  "LBFGS_maxfun": 7500,
+  "adam_skipped": false
+}

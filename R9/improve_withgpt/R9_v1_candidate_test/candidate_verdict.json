@@ -1,0 +1,29 @@
+{
+  "soft_candidate": {
+    "xstart": 3.5,
+    "eta": 0.2,
+    "corr": 0.9841390566963722,
+    "rel_L2": 0.2703882494008057,
+    "alpha_pref": 0.7853384825508127,
+    "dL_dalpha_at_zero": -2.439747191206727,
+    "oracle_rel_L2": 0.17739875164378854,
+    "landscape_min_alpha": 0.7875000000000001,
+    "landscape_min_phase_deg": 6.0
+  },
+  "radial_candidate": {
+    "xstart": 3.5,
+    "eta": 0.03,
+    "rho": 0.6000000000000002,
+    "truth_reachable_frac": 0.9915730337078652,
+    "irreducible_bias_rel_L2": 0.0021190049575949424,
+    "CFD_farwake_energy_coverage": 0.8547480599406588,
+    "mean_floor_over_mean_truth": 0.327185909287895,
+    "zero_reachable_frac": 0.0,
+    "prior_corr_in_trust_region": 0.9845248933837565
+  },
+  "notes": {
+    "gpu_needed_for_this_notebook": false,
+    "CFD_used_only_for_evaluation": true,
+    "recommended_next_step": "Run a short ModalPINN smoke test for BOTH candidates before any full 9-hour production run."
+  }
+}

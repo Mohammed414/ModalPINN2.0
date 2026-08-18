@@ -1,0 +1,112 @@
+{
+  "verdict": "PASS",
+  "checks": {
+    "radial_amp_ratio_ge_0p25": true,
+    "radial_corr_ge_0p80": true,
+    "radial_rel_error_beats_baseline": true,
+    "radial_amp_gain_ge_0p10": true
+  },
+  "budget": {
+    "seed": 0,
+    "Nint": 10000,
+    "Ngrid": 3,
+    "Nmes": 5000,
+    "LBFGS_maxit": 1500,
+    "LBFGS_maxfun": 1800
+  },
+  "radial_config": {
+    "rho": 0.7,
+    "xstart": 3.0,
+    "xwidth": 0.3,
+    "ymax": 2.0,
+    "ywidth": 0.2,
+    "gate": "C2 smootherstep; exact W=1 for x>=xstart and |y|<=ymax"
+  },
+  "baseline": {
+    "run_dir": "/content/R10_smoke_baseline/OutputPythonScript/ModalPINN_2026_08_14-16_37_00__717_Ponly_Ntap32_FSBC_FIBC",
+    "v1_radial": false,
+    "rho": 0.7,
+    "xstart": 3.0,
+    "regions": {
+      "near-cylinder": {
+        "n": 13715,
+        "rel_L2": 0.9105110803383893,
+        "corr": 0.5747075995516631,
+        "amp_ratio": 0.21522564190751914
+      },
+      "near-wake": {
+        "n": 15248,
+        "rel_L2": 0.9982445322873316,
+        "corr": 0.23188179667215542,
+        "amp_ratio": 0.04588670291422807
+      },
+      "far-wake": {
+        "n": 16393,
+        "rel_L2": 1.0001045735632823,
+        "corr": 0.07577038278368921,
+        "amp_ratio": 0.01522684716186349
+      },
+      "far-core": {
+        "n": 12460,
+        "rel_L2": 0.9998335085390316,
+        "corr": 0.08762344294033038,
+        "amp_ratio": 0.012726324556313536
+      },
+      "whole-domain": {
+        "n": 51654,
+        "rel_L2": 0.9985735984177027,
+        "corr": 0.10161429470699662,
+        "amp_ratio": 0.040777154619598986
+      }
+    }
+  },
+  "radial": {
+    "run_dir": "/content/R10_smoke_radial/OutputPythonScript/ModalPINN_2026_08_14-16_48_32__532_Ponly_Ntap32_FSBC_FIBC_V1RAD_rho0p7_x3p0",
+    "v1_radial": true,
+    "rho": 0.7,
+    "xstart": 3.0,
+    "regions": {
+      "near-cylinder": {
+        "n": 13715,
+        "rel_L2": 1.1450224400883442,
+        "corr": 0.6170723912713623,
+        "amp_ratio": 0.6799080362709944
+      },
+      "near-wake": {
+        "n": 15248,
+        "rel_L2": 0.7273325286183012,
+        "corr": 0.8109071574720429,
+        "amp_ratio": 0.679061087345302
+      },
+      "far-wake": {
+        "n": 16393,
+        "rel_L2": 0.2935087251019264,
+        "corr": 0.9696674535638012,
+        "amp_ratio": 0.827507334728106
+      },
+      "far-core": {
+        "n": 12460,
+        "rel_L2": 0.28673878593397334,
+        "corr": 0.9720517821698281,
+        "amp_ratio": 0.8259089472459887
+      },
+      "whole-domain": {
+        "n": 51654,
+        "rel_L2": 0.4922586456766385,
+        "corr": 0.8774380956256451,
+        "amp_ratio": 0.7841297929991025
+      }
+    },
+    "raw_prior_far_core": {
+      "n": 12460,
+      "rel_L2": 0.28192872219569404,
+      "corr": 0.9775460437294204,
+      "amp_ratio": 0.8082260065535708
+    }
+  },
+  "wall_minutes": {
+    "baseline": 11.531291023890178,
+    "radial": 14.345231982072194,
+    "preflight": 10.489185134569803
+  }
+}

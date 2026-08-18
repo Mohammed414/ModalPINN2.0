@@ -1,0 +1,27 @@
+{
+  "rank": 5,
+  "condition_number": 1.4990146897413088,
+  "truncation_mse": 3.673214808391383e-08,
+  "signal_variance_about_tap_means": 0.0022276872548209993,
+  "fit_relative_L2": 0.00046094906912665546,
+  "mode_energy": [
+    0.17066530368094224,
+    0.004459380531126619,
+    1.3276236263662439e-05
+  ],
+  "normalization_floor": 1.7066530368094224e-07,
+  "denominator": [
+    0.17066530368094224,
+    0.004459380531126619,
+    1.3276236263662439e-05
+  ],
+  "convention_selfcheck_rel": 1.1432424136698095e-16,
+  "NTaps": 32,
+  "Nmodes": 3,
+  "omega": 1.036,
+  "Ntimes": 201,
+  "distinct_tap_count": 32,
+  "time_unique_count": 201,
+  "time_strictly_increasing": true,
+  "training_information": "pressure taps only; u/v arrays returned by loader are ignored"
+}
