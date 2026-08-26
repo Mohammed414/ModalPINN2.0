@@ -1,0 +1,38 @@
+{
+  "run_dir": "/content/run_boundary_vorticity_flux_K3/OutputPythonScript/ModalPINN_2026_08_24-05_26_43__757_Ponly_Ntap32_FSBC_FIBC_BVF_lam0p1",
+  "v1_radial": false,
+  "rho": 0.7,
+  "xstart": 3.0,
+  "regions": {
+    "near-cylinder": {
+      "n": 13715,
+      "rel_L2": 0.6367083490757319,
+      "corr": 0.8826518705593922,
+      "amp_ratio": 0.4999786215937456
+    },
+    "near-wake": {
+      "n": 15248,
+      "rel_L2": 1.0321204272911464,
+      "corr": 0.2522350345873903,
+      "amp_ratio": 0.12045145044316044
+    },
+    "far-wake": {
+      "n": 16393,
+      "rel_L2": 0.9958316689892045,
+      "corr": 0.09697623131497295,
+      "amp_ratio": 0.10359961721710652
+    },
+    "far-core": {
+      "n": 12460,
+      "rel_L2": 0.9945783710976569,
+      "corr": 0.10809460503298413,
+      "amp_ratio": 0.08945028867368397
+    },
+    "whole-domain": {
+      "n": 51654,
+      "rel_L2": 1.0040191585427707,
+      "corr": 0.0790173297854938,
+      "amp_ratio": 0.12289292084246899
+    }
+  }
+}

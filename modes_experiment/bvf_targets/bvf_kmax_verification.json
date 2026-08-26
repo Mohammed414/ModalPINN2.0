@@ -1,0 +1,29 @@
+{
+  "what": "KMAX generalisation of bvf_targets.py, verified against the original",
+  "change": "KMAX became a --KMAX CLI argument (default 2, unchanged); the npz save loops over k instead of hardcoding k0/k1/k2; the diagnostic plot sizes itself from KMAX.",
+  "source_untouched": "ModalPINN2.0/src/pressure_only/bvf_targets.py is unmodified; the patched copy lives in modes_experiment/code/bvf_targets.py",
+  "regression_test": {
+    "command": "--KMAX 2 --NTaps 32 --Seed 0 against the same DNS file",
+    "shared_keys": 17,
+    "max_abs_difference_vs_original": 1.088e-14,
+    "verdict": "reproduces the original to float64 round-off; the only new key is 'kmax' metadata"
+  },
+  "kmax3_result": {
+    "tap_fit_R2_min": 0.99998,
+    "tap_fit_R2_mean": 1.0,
+    "g_hat_rms": {
+      "k0": 1.184358,
+      "k1": 0.1605654,
+      "k2": 0.02047923,
+      "k3": 0.002097086
+    },
+    "k3_share_of_oscillating_wall_flux_energy_pct": 0.017,
+    "target_field_change_rms_pct_of_G": 0.125,
+    "dominant_azimuthal_modes_k3": [
+      -2,
+      -1,
+      -4
+    ]
+  },
+  "interpretation": "The k=3 wall-flux harmonic is real and cleanly fitted (tap R^2 improves from 0.99972 to 0.99998 when the third harmonic is admitted), but tiny: 0.017% of the oscillating wall-flux energy, and the reassembled target G changes by 0.125% rms. So the k=0,1,2 target was NOT materially wrong for a 4-mode network - the inconsistency is real but small. The corrected target is used anyway because it costs nothing and removes the objection."
+}

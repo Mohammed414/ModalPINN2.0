@@ -1,0 +1,13 @@
+{
+  "total_loss": 0.0010921237990260124,
+  "physics_loss": 0.0010822848416864872,
+  "pressure_tap_loss": 9.838953701546416e-06,
+  "warm_started": false,
+  "restore_model": null,
+  "Nint": 50000,
+  "Nmes": 5000,
+  "LBFGS_maxit": 50000,
+  "LBFGS_maxfun": 50000,
+  "adam_skipped": false,
+  "int_sampling": "uniform"
+}

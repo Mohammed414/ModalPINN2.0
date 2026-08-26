@@ -1,0 +1,38 @@
+{
+  "run_dir": "/content/run_wake_biased_random/OutputPythonScript/ModalPINN_2026_08_25-10_23_12__82_Ponly_Ntap32_FSBC_WAKEBIAS",
+  "v1_radial": false,
+  "rho": 0.7,
+  "xstart": 3.0,
+  "regions": {
+    "near-cylinder": {
+      "n": 13715,
+      "rel_L2": 0.5038970257542804,
+      "corr": 0.9353047878088723,
+      "amp_ratio": 0.7105370072227397
+    },
+    "near-wake": {
+      "n": 15248,
+      "rel_L2": 1.1559147112358312,
+      "corr": 0.38090666284756414,
+      "amp_ratio": 0.35481169996374134
+    },
+    "far-wake": {
+      "n": 16393,
+      "rel_L2": 1.0312184418694958,
+      "corr": 0.07985305401099634,
+      "amp_ratio": 0.341687235285932
+    },
+    "far-core": {
+      "n": 12460,
+      "rel_L2": 1.0155582490203934,
+      "corr": 0.09632719788013151,
+      "amp_ratio": 0.2975191771056635
+    },
+    "whole-domain": {
+      "n": 51654,
+      "rel_L2": 1.0732741939642718,
+      "corr": 0.09069061080928752,
+      "amp_ratio": 0.3695256344990723
+    }
+  }
+}

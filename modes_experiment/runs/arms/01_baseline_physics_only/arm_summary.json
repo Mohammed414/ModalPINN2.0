@@ -1,0 +1,78 @@
+{
+  "arm": "baseline_physics_only_K3",
+  "nmodes": 4,
+  "v1": {
+    "run_dir": "/content/run_baseline_physics_only_K3/OutputPythonScript/ModalPINN_2026_08_24-05_19_05__740_Ponly_Ntap32_FSBC",
+    "v1_radial": false,
+    "rho": 0.7,
+    "xstart": 3.0,
+    "regions": {
+      "near-cylinder": {
+        "n": 13715,
+        "rel_L2": 0.9109867766833559,
+        "corr": 0.5902256375213265,
+        "amp_ratio": 0.23297214707193703
+      },
+      "near-wake": {
+        "n": 15248,
+        "rel_L2": 1.0027584646119267,
+        "corr": 0.0822224367766443,
+        "amp_ratio": 0.053547688578845294
+      },
+      "far-wake": {
+        "n": 16393,
+        "rel_L2": 0.9975692686865472,
+        "corr": 0.1416339535130898,
+        "amp_ratio": 0.021598279196610882
+      },
+      "far-core": {
+        "n": 12460,
+        "rel_L2": 0.9974424387095059,
+        "corr": 0.16035731079632312,
+        "amp_ratio": 0.018948157115054525
+      },
+      "whole-domain": {
+        "n": 51654,
+        "rel_L2": 0.9982455018511894,
+        "corr": 0.06938340482171801,
+        "amp_ratio": 0.04659970799634275
+      }
+    }
+  },
+  "physics": null,
+  "regions": {
+    "run_dir": "/content/run_baseline_physics_only_K3/OutputPythonScript/ModalPINN_2026_08_24-05_19_05__740_Ponly_Ntap32_FSBC",
+    "regions": {
+      "near-cylinder": {
+        "n_nodes": 13715,
+        "E_u": 0.04342258899366912,
+        "E_v": 0.1414384909790958,
+        "E_p": 0.018676449053769296
+      },
+      "near-wake": {
+        "n_nodes": 15248,
+        "E_u": 0.27273723103122655,
+        "E_v": 1.0366273605311191,
+        "E_p": 0.6163448422508141
+      },
+      "far-wake": {
+        "n_nodes": 16393,
+        "E_u": 0.5002203592331037,
+        "E_v": 1.0139960693163825,
+        "E_p": 2.3331980827043837
+      },
+      "other (upstream/off-axis)": {
+        "n_nodes": 6298,
+        "E_u": 0.06775577241476839,
+        "E_v": 0.12204269564908236,
+        "E_p": 0.19711750431121255
+      },
+      "whole domain": {
+        "n_nodes": 51654,
+        "E_u": 0.3525416171248772,
+        "E_v": 0.8035550514210666,
+        "E_p": 0.5622520381489251
+      }
+    }
+  }
+}

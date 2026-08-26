@@ -24,3 +24,7 @@ src/pressure_only/_flow_cache.npz
 # R9_wake_rescue: regenerable truth-field cache (re-run any script that
 # calls src/common.py::load_truth_fields() to recreate)
 R9_wake_rescue/cache/
+
+# modes_experiment: large regenerable figure cache (the source scripts and
+# rendered figures remain tracked; recreate this cache with figures/parse_dns.py)
+modes_experiment/figures/dns_raw.npz
