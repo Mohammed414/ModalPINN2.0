@@ -14,6 +14,11 @@
     "whole-domain": 51654
   },
   "metric_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/data_contract.md",
+  "snapshot": {
+    "index": 100,
+    "time": 410.0,
+    "artifact": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a04_snapshot_fields.npz"
+  },
   "models": {
     "arm1_baseline": {
       "field_metrics": {

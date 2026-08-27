@@ -121,7 +121,7 @@ def evaluate_model(name: str, module_path: pathlib.Path,
                    checkpoint: pathlib.Path, prior_path: pathlib.Path | None,
                    x: np.ndarray, y: np.ndarray, times: np.ndarray,
                    refs: Dict[str, np.ndarray], regions,
-                   tf, chunk: int) -> Dict[str, object]:
+                   tf, chunk: int, snapshot_index: int) -> Dict[str, object]:
     tf.compat.v1.reset_default_graph()
     _, placeholders, outputs, v_modes = _tf_model(
         module_path, checkpoint, prior_path, tf
@@ -135,6 +135,8 @@ def evaluate_model(name: str, module_path: pathlib.Path,
     nt, nnode = refs["u"].shape
     pred = {key: np.empty((nt, nnode), dtype=np.float32)
             for key in ("u", "v", "p")}
+    snapshot = {key: np.empty(nnode, dtype=np.float32)
+                for key in ("u", "v", "p")}
     x_col = x.astype(np.float32).reshape(-1, 1)
     y_col = y.astype(np.float32).reshape(-1, 1)
     for start in range(0, nnode, chunk):
@@ -148,6 +150,10 @@ def evaluate_model(name: str, module_path: pathlib.Path,
             pred["u"][it, sl] = pu[:, 0]
             pred["v"][it, sl] = pv[:, 0]
             pred["p"][it, sl] = pp[:, 0]
+            if it == snapshot_index:
+                snapshot["u"][sl] = pu[:, 0]
+                snapshot["v"][sl] = pv[:, 0]
+                snapshot["p"][sl] = pp[:, 0]
         print(f"{name}: nodes {stop}/{nnode}", flush=True)
     # Direct modal evaluation avoids fitting the network output back in time.
     # Convert the one-sided coefficient to the frozen conventional coefficient.
@@ -163,6 +169,7 @@ def evaluate_model(name: str, module_path: pathlib.Path,
             "prior_for_v1_radial": str(prior_path) if prior_path else None,
             "one_sided_mode_conversion": "network_v1 / 2",
         },
+        "snapshot": snapshot,
     }
 
 
@@ -194,6 +201,7 @@ def main() -> None:
     global TRUE_V1
     true_modes = temporal_harmonic_coefficients(refs["v"], times, OMEGA_0, 3)
     TRUE_V1 = true_modes[1]
+    snapshot_index = times.size // 2
 
     arm1 = ARMS_ROOT / "01_baseline_physics_only"
     arm15 = ARMS_ROOT / "15_karman_prior_fluct_off"
@@ -214,8 +222,23 @@ def main() -> None:
                 raise FileNotFoundError(path)
         results[name] = evaluate_model(
             name, module, checkpoint, prior, x, y, times, refs, regions,
-            tf, args.Chunk
+            tf, args.Chunk, snapshot_index
         )
+
+    # Keep a compact representative-state artifact for the field figure; the
+    # JSON remains scalar-only and therefore easy to inspect and version.
+    snapshot_payload = {
+        "x": x.astype(np.float32), "y": y.astype(np.float32),
+        "time": np.asarray(times[snapshot_index], dtype=float),
+        "u_true": refs["u"][snapshot_index],
+        "v_true": refs["v"][snapshot_index],
+        "p_true": refs["p"][snapshot_index],
+    }
+    for name, model_result in results.items():
+        for variable, values in model_result.pop("snapshot").items():
+            snapshot_payload[f"{name}_{variable}"] = values
+    snapshot_path = FRESH_ROOT / "derived" / "a04_snapshot_fields.npz"
+    np.savez_compressed(snapshot_path, **snapshot_payload)
 
     out = {
         "analysis_id": "A04",
@@ -226,6 +249,9 @@ def main() -> None:
         "crop_nodes": int(x.size),
         "regions": {key: int(mask.sum()) for key, mask in regions.items()},
         "metric_contract": str(FRESH_ROOT / "data_contract.md"),
+        "snapshot": {"index": int(snapshot_index),
+                      "time": float(times[snapshot_index]),
+                      "artifact": str(snapshot_path)},
         "models": results,
     }
     args.Out.parent.mkdir(parents=True, exist_ok=True)

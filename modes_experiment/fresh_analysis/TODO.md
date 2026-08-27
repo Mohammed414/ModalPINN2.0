@@ -33,8 +33,18 @@ and `COMPLETE`.
 **Completed:** A00 is closed. Data provenance, crop/region masks, sensor
 mapping, and all three F0 figures are finished, reviewed, and promoted to
 `figures/final/` as 300-dpi PNGs.
-**Next action:** review the completed prior-attribution comparison and decide
-which figures should be promoted for the dissertation.
+**Next action:** review the F01 representative-snapshot draft and decide its
+visual refinements before the metric/attribution figure is designed.
+
+**Follow-up checks completed this session:**
+- Pressure-gauge sensitivity (`derived/a04_pressure_gauge_check.json`): a
+  constant-offset correction only partly explains the >1.0 far-field pressure
+  errors (far-core: Arm 1 2.33→0.81, Arm 15 1.57→1.43); genuine deficit
+  remains after correction, report both numbers per the frozen contract.
+- Upstream ('other' region) v1 anomaly, checked in absolute terms
+  (`derived/a04_v1_absolute_check.json`): the 11.5x amp_ratio is a
+  ratio-against-near-zero artefact — absolute leakage is 37% of the far-core
+  signal, not 11x it. No code fix planned; report as a caveat, not a defect.
 
 ## Progress overview
 
@@ -183,9 +193,9 @@ it?
   `scripts/a04_validate_results.py`.
 - [ ] Add explicit relative improvements and learned-correction magnitudes to
   the summary after the attribution figure design is approved.
-- [ ] Generate the prior-only field figure. **Planned result:**
-  `figures/draft/F01_prior_only.png`; planned generator:
-  `scripts/figures/fig01_prior_only.py`.
+- [ ] Review the representative-snapshot field figure. **Draft result:**
+  `figures/draft/F01_prior_attribution_fields.png`; generator:
+  `scripts/figures/fig01_prior_attribution_fields.py`.
 - [ ] Generate the attribution figure. **Planned result:**
   `figures/draft/F02_prior_attribution.png`; planned generator:
   `scripts/figures/fig02_prior_attribution.py`.
