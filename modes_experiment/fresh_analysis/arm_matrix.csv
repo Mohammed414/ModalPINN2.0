@@ -1,0 +1,7 @@
+analysis_id,analysis_name,question,method,data_inputs,model_inputs,metrics,figure_ids,status,decision_notes
+A00,data_audit,What data and preprocessing are fixed?,audit,TBD,TBD,TBD,F0,planned,TBD
+A01,prior_only,What does the analytical prior produce without training?,prior_only,TBD,TBD,TBD,F1,planned,TBD
+A02,network_only,What does the learned model produce without the prior?,network_only,TBD,TBD,TBD,F3,planned,TBD
+A03,prior_plus_network,Where does the network change the prior and does it help?,hybrid,TBD,TBD,TBD,F2;F3,planned,TBD
+A04,robustness,Which agreed perturbation changes the conclusion?,sensitivity,TBD,TBD,TBD,F4,planned,TBD
+A05,derived_quantities,Do derived forces agree with field-level quality?,force_diagnostic,TBD,TBD,TBD,F5,planned,TBD

@@ -1,0 +1,68 @@
+{
+  "accepted_iterations_final": 37924,
+  "requested_iterations": [
+    5000,
+    10000,
+    20000,
+    30000,
+    40000
+  ],
+  "packed_variable_count": 36,
+  "packed_parameter_count": 64824,
+  "checkpoints": [
+    {
+      "accepted_iter": 0,
+      "is_final": false,
+      "model_dir": "OutputPythonScript/ModalPINN_2026_08_25-20_53_49__795_FSBC/lbfgs_checkpoints/iter_00000",
+      "model_file": "OutputPythonScript/ModalPINN_2026_08_25-20_53_49__795_FSBC/lbfgs_checkpoints/iter_00000/DNN2_100_100_4_tanh.pickle",
+      "training_total_loss": 5.4253153800964355,
+      "training_physics_loss": 4.007173538208008,
+      "training_pressure_tap_loss": 1.4181419610977173
+    },
+    {
+      "accepted_iter": 5000,
+      "is_final": false,
+      "model_dir": "OutputPythonScript/ModalPINN_2026_08_25-20_53_49__795_FSBC/lbfgs_checkpoints/iter_05000",
+      "model_file": "OutputPythonScript/ModalPINN_2026_08_25-20_53_49__795_FSBC/lbfgs_checkpoints/iter_05000/DNN2_100_100_4_tanh.pickle",
+      "training_total_loss": 0.0018257852643728256,
+      "training_physics_loss": 0.0009288056753575802,
+      "training_pressure_tap_loss": 0.0008969795308075845
+    },
+    {
+      "accepted_iter": 10000,
+      "is_final": false,
+      "model_dir": "OutputPythonScript/ModalPINN_2026_08_25-20_53_49__795_FSBC/lbfgs_checkpoints/iter_10000",
+      "model_file": "OutputPythonScript/ModalPINN_2026_08_25-20_53_49__795_FSBC/lbfgs_checkpoints/iter_10000/DNN2_100_100_4_tanh.pickle",
+      "training_total_loss": 0.000769920414313674,
+      "training_physics_loss": 0.00048617119318805635,
+      "training_pressure_tap_loss": 0.0002837492502294481
+    },
+    {
+      "accepted_iter": 20000,
+      "is_final": false,
+      "model_dir": "OutputPythonScript/ModalPINN_2026_08_25-20_53_49__795_FSBC/lbfgs_checkpoints/iter_20000",
+      "model_file": "OutputPythonScript/ModalPINN_2026_08_25-20_53_49__795_FSBC/lbfgs_checkpoints/iter_20000/DNN2_100_100_4_tanh.pickle",
+      "training_total_loss": 0.00040564662776887417,
+      "training_physics_loss": 0.0002501213166397065,
+      "training_pressure_tap_loss": 0.00015552529657725245
+    },
+    {
+      "accepted_iter": 30000,
+      "is_final": false,
+      "model_dir": "OutputPythonScript/ModalPINN_2026_08_25-20_53_49__795_FSBC/lbfgs_checkpoints/iter_30000",
+      "model_file": "OutputPythonScript/ModalPINN_2026_08_25-20_53_49__795_FSBC/lbfgs_checkpoints/iter_30000/DNN2_100_100_4_tanh.pickle",
+      "training_total_loss": 0.00032642262522131205,
+      "training_physics_loss": 0.00019571324810385704,
+      "training_pressure_tap_loss": 0.00013070939166937023
+    },
+    {
+      "accepted_iter": 37924,
+      "is_final": true,
+      "model_dir": "OutputPythonScript/ModalPINN_2026_08_25-20_53_49__795_FSBC/lbfgs_checkpoints/iter_37924",
+      "model_file": "OutputPythonScript/ModalPINN_2026_08_25-20_53_49__795_FSBC/lbfgs_checkpoints/iter_37924/DNN2_100_100_4_tanh.pickle",
+      "training_total_loss": 0.00029661087319254875,
+      "training_physics_loss": 0.00017425918485969305,
+      "training_pressure_tap_loss": 0.00012235167378094047
+    }
+  ]
+}
