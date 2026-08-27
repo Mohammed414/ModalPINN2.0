@@ -29,12 +29,12 @@ and `COMPLETE`.
 ## Current checkpoint
 
 **Current focus:** A04 — prior attribution
-**Status:** NOT STARTED
+**Status:** IN PROGRESS
 **Completed:** A00 is closed. Data provenance, crop/region masks, sensor
 mapping, and all three F0 figures are finished, reviewed, and promoted to
 `figures/final/` as 300-dpi PNGs.
-**Next action:** prepare the prior-only, Arm 1, and Arm 15 input manifest, then
-run the common evaluator for the central prior-attribution question.
+**Next action:** evaluate the prior-only field, Arm 1, and Arm 15 on the common
+snapshots and regions for the central prior-attribution question.
 
 ## Progress overview
 
@@ -43,7 +43,7 @@ run the common evaluator for the central prior-attribution question.
 | A00 — data and regions | COMPLETE | Figures approved (F0b split into two) | — | `derived/a00_geometry.npz`, `figures/final/F00_evaluation_regions.png`, `figures/final/F00a_probe_locations.png`, `figures/final/F00b_tap_layout.png` |
 | Metric contract | COMPLETE | Equations and choices frozen | — | `data_contract.md`, `section_blueprint.md` |
 | Common evaluator | COMPLETE | Evaluator and identity tests pass | — | `scripts/evaluate_common.py`, `scripts/verify_evaluate_common.py`, `derived/common_evaluator_verification.json` |
-| A04 — prior attribution | NOT STARTED | Planned | Prepare the input manifest | planned: `derived/a04_*`, F1 and F2 |
+| A04 — prior attribution | IN PROGRESS | Inputs verified; prior-only baseline computed | Evaluate Arm 1 and Arm 15 in the TensorFlow environment | `derived/a04_input_manifest.json`, `derived/a04_prior_only_metrics.json`; planned: `derived/a04_*`, F1 and F2 |
 | A01 — information comparison | NOT STARTED | Planned | Start after common evaluator | planned: `derived/a01_*`, F3 |
 | A02 — tap count | NOT STARTED | Planned | Start after common evaluator | planned: `derived/a02_*`, F4a |
 | A03 — collocation strategy | NOT STARTED | Planned | Start after common evaluator | planned: `derived/a03_*`, F4b |
@@ -156,13 +156,22 @@ An arm can be marked `COMPLETE` only when all of these are true:
 
 ## A04 — Prior attribution (priority 1)
 
-**Status: NOT STARTED**
+**Status: IN PROGRESS**
 
 Question: does the trained network improve the Karman prior or merely reproduce
 it?
 
-- [ ] Record the exact prior-only, Arm 1, and Arm 15 inputs. **Planned result:**
-  `derived/a04_input_manifest.csv`.
+- [x] Record the exact prior-only, Arm 1, and Arm 15 inputs and verify matched
+  settings. **Result:** `derived/a04_input_manifest.json` and generator:
+  `scripts/a04_prepare_inputs.py`.
+- [x] Evaluate the analytical prior-only field under the frozen metric contract.
+  **Result:** `derived/a04_prior_only_metrics.json`; generator:
+  `scripts/a04_prior_only.py`.
+- [ ] Evaluate Arm 1 and Arm 15 with their exact inference-time wrappers.
+  **Pending runtime:** TensorFlow is unavailable in this local environment;
+  run this step in the project’s TensorFlow/Colab environment. Existing
+  `regions.json` and `v1.json` files remain legacy references until this fresh
+  evaluator produces the contract-compliant outputs.
 - [ ] Evaluate all three on the common snapshots and regions. **Planned script:**
   `scripts/a04_prior_attribution.py`.
 - [ ] Save prior error, hybrid error, relative improvement, learned-correction
