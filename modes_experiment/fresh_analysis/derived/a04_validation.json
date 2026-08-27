@@ -1,0 +1,22 @@
+{
+  "analysis_id": "A04",
+  "status": "passed",
+  "checks": {
+    "status_verified": true,
+    "snapshots_201": true,
+    "crop_nodes_51654": true,
+    "region_counts": true,
+    "required_models": true,
+    "legacy_field_crosscheck": true,
+    "all_metrics_finite": true,
+    "all_pass": true
+  },
+  "max_legacy_field_metric_abs_diff": {
+    "arm1_baseline": 2.5265840575494636e-05,
+    "arm15_v1_radial_trust": 3.620533615424429e-05
+  },
+  "legacy_files": {
+    "arm1_baseline": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only/regions.json",
+    "arm15_v1_radial_trust": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/regions.json"
+  }
+}

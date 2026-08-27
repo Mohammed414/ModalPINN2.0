@@ -1,0 +1,187 @@
+{
+  "analysis_id": "A04",
+  "method": "prior_attribution",
+  "status": "verified",
+  "data": "/Users/mohammedhilal/Desktop/try/GappyPOD/data/flow_cache.npz",
+  "snapshots": 201,
+  "crop_nodes": 51654,
+  "regions": {
+    "near-cylinder": 13715,
+    "near-wake": 15248,
+    "far-wake": 16393,
+    "far-core": 12460,
+    "other": 6298,
+    "whole-domain": 51654
+  },
+  "metric_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/data_contract.md",
+  "models": {
+    "arm1_baseline": {
+      "field_metrics": {
+        "near-cylinder": {
+          "u": 0.04342290014028549,
+          "v": 0.14143913984298706,
+          "p": 0.01867641694843769
+        },
+        "near-wake": {
+          "u": 0.2727372944355011,
+          "v": 1.0366290807724,
+          "p": 0.6163440942764282
+        },
+        "far-wake": {
+          "u": 0.5002196431159973,
+          "v": 1.0139986276626587,
+          "p": 2.3332183361053467
+        },
+        "far-core": {
+          "u": 0.5826302766799927,
+          "v": 1.0038522481918335,
+          "p": 1.9013025760650635
+        },
+        "other": {
+          "u": 0.06775574386119843,
+          "v": 0.12204265594482422,
+          "p": 0.19711746275424957
+        },
+        "whole-domain": {
+          "u": 0.35252973437309265,
+          "v": 0.8035315275192261,
+          "p": 0.5622267723083496
+        }
+      },
+      "v1_mode_metrics": {
+        "near-cylinder": {
+          "n": 13715,
+          "rel_L2": 0.9109855202529975,
+          "amp_ratio": 0.2329956420896799,
+          "corr": 0.5901849294755548,
+          "phase_deg": -35.322581399189
+        },
+        "near-wake": {
+          "n": 15248,
+          "rel_L2": 1.002758461783868,
+          "amp_ratio": 0.05354769742155542,
+          "corr": 0.08222242151454576,
+          "phase_deg": 107.56324823465752
+        },
+        "far-wake": {
+          "n": 16393,
+          "rel_L2": 0.9975692708101322,
+          "amp_ratio": 0.021598274531735875,
+          "corr": 0.1416338488100317,
+          "phase_deg": 29.554766401013815
+        },
+        "far-core": {
+          "n": 12460,
+          "rel_L2": 0.997442441082733,
+          "amp_ratio": 0.018948152768257277,
+          "corr": 0.16035718037970534,
+          "phase_deg": 25.877405514357914
+        },
+        "other": {
+          "n": 6298,
+          "rel_L2": 1.0429656925989803,
+          "amp_ratio": 1.214686575140202,
+          "corr": 0.7087490409532666,
+          "phase_deg": 36.298543210193266
+        },
+        "whole-domain": {
+          "n": 51654,
+          "rel_L2": 0.9982590529322467,
+          "amp_ratio": 0.047024170317109565,
+          "corr": 0.06884213593908428,
+          "phase_deg": 28.49546678561774
+        }
+      },
+      "metadata": {
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only/training_run/NN_functions.py",
+        "prior_for_v1_radial": null,
+        "one_sided_mode_conversion": "network_v1 / 2"
+      }
+    },
+    "arm15_v1_radial_trust": {
+      "field_metrics": {
+        "near-cylinder": {
+          "u": 0.0592205636203289,
+          "v": 0.0647122859954834,
+          "p": 0.017133427783846855
+        },
+        "near-wake": {
+          "u": 0.16433614492416382,
+          "v": 0.4852791726589203,
+          "p": 0.3067087233066559
+        },
+        "far-wake": {
+          "u": 0.18780824542045593,
+          "v": 0.4490889012813568,
+          "p": 1.5653620958328247
+        },
+        "far-core": {
+          "u": 0.2100825160741806,
+          "v": 0.3913930058479309,
+          "p": 1.276977300643921
+        },
+        "other": {
+          "u": 0.11128376424312592,
+          "v": 0.4498370885848999,
+          "p": 0.680185079574585
+        },
+        "whole-domain": {
+          "u": 0.16075393557548523,
+          "v": 0.3884117901325226,
+          "p": 0.37669020891189575
+        }
+      },
+      "v1_mode_metrics": {
+        "near-cylinder": {
+          "n": 13715,
+          "rel_L2": 0.5132904835173822,
+          "amp_ratio": 0.8003018055450686,
+          "corr": 0.9302835550571195,
+          "phase_deg": 22.364354193098066
+        },
+        "near-wake": {
+          "n": 15248,
+          "rel_L2": 0.44070619498280006,
+          "amp_ratio": 0.8580118281696182,
+          "corr": 0.9267508026289285,
+          "phase_deg": 14.166488718867445
+        },
+        "far-wake": {
+          "n": 16393,
+          "rel_L2": 0.2896911996010357,
+          "amp_ratio": 0.8405636591923414,
+          "corr": 0.9750197121464108,
+          "phase_deg": 8.137980951574173
+        },
+        "far-core": {
+          "n": 12460,
+          "rel_L2": 0.28505577663469245,
+          "amp_ratio": 0.8387517940246543,
+          "corr": 0.9765788676166033,
+          "phase_deg": 8.00597546735443
+        },
+        "other": {
+          "n": 6298,
+          "rel_L2": 11.220070420706785,
+          "amp_ratio": 11.489159861210812,
+          "corr": 0.35065447214748047,
+          "phase_deg": -28.052853985750083
+        },
+        "whole-domain": {
+          "n": 51654,
+          "rel_L2": 0.3899240721288184,
+          "amp_ratio": 0.864772839549277,
+          "corr": 0.937195309819395,
+          "phase_deg": 10.102353702792673
+        }
+      },
+      "metadata": {
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/training_run/NN_functions.py",
+        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/street_prior_used.npz",
+        "one_sided_mode_conversion": "network_v1 / 2"
+      }
+    }
+  }
+}

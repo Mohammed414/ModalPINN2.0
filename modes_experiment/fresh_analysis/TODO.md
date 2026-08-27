@@ -33,8 +33,8 @@ and `COMPLETE`.
 **Completed:** A00 is closed. Data provenance, crop/region masks, sensor
 mapping, and all three F0 figures are finished, reviewed, and promoted to
 `figures/final/` as 300-dpi PNGs.
-**Next action:** evaluate the prior-only field, Arm 1, and Arm 15 on the common
-snapshots and regions for the central prior-attribution question.
+**Next action:** review the completed prior-attribution comparison and decide
+which figures should be promoted for the dissertation.
 
 ## Progress overview
 
@@ -43,7 +43,7 @@ snapshots and regions for the central prior-attribution question.
 | A00 — data and regions | COMPLETE | Figures approved (F0b split into two) | — | `derived/a00_geometry.npz`, `figures/final/F00_evaluation_regions.png`, `figures/final/F00a_probe_locations.png`, `figures/final/F00b_tap_layout.png` |
 | Metric contract | COMPLETE | Equations and choices frozen | — | `data_contract.md`, `section_blueprint.md` |
 | Common evaluator | COMPLETE | Evaluator and identity tests pass | — | `scripts/evaluate_common.py`, `scripts/verify_evaluate_common.py`, `derived/common_evaluator_verification.json` |
-| A04 — prior attribution | IN PROGRESS | Inputs verified; prior-only baseline computed | Evaluate Arm 1 and Arm 15 in the TensorFlow environment | `derived/a04_input_manifest.json`, `derived/a04_prior_only_metrics.json`; planned: `derived/a04_*`, F1 and F2 |
+| A04 — prior attribution | IN PROGRESS | Prior-only, Arm 1, and Arm 15 evaluated under the common contract | Review attribution metrics and figures | `derived/a04_input_manifest.json`, `derived/a04_prior_only_metrics.json`, `derived/a04_prior_attribution_metrics.json`; planned: validation, F1 and F2 |
 | A01 — information comparison | NOT STARTED | Planned | Start after common evaluator | planned: `derived/a01_*`, F3 |
 | A02 — tap count | NOT STARTED | Planned | Start after common evaluator | planned: `derived/a02_*`, F4a |
 | A03 — collocation strategy | NOT STARTED | Planned | Start after common evaluator | planned: `derived/a03_*`, F4b |
@@ -167,18 +167,22 @@ it?
 - [x] Evaluate the analytical prior-only field under the frozen metric contract.
   **Result:** `derived/a04_prior_only_metrics.json`; generator:
   `scripts/a04_prior_only.py`.
-- [ ] Evaluate Arm 1 and Arm 15 with their exact inference-time wrappers.
-  **Pending runtime:** TensorFlow is unavailable in this local environment;
-  run this step in the project’s TensorFlow/Colab environment. Existing
-  `regions.json` and `v1.json` files remain legacy references until this fresh
-  evaluator produces the contract-compliant outputs.
-- [ ] Evaluate all three on the common snapshots and regions. **Planned script:**
-  `scripts/a04_prior_attribution.py`.
-- [ ] Save prior error, hybrid error, relative improvement, learned-correction
-  magnitude, and harmonic diagnostics. **Planned result:**
-  `derived/a04_prior_attribution_metrics.csv`.
-- [ ] Save numerical sanity checks and data-shape/provenance checks. **Planned
-  result:** `derived/a04_validation.json`.
+- [x] Evaluate Arm 1 and Arm 15 with their exact inference-time wrappers.
+  **Result:** `derived/a04_prior_attribution_metrics.json`; generator:
+  `scripts/a04_prior_attribution.py`. The isolated inference environment is
+  `../.venv_tf_eval/`; no training operation is used.
+- [x] Evaluate all three on the common snapshots and regions. **Result:**
+  `derived/a04_prior_only_metrics.json` and
+  `derived/a04_prior_attribution_metrics.json`.
+- [x] Save prior/model field errors and first-harmonic diagnostics in a tidy
+  dissertation-facing table. **Result:**
+  `derived/a04_prior_attribution_summary.csv`; generator:
+  `scripts/a04_make_summary.py`.
+- [x] Save numerical sanity checks and data-shape/provenance checks. **Result:**
+  `derived/a04_validation.json`; generator:
+  `scripts/a04_validate_results.py`.
+- [ ] Add explicit relative improvements and learned-correction magnitudes to
+  the summary after the attribution figure design is approved.
 - [ ] Generate the prior-only field figure. **Planned result:**
   `figures/draft/F01_prior_only.png`; planned generator:
   `scripts/figures/fig01_prior_only.py`.
