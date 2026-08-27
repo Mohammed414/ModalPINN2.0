@@ -64,8 +64,9 @@ fields = {
     "p": [SNAP["p_true"], p_prior, SNAP["arm1_baseline_p"],
           SNAP["arm15_v1_radial_trust_p"]],
 }
-titles = ["CFD reference", "Prior only", "Arm 1\nordinary ModalPINN",
-          "Arm 15\nKármán-constrained"]
+titles = ["CFD reference", "Kármán prior\nonly",
+          "Pressure-only\n+ physics",
+          "Pressure-only\n+ physics\n+ Kármán prior"]
 row_labels = {"u": r"$u/U_\infty$", "v": r"$v/U_\infty$",
               "p": r"$p/(\rho U_\infty^2)$"}
 
