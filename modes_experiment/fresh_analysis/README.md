@@ -15,6 +15,8 @@ write the analysis script and run it. A result is not added to
 
 - `section_blueprint.md` — the proposed Methodology, Results, and Discussion
   structure, written before any new computation.
+- `TODO.md` — the execution checklist and checkpoint dashboard. Completed tasks
+  always include the location of their result.
 - `figure_blueprint.md` — visual wireframes for each planned figure.
 - `arm_matrix.csv` — a fresh plan of analyses/arms; status starts as `planned`.
 - `results_master.csv` — an empty long-form results table. Each row will carry
@@ -22,8 +24,15 @@ write the analysis script and run it. A result is not added to
 - `data_contract.md` — the data paths, variables, units, and preprocessing we
   agree to use.
 - `decisions.md` — a dated record of decisions and changes in scope.
-- `figures/` — generated figures only.
-- `scripts/` — new analysis scripts only.
+- `design/` — the shared style guide, figure manifest, and one reviewed design
+  note per figure.
+- `figure_common.py` — the single source of shared typography, colours, sizes,
+  axes, and export behaviour.
+- `derived/` — machine-readable outputs produced by analysis scripts; never
+  hand-edited.
+- `figures/draft/` and `figures/final/` — generated figures only.
+- `scripts/` — data and metric builders; `scripts/figures/` contains short
+  figure-specific generators that load prepared data.
 
 ## Proposed sequence
 

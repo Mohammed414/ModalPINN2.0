@@ -3,20 +3,34 @@
 These are proposed layouts only. No figure should be generated until its claim,
 inputs, and metric are approved.
 
-## F0 — Data, sensors, and evaluation regions
+## F0a — Evaluation regions (standalone LaTeX figure)
 
 ```text
 ┌─────────────────────────────────────┐
-│ full domain + cylinder + sensors    │
-├──────────────────┬──────────────────┤
-│ named regions    │ region node count│
-└──────────────────┴──────────────────┘
+│ clean domain schematic              │
+│ partition regions + nested far core │
+│ exact masks + node counts           │
+└─────────────────────────────────────┘
 ```
 
 Purpose: establish what data the analysis uses and make every regional metric
 spatially interpretable. Each region must have a distinct outline or light
 transparent fill, a direct label, and its node count. Overlapping regions must
 be made explicit rather than visually hidden.
+
+## F0a-probes and F0b-taps — Measurement locations
+
+```text
+┌──────────────────┐  ┌──────────────────┐
+│ velocity probes  │  │ pressure taps    │
+│ full domain      │  │ ring + unrolled  │
+│ region context   │  │ angular quadrant │
+└──────────────────┘  └──────────────────┘
+```
+
+Purpose: show the 40 sparse velocity probes at domain scale and the nested
+8/16/32 cylinder-pressure tap sets at cylinder scale. These are independent
+single-column PNGs so LaTeX controls their placement and optional panel labels.
 
 ## F1 — Prior-only field reconstruction
 

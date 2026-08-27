@@ -1,0 +1,8 @@
+figure_id,working_title,claim_or_purpose,derived_input,generator,status
+F0a,Evaluation regions,Make every later regional result spatially interpretable,derived/a00_geometry.npz,scripts/figures/fig00_evaluation_regions.py,COMPLETE
+F0a-probes,Probe locations,Show velocity-probe sections against the F0a region shading,derived/a00_geometry.npz,scripts/figures/fig00a_probe_locations.py,COMPLETE
+F0b-taps,Tap layout,Show the nested 8/16/32 tap sets as an angular pattern rather than overlapping same-radius rings,derived/a00_geometry.npz,scripts/figures/fig00b_tap_layout.py,COMPLETE
+F1,Prior-only reconstruction,Show what the analytical prior supplies before training,TBD,TBD,planned
+F2,Prior attribution,Show where training improves leaves or worsens the prior,TBD,TBD,planned
+F3,Information comparison,Compare pressure-only sparse probes and the dense ceiling,TBD,TBD,planned
+F4,Controlled parameters,Compare tap count collocation prior sampling and pressure noise,TBD,TBD,planned
