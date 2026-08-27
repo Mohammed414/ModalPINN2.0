@@ -28,22 +28,22 @@ and `COMPLETE`.
 
 ## Current checkpoint
 
-**Current focus:** metric contract  
-**Status:** NOT STARTED  
+**Current focus:** A04 — prior attribution
+**Status:** NOT STARTED
 **Completed:** A00 is closed. Data provenance, crop/region masks, sensor
 mapping, and all three F0 figures are finished, reviewed, and promoted to
-`figures/final/` as 300-dpi PNGs.  
-**Next action:** freeze the metric contract in `data_contract.md`, then begin
-A04 because prior attribution is the central dissertation question.
+`figures/final/` as 300-dpi PNGs.
+**Next action:** prepare the prior-only, Arm 1, and Arm 15 input manifest, then
+run the common evaluator for the central prior-attribution question.
 
 ## Progress overview
 
 | Work item | Status | Current checkpoint | Next action | Result index |
 |---|---|---|---|---|
 | A00 — data and regions | COMPLETE | Figures approved (F0b split into two) | — | `derived/a00_geometry.npz`, `figures/final/F00_evaluation_regions.png`, `figures/final/F00a_probe_locations.png`, `figures/final/F00b_tap_layout.png` |
-| Metric contract | NOT STARTED | Definitions outlined only — **next task** | Freeze equations, aggregation, ideal values, and limitations | `data_contract.md`, `section_blueprint.md` |
-| Common evaluator | NOT STARTED | No fresh evaluator yet | Specify shared input/output contract | planned: `scripts/evaluate_common.py` |
-| A04 — prior attribution | NOT STARTED | Planned | Start after metric contract | planned: `derived/a04_*`, F1 and F2 |
+| Metric contract | COMPLETE | Equations and choices frozen | — | `data_contract.md`, `section_blueprint.md` |
+| Common evaluator | COMPLETE | Evaluator and identity tests pass | — | `scripts/evaluate_common.py`, `scripts/verify_evaluate_common.py`, `derived/common_evaluator_verification.json` |
+| A04 — prior attribution | NOT STARTED | Planned | Prepare the input manifest | planned: `derived/a04_*`, F1 and F2 |
 | A01 — information comparison | NOT STARTED | Planned | Start after common evaluator | planned: `derived/a01_*`, F3 |
 | A02 — tap count | NOT STARTED | Planned | Start after common evaluator | planned: `derived/a02_*`, F4a |
 | A03 — collocation strategy | NOT STARTED | Planned | Start after common evaluator | planned: `derived/a03_*`, F4b |
@@ -71,22 +71,22 @@ An arm can be marked `COMPLETE` only when all of these are true:
 
 ## Shared analysis infrastructure
 
-**Status: NOT STARTED**
+**Status: COMPLETE**
 
-- [ ] Freeze the mathematical definition of regional relative L2 for `u`, `v`,
-  and `p`. **Planned result:** `data_contract.md`.
-- [ ] Explain why relative L2 is used, what 0 and 1 mean, and when the metric can
-  mislead. **Planned result:** `section_blueprint.md` and dissertation
-  Methodology.
-- [ ] Freeze the first-harmonic metrics: relative L2, amplitude ratio,
-  normalized complex correlation, and phase offset. **Planned result:**
+- [x] Freeze the mathematical definition of regional relative L2 for `u`, `v`,
+  and `p`. **Result:** `data_contract.md`.
+- [x] Record why relative L2 is used, what 0 and 1 mean, and when the metric can
+  mislead. **Result:** `data_contract.md`; it will be expanded into the
+  dissertation Methodology later.
+- [x] Freeze the first-harmonic metrics: relative L2, amplitude ratio,
+  normalized complex correlation, and signed phase offset. **Result:**
   `data_contract.md`.
-- [ ] Define the spatial/time aggregation and treatment of near-zero reference
-  norms. **Planned result:** `data_contract.md`.
-- [ ] Build one shared evaluator used by all arms. **Planned result:**
+- [x] Freeze the spatial/time aggregation, raw-pressure policy, and treatment of
+  near-zero reference norms. **Result:** `data_contract.md`.
+- [x] Build one shared evaluator used by all arms. **Result:**
   `scripts/evaluate_common.py`.
-- [ ] Add small deterministic tests for masks, shapes, and identity cases.
-  **Planned result:** `scripts/verify_evaluate_common.py` and its saved report in
+- [x] Add deterministic tests for masks, shapes, identity cases, amplitude, and
+  phase. **Result:** `scripts/verify_evaluate_common.py` and
   `derived/common_evaluator_verification.json`.
 
 ## A00 — Data and region audit
@@ -114,14 +114,15 @@ An arm can be marked `COMPLETE` only when all of these are true:
 
 - [x] Approve `F00_evaluation_regions`. Regions redrawn as exact filled
   geometry from their defining inequalities rather than mesh-node scatter; the
-  far core is shown nested inside the far wake with a dashed boundary and no
+  far core is shown nested inside the far wake with a hatched patch and solid
   overlapping translucent fills. **Result:**
   `figures/final/F00_evaluation_regions.png`.
-- [x] Approve `F00_measurement_locations` — later split into two standalone
+- [x] Approve the measurement-location design — later split into two standalone
   figures per user request, for side-by-side placement in Overleaf and because
   the combined tap panel was confusing (same-radius rings hid the nesting).
   `F00a_probe_locations`: probe panel carries the same region shading as F0a,
-  so the unobserved far core is visible. `F00b_tap_layout`: redesigned with a
+  and notes that no probe section lies downstream of x/D = 3.
+  `F00b_tap_layout`: redesigned with a
   true-scale ring plus an unrolled-quadrant angle strip, so the 8/16/32
   nesting reads as an interleaving pattern rather than three same-radius
   dot layers distinguished only by colour. **Result:**

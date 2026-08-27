@@ -82,3 +82,116 @@ a full-field reconstruction comparison, not a completely held-out test set:
   evaluation interval itself is not temporally held out.
 
 This distinction must be stated in the Methodology and Limitations sections.
+
+## Evaluation-metric contract
+
+This section is the frozen metric contract traced from `code/evaluate_regions.py`,
+`prior_only_evaluation/evaluate_prior_only.py`, and the notebook-15 `v1` smoke
+evaluator. The choices below were confirmed on 2026-08-27.
+
+### Regional field error
+
+For variable (q\in\{u,v,p\}), region mask (M_r), and all (T=201)
+snapshots, define the space--time Frobenius norm
+
+\[
+\lVert q\rVert_{2,r}
+= \left(\sum_{t=1}^{T}\sum_{i\in M_r} q_{t,i}^{,2}\right)^{1/2}.
+\]
+
+The regional relative (L^2) error is
+
+\[
+E_{q,r}^{\mathrm{rel}}
+= \frac{\lVert \widehat q-q\rVert_{2,r}}
+        {\lVert q\rVert_{2,r}+\varepsilon},
+\qquad \varepsilon=10^{-30}\text{ in the implementation}.
+\]
+
+This is the Euclidean norm of all errors in a region and over time, divided by
+the corresponding reference-field norm. Every node--snapshot pair receives
+equal weight; this is not a mesh-volume-weighted integral. Regional values are
+computed independently, so a large region does not numerically dilute a small
+region's score. The whole-domain value uses the same formula on the union of
+the four partition regions.
+
+Interpretation: (0) is exact reconstruction; (1) means the error norm is as
+large as the reference norm; values above (1) mean the error exceeds the
+reference norm. Relative normalization makes `u`, `v`, and `p` dimensionless and
+comparable across regions, while retaining each variable as a separate metric.
+It is preferred to an unnormalized error because the variables and regions have
+different magnitudes and node counts. Its limitations are sensitivity to small
+reference norms, equal weighting of all sampled nodes rather than physical
+area, and sensitivity to a pressure-gauge offset if raw pressure is retained.
+
+### First-shedding-harmonic extraction
+
+Let \(\tau=t-t_0\), \(\omega_0=1.036\), and construct the temporal design
+matrix with columns (1,\cos(k\omega_0\tau),\sin(k\omega_0\tau)). A least-squares
+fit is performed independently at every spatial node. Under the real-signal
+convention
+
+\[
+q(t)=q_0+q_1e^{i\omega_0\tau}+q_1^*e^{-i\omega_0\tau}+\cdots,
+\]
+
+the conventional complex first-harmonic coefficient is
+
+\[
+q_1=\tfrac12\left(c_{\cos}-i\,c_{\sin}\right).
+\]
+
+The saved ModalPINN mode is one-sided, so the evaluator divides that mode by
+two before comparing it with this conventional CFD coefficient. The fit uses
+all available snapshots and is therefore an evaluation over the available
+time interval, not a temporally held-out test.
+
+### First-harmonic metrics
+
+For predicted and reference complex fields (z=\widehat q_1) and
+(w=q_1), restricted to region (M_r):
+
+\[
+E_{1,r}^{\mathrm{rel}}=\frac{\lVert z-w\rVert_2}{\lVert w\rVert_2+\varepsilon},
+\qquad
+A_r=\frac{\lVert z\rVert_2}{\lVert w\rVert_2+\varepsilon},
+\]
+
+\[
+C_r=\frac{|w^H z|}{(\lVert w\rVert_2\lVert z\rVert_2)+\varepsilon}.
+\]
+
+Here (E_{1,r}^{\mathrm{rel}}) is modal relative (L^2) error, (A_r) is a
+regional modal-energy amplitude ratio (ideal value (1)), and (C_r) is the
+magnitude of the normalized complex inner product (ideal value (1)). The
+absolute value makes (C_r) insensitive to a uniform phase rotation; it must
+not be described as a phase-accuracy metric. A low error can coexist with a
+wrong spatial phase if the amplitude is small, and an amplitude ratio can hide
+spatial cancellation, so all three metrics are reported together.
+
+The proposed signed phase offset is
+
+\[
+\Delta\phi_r=\arg(w^H z)\in[-\pi,\pi],
+\]
+
+reported in degrees. With this order of the inner product, positive values
+mean the prediction leads the reference in the complex (q_1) convention. The
+phase is undefined when either modal norm is effectively zero; such a case must
+be reported as unavailable rather than as zero degrees.
+
+### Frozen decisions
+
+1. **Pressure gauge:** retain stored/reconstructed raw pressure for the primary
+   metric, matching the training loss and existing evaluators. If a constant
+   offset appears to dominate an interpretation, an explicitly labelled
+   zero-mean-pressure sensitivity metric may be added; it must never replace the
+   primary raw-pressure result.
+2. **Phase reporting:** report the signed
+   \(\Delta\phi=\arg(w^H z)\) above alongside the magnitude-only correlation.
+   Positive values mean the prediction leads the CFD reference in the stated
+   complex-coefficient convention.
+
+**Contract status: FROZEN.** Any later change requires an entry in
+`decisions.md`, regeneration of dependent results, and a note in
+`TODO.md`.

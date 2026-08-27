@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "checks": [
+    "relative_l2_identity_and_scale",
+    "complex_phase_and_amplitude",
+    "temporal_harmonic_recovery",
+    "strict_crop_and_nested_regions"
+  ]
+}
