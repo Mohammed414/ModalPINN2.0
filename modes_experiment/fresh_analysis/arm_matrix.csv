@@ -1,7 +1,8 @@
 analysis_id,analysis_name,question,method,data_inputs,model_inputs,metrics,figure_ids,status,decision_notes
-A00,data_audit,What data and preprocessing are fixed?,audit,TBD,TBD,TBD,F0,planned,TBD
-A01,prior_only,What does the analytical prior produce without training?,prior_only,TBD,TBD,TBD,F1,planned,TBD
-A02,network_only,What does the learned model produce without the prior?,network_only,TBD,TBD,TBD,F3,planned,TBD
-A03,prior_plus_network,Where does the network change the prior and does it help?,hybrid,TBD,TBD,TBD,F2;F3,planned,TBD
-A04,robustness,Which agreed perturbation changes the conclusion?,sensitivity,TBD,TBD,TBD,F4,planned,TBD
-A05,derived_quantities,Do derived forces agree with field-level quality?,force_diagnostic,TBD,TBD,TBD,F5,planned,TBD
+A00,data_and_region_audit,What data sensors and evaluation regions are used?,audit,TBD,CFD dataset and region masks,geometry; sensor locations; region bounds; node counts,F0,planned,Regions must be visualized before regional metrics
+A01,information_comparison,How does available measurement information affect reconstruction?,matched comparison,TBD,Arm 1; Arm 4; Arm 5,regional relative L2 for u v p; first-harmonic diagnostics,F3,planned,Arm 1 versus 4 is controlled; Arm 5 is a representational ceiling
+A02,tap_count,Does increasing cylinder pressure-tap count improve reconstruction?,controlled parameter,TBD,Arm 8; Arm 9; Arm 1,regional relative L2; first-shedding-harmonic relative L2 amplitude ratio correlation and phase,F4,planned,8 versus 16 versus 32 taps
+A03,collocation_strategy,Does wake-biased collocation recover information absent from wall measurements?,controlled parameter,TBD,Arm 1; Arm 6; Arm 7,regional relative L2; first-shedding-harmonic relative L2 amplitude ratio correlation and phase,F4,planned,Uniform versus wake-biased random versus wake-biased grid
+A04,prior_attribution,Does the trained network improve the Karman prior or reproduce it?,prior attribution,TBD,prior only; Arm 1; Arm 15,prior error; hybrid error; relative improvement; learned-correction magnitude; harmonic diagnostics,F1;F2;F3,planned,Central dissertation comparison
+A05,prior_collocation,Does wake-biased collocation improve the prior-assisted reconstruction?,controlled parameter,TBD,Arm 15; Arm 10,regional relative L2; harmonic diagnostics,F4,planned,Matched prior runs differing by grid sampling
+A06,pressure_noise,Is the prior-assisted result robust to pressure noise?,controlled parameter,TBD,Arm 15; Arm 11; Arm 12; Arm 13,regional relative L2; harmonic diagnostics,F4,planned,Single seed limits uncertainty claims

@@ -28,10 +28,16 @@ fill the evidence columns together.
 
 ### M4. Metrics and visual diagnostics
 
-- Field metrics: `TBD`.
-- Modal/amplitude/phase metrics: `TBD`.
-- Force metrics, if included: `TBD`.
-- Regions and denominators: `TBD`.
+- Field metrics: regional relative L2 for u, v, and p. The methodology must
+  define the L2 norm, justify normalization by the reference-field norm, state
+  how space and time are aggregated, and explain the interpretation of 0, 1,
+  and values above 1.
+- First-shedding-harmonic diagnostics: relative L2, amplitude ratio, normalized
+  complex correlation, and global phase offset. Each metric must include its
+  mathematical definition, ideal value, interpretation, and limitation.
+- Regions: fixed definitions and node counts recorded in the data contract and
+  shown visually before any regional result is presented.
+- Force, lift, and drag metrics are outside the current scope.
 
 ## Results
 
@@ -52,14 +58,17 @@ the prior?
 
 Answer: where does the network change the prior, and does that improve the field?
 
-### R5. Sensitivity/robustness (only if justified)
+### R5. Controlled-parameter studies
 
-Possible variables: taps, noise, phase, region, or training configuration.
+Evaluate only comparisons with a defensible matched reference:
 
-### R6. Forces and derived quantities (only if justified)
+- pressure-tap count: Arms 8, 9, and 1;
+- collocation strategy: Arms 1, 6, and 7;
+- prior plus wake-biased collocation: Arms 15 and 10;
+- pressure noise: Arms 15 and 11--13.
 
-Keep this separate from field reconstruction because an accurate force does not
-automatically establish an accurate wake field.
+Do not infer an Adam effect from Arm 16 because optimizer, boundary-condition,
+and L-BFGS settings changed together.
 
 ## Discussion
 
@@ -75,7 +84,8 @@ what comes from the data/snapshot library.
 ### D3. Limitations
 
 Record dataset scope, single-seed effects, metric limitations, and any
-unmeasured comparison.
+unmeasured comparison. State explicitly that force reconstruction and optimizer
+ablation are not addressed by the current evidence.
 
 ### D4. Implications and next experiment
 

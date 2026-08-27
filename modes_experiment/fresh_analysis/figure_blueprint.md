@@ -3,17 +3,20 @@
 These are proposed layouts only. No figure should be generated until its claim,
 inputs, and metric are approved.
 
-## F0 — Data and geometry sanity check
+## F0 — Data, sensors, and evaluation regions
 
 ```text
-┌──────────────────┬──────────────────┐
-│ mesh/domain      │ cylinder + taps  │
-├──────────────────┼──────────────────┤
-│ snapshot example │ time/phase check │
+┌─────────────────────────────────────┐
+│ full domain + cylinder + sensors    │
+├──────────────────┬──────────────────┤
+│ named regions    │ region node count│
 └──────────────────┴──────────────────┘
 ```
 
-Purpose: establish what data the analysis is using.
+Purpose: establish what data the analysis uses and make every regional metric
+spatially interpretable. Each region must have a distinct outline or light
+transparent fill, a direct label, and its node count. Overlapping regions must
+be made explicit rather than visually hidden.
 
 ## F1 — Prior-only field reconstruction
 
@@ -61,15 +64,6 @@ metric
   └──────────────────── parameter
 ```
 
-Purpose: include only a sensitivity study that answers a stated research
-question.
-
-## F5 — Optional force/derived-quantity figure
-
-```text
-┌──────────────────┬──────────────────┐
-│ force time series│ harmonic metrics │
-└──────────────────┴──────────────────┘
-```
-
-Purpose: keep force validation visibly separate from field validation.
+Purpose: compare only controlled parameters with a matched reference: tap
+count, collocation strategy, prior-plus-collocation, or pressure noise. Force
+metrics and optimizer ablations are outside the current figure plan.
