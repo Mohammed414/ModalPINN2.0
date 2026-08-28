@@ -585,24 +585,75 @@ Secondary limitations: single seed per arm, as everywhere in this project;
 and the two wake-biased arms are not independent evidence of each other, being
 the same idea implemented two ways.
 
-### Upstream leakage: larger than A04's, and not only a ratio artefact
+### Upstream leakage: the ratio is inflated, the leakage is real, and the cause is not what I first guessed
 
-**Evidence:** in `other` (upstream/off-axis), $v_1$ rel $L^2$ goes 1.043 →
-7.955 / 7.964 and amplitude ratio 1.215 → 8.008 / 8.004.
+**Evidence:** `derived/a03_v1_absolute_check.json`, generator
+`scripts/a03_v1_absolute_check.py` (inference only; mirrors
+`a04_v1_absolute_check.py` exactly so the two are comparable). Upstream
+(`other`) $v_1$, as RMS per node:
 
-The ratio inherits the near-zero-denominator caveat established for A04's
-11.5x figure — true upstream $|v_1|$ is physically almost zero, so any ratio
-against it inflates. But unlike A04, the *field* errors move too: upstream
-$v$ rel $L^2$ 0.122 → 0.322 and upstream $p$ 0.197 → 0.434, both roughly
-2.6x and both computed against non-degenerate denominators. **[unverified]**
-The likely reason is that these arms carry no `--V1RadialTrust` blend to
-suppress upstream oscillation, so concentrating interior points downstream
-leaves the upstream region both unconstrained and unpenalised; confirming that
-would need an absolute-magnitude check of the kind run for A04
-(`derived/a04_v1_absolute_check.json`), which has not been done for A03.
+| arm | predicted | true | ratio | vs its own far-core signal |
+|---|---:|---:|---:|---:|
+| uniform | 0.0068 | 0.0056 | 1.2x | 174% |
+| wake-biased random | 0.0451 | 0.0056 | 8.0x | 73% |
+| wake-biased grid | 0.0451 | 0.0056 | 8.0x | 86% |
+| *A04 prior + trust, for scale* | *0.0647* | *0.0056* | *11.5x* | *37%* |
 
-Report as a caveat on whole-domain and `other` summaries, consistent with the
-A04 decision.
+A consistency check worth recording: A03's uniform arm is
+`01_baseline_physics_only`, the same checkpoint A04 evaluated, and the two
+independent scripts return the identical upstream figure (0.006839).
+
+**Interpretation, in three parts.**
+
+1. *The 8.0x is partly a denominator artefact*, as suspected. True upstream
+   $v_1$ RMS is 0.0056 — physically almost zero, correct for a region with no
+   shedding — so any ratio against it inflates. This is the same trap as A04's
+   11.5x.
+
+2. *But the absolute leakage is real.* Upstream $v_1$ rises 0.0068 -> 0.0451
+   between uniform and wake-biased, a genuine 6.6x increase measured against
+   nothing degenerate. Wake-biased collocation really does put more spurious
+   oscillation upstream of the cylinder. This is not purely an artefact, which
+   is what distinguishes A03 from A04 and is why the field errors moved too.
+
+3. *My earlier `--V1RadialTrust` hypothesis was wrong, and the data says so
+   plainly.* I had guessed that A03's arms leak because they carry no trust
+   region to suppress upstream oscillation. But the arm that *has* the trust
+   region (A04's arm 15) leaks the **most** in absolute terms, 0.0647 against
+   the wake-biased arms' 0.0451. The trust region cannot be the control,
+   because it acts radially from $x \ge 3$ and is inactive upstream by
+   construction — which `decisions.md` already recorded for A04 and I failed to
+   carry across.
+
+**What actually organises the leakage.** Rank the four arms by the far-core
+signal each one produces and the upstream leakage follows it: 0.0039 -> 0.0068,
+0.0526 -> 0.0451, 0.0616 -> 0.0451, 0.1736 -> 0.0647. Arms that generate more
+oscillation anywhere generate more of it upstream too. The growth is
+sub-linear, so as a *fraction* of the arm's own wake signal the leakage falls
+monotonically — 174%, 86%, 73%, 37%.
+
+That last column reframes the uniform arm rather than exonerating it. Its 1.2x
+ratio looks clean only because it produces almost no oscillation at all: its
+far-core prediction is 2% of the true amplitude, so its upstream leakage is
+*larger than its own wake signal*. Uniform is not upstream-clean; it is
+close to empty everywhere.
+
+**Consequence for A03's main claim.** This strengthens it rather than
+qualifying it. Wake-biased collocation raises oscillation amplitude
+indiscriminately — ~16x more in the far core, where correlation with the true
+mode simultaneously falls ~40%, and 6.6x more upstream, where the true answer
+is zero. Both are the same behaviour: amplitude generated without structural
+correctness.
+
+**Limitation:** this measures magnitudes only. It establishes that the leakage
+is real and that it scales with overall amplitude; it does not establish a
+mechanism, and with four arms the ranking is a pattern, not a fitted
+relationship.
+
+**Decision:** report as a caveat on `other` and whole-domain summaries,
+consistent with A04, and quote the absolute numbers rather than the 8.0x. No
+code fix: the behaviour is a consequence of an unconstrained region, not a
+defect.
 
 **Figure/result:** `figures/final/F04b_collocation_strategy.png`, generated by
 `scripts/figures/fig04b_collocation_strategy.py`; numerical sources

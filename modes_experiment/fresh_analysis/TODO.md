@@ -44,10 +44,11 @@ attached — A03 (effort not controlled, 6.9-7.9x), A05 (effort not controlled,
 never be quoted as a network result in A04/A05/A06, since `--V1RadialTrust`
 pins that region to the prior.
 
-**Open loose end (not blocking writing):** A03's upstream leakage is recorded
-as **[unverified]** in `findings.md` pending an absolute-magnitude check of
-the kind run for A04. The termination census, previously the other loose end,
-was recovered and verified on 2026-08-28.
+**No open analysis items remain.** Both loose ends were closed on 2026-08-28:
+the 17-arm termination census was recovered and reproduces exactly, and A03's
+upstream leakage was measured in absolute terms. Every remaining unchecked box
+below is a "record the dissertation subsection path" placeholder that resolves
+as the writing is done.
 
 **Follow-up checks completed this session:**
 - Pressure-gauge sensitivity (`derived/a04_pressure_gauge_check.json`): a
@@ -372,10 +373,16 @@ measurements?
 - [x] Add accepted rows to `results_master.csv` with the A03 source paths.
   147 rows (49 per arm: 144 metric rows plus one effort-audit row each).
   **Generator:** `scripts/a03_finalize_results.py`.
-- [ ] Confirm the upstream leakage in absolute terms, as was done for A04
-  (`derived/a04_v1_absolute_check.json`). Marked **[unverified]** in
-  `findings.md`; the `other`-region field errors roughly 2.6x while the ratio
-  metric inflates 8x against a near-zero denominator.
+- [x] Confirm the upstream leakage in absolute terms, as was done for A04.
+  **Result:** `derived/a03_v1_absolute_check.json`; generator:
+  `scripts/a03_v1_absolute_check.py`. The 8.0x ratio is partly a near-zero
+  denominator artefact (true upstream RMS 0.0056), but the absolute leakage is
+  real: 0.0068 -> 0.0451, a 6.6x rise between uniform and wake-biased. The
+  `--V1RadialTrust` hypothesis is disproved — A04's arm 15, which *has* the
+  trust region, leaks most of all (0.0647), because that region acts from
+  x >= 3 and is inactive upstream. Leakage instead tracks each arm's overall
+  oscillation amplitude. Cross-check: A03's uniform arm and A04's arm 1 are the
+  same checkpoint and the two scripts agree to six decimals (0.006839).
 - [ ] Record the final dissertation subsection path here when writing begins.
 
 ## A05 — Prior plus collocation (priority 5)

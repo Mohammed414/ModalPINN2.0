@@ -1,0 +1,140 @@
+{
+  "uniform_collocation": {
+    "near-cylinder": {
+      "n": 13715,
+      "pred_l2_norm": 0.7089082794755805,
+      "true_l2_norm": 3.0425817114756253,
+      "pred_rms_per_node": 0.006053299228524616,
+      "true_rms_per_node": 0.025980310937295144
+    },
+    "near-wake": {
+      "n": 15248,
+      "pred_l2_norm": 0.8497093530718455,
+      "true_l2_norm": 15.868270607090533,
+      "pred_rms_per_node": 0.006881196457284663,
+      "true_rms_per_node": 0.12850592627937468
+    },
+    "far-wake": {
+      "n": 16393,
+      "pred_l2_norm": 0.5016849149597182,
+      "true_l2_norm": 23.22800898852161,
+      "pred_rms_per_node": 0.003918337342382582,
+      "true_rms_per_node": 0.18141899884757423
+    },
+    "far-core": {
+      "n": 12460,
+      "pred_l2_norm": 0.43784533828189987,
+      "true_l2_norm": 23.107547402478005,
+      "pred_rms_per_node": 0.003922488770987442,
+      "true_rms_per_node": 0.20701167121465036
+    },
+    "other": {
+      "n": 6298,
+      "pred_l2_norm": 0.5427162734997827,
+      "true_l2_norm": 0.4467953170859249,
+      "pred_rms_per_node": 0.006838667932573704,
+      "true_rms_per_node": 0.005629985604956874,
+      "leakage_vs_far_core_pred": 1.7434512453306898,
+      "pred_over_true_rms": 1.214686575140202
+    },
+    "whole-domain": {
+      "n": 51654,
+      "pred_l2_norm": 1.3307086987115047,
+      "true_l2_norm": 28.298398243665158,
+      "pred_rms_per_node": 0.0058550555084719924,
+      "true_rms_per_node": 0.1245116175147412
+    }
+  },
+  "wake_biased_random_collocation": {
+    "near-cylinder": {
+      "n": 13715,
+      "pred_l2_norm": 2.1618818465309215,
+      "true_l2_norm": 3.0425817114756253,
+      "pred_rms_per_node": 0.01846009997717594,
+      "true_rms_per_node": 0.025980310937295144
+    },
+    "near-wake": {
+      "n": 15248,
+      "pred_l2_norm": 5.630249426581931,
+      "true_l2_norm": 15.868270607090533,
+      "pred_rms_per_node": 0.045595417147948895,
+      "true_rms_per_node": 0.12850592627937468
+    },
+    "far-wake": {
+      "n": 16393,
+      "pred_l2_norm": 7.936713761007975,
+      "true_l2_norm": 23.22800898852161,
+      "pred_rms_per_node": 0.06198855293078977,
+      "true_rms_per_node": 0.18141899884757423
+    },
+    "far-core": {
+      "n": 12460,
+      "pred_l2_norm": 6.8749386848537775,
+      "true_l2_norm": 23.107547402478005,
+      "pred_rms_per_node": 0.06158994383355504,
+      "true_rms_per_node": 0.20701167121465036
+    },
+    "other": {
+      "n": 6298,
+      "pred_l2_norm": 3.5779290406580664,
+      "true_l2_norm": 0.4467953170859249,
+      "pred_rms_per_node": 0.045084825700149773,
+      "true_rms_per_node": 0.005629985604956874,
+      "leakage_vs_far_core_pred": 0.7320160223232246,
+      "pred_over_true_rms": 8.007982411261445
+    },
+    "whole-domain": {
+      "n": 51654,
+      "pred_l2_norm": 10.59086603012451,
+      "true_l2_norm": 28.298398243665158,
+      "pred_rms_per_node": 0.04659931099061155,
+      "true_rms_per_node": 0.1245116175147412
+    }
+  },
+  "wake_biased_grid_collocation": {
+    "near-cylinder": {
+      "n": 13715,
+      "pred_l2_norm": 2.114670962743728,
+      "true_l2_norm": 3.0425817114756253,
+      "pred_rms_per_node": 0.01805697080704071,
+      "true_rms_per_node": 0.025980310937295144
+    },
+    "near-wake": {
+      "n": 15248,
+      "pred_l2_norm": 5.109647426668879,
+      "true_l2_norm": 15.868270607090533,
+      "pred_rms_per_node": 0.04137942891090509,
+      "true_rms_per_node": 0.12850592627937468
+    },
+    "far-wake": {
+      "n": 16393,
+      "pred_l2_norm": 6.770711583010343,
+      "true_l2_norm": 23.22800898852161,
+      "pred_rms_per_node": 0.0528816618541179,
+      "true_rms_per_node": 0.18141899884757423
+    },
+    "far-core": {
+      "n": 12460,
+      "pred_l2_norm": 5.8702527526359045,
+      "true_l2_norm": 23.107547402478005,
+      "pred_rms_per_node": 0.05258934717776424,
+      "true_rms_per_node": 0.20701167121465036
+    },
+    "other": {
+      "n": 6298,
+      "pred_l2_norm": 3.576227533212294,
+      "true_l2_norm": 0.4467953170859249,
+      "pred_rms_per_node": 0.045063385317808916,
+      "true_rms_per_node": 0.005629985604956874,
+      "leakage_vs_far_core_pred": 0.8568918941983473,
+      "pred_over_true_rms": 8.0041741630979
+    },
+    "whole-domain": {
+      "n": 51654,
+      "pred_l2_norm": 9.445224656679825,
+      "true_l2_norm": 28.298398243665158,
+      "pred_rms_per_node": 0.04155854298419833,
+      "true_rms_per_node": 0.1245116175147412
+    }
+  }
+}
