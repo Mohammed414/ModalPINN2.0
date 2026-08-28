@@ -1,0 +1,277 @@
+{
+  "analysis_id": "A06",
+  "status": "input_mismatch",
+  "question": "Is the prior-assisted reconstruction robust to pressure noise?",
+  "data_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/data_contract.md",
+  "candidates": {
+    "prior_noise_00pct": {
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off",
+      "run_label": "prior_no_fluct_inlet",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint_exists": true,
+      "checkpoint_sha256": "4a84f4e22daa0128845ddaf013bb89588ecf53f69a5a726009486cf57634ae3a",
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/training_run/NN_functions.py",
+      "nn_functions_exists": true,
+      "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
+      "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/street_prior_used.npz",
+      "flags": {
+        "Tmax": "9",
+        "SparseData": true,
+        "PressureOnly": true,
+        "NTaps": "32",
+        "Seed": "0",
+        "Nmes": "5000",
+        "Nint": "50000",
+        "multigrid": true,
+        "Ngrid": "5",
+        "NgridTurn": "200",
+        "WidthLayer": "25",
+        "Nmodes": "4",
+        "FreestreamBC": true,
+        "SkipDiagnostics": true,
+        "ExitAfterSafetySave": true,
+        "V1RadialTrust": true,
+        "StreetPrior": "street_prior_Ntap32.npz",
+        "V1TrustRho": "0.60",
+        "V1TrustXStart": "3.0",
+        "V1TrustXWidth": "0.30",
+        "V1TrustYMax": "2.0",
+        "V1TrustYWidth": "0.20"
+      },
+      "effort": {
+        "wall_s": 32449.6,
+        "lbfgs_evals": 34643,
+        "adam_ran": true,
+        "final_total_loss": 0.00029793550493195653,
+        "final_physics_loss": 0.0002928291214630008,
+        "final_measurement_loss": 5.106393018650124e-06,
+        "stop_reason": "ftol_rel_reduction",
+        "iterations": 32442,
+        "projg_at_exit": "2.032D-03",
+        "objective_at_exit": "2.644D-04"
+      }
+    },
+    "prior_noise_01pct": {
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_11_prior_noise_01pct",
+      "run_label": "prior_noise_01pct",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_11_prior_noise_01pct/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint_exists": true,
+      "checkpoint_sha256": "b5d51166c3ec76edb2237209b2d6a6c1e0efb9f7ed32c3c33f5dd5cf6068ea63",
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_11_prior_noise_01pct/training_run/NN_functions.py",
+      "nn_functions_exists": true,
+      "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
+      "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_11_prior_noise_01pct/street_prior_used.npz",
+      "flags": {
+        "Tmax": "9",
+        "SparseData": true,
+        "PressureOnly": true,
+        "NTaps": "32",
+        "Seed": "0",
+        "Nmes": "5000",
+        "Nint": "50000",
+        "multigrid": true,
+        "Ngrid": "5",
+        "NgridTurn": "200",
+        "WidthLayer": "25",
+        "Nmodes": "4",
+        "FreestreamBC": true,
+        "LBFGSCheckpointIters": "5000,10000,20000,30000,40000",
+        "SkipDiagnostics": true,
+        "ExitAfterSafetySave": true,
+        "Noise": "4.7265e-04",
+        "V1RadialTrust": true,
+        "StreetPrior": "street_prior_Ntap32.npz",
+        "V1TrustRho": "0.60",
+        "V1TrustXStart": "3.0",
+        "V1TrustXWidth": "0.30",
+        "V1TrustYMax": "2.0",
+        "V1TrustYWidth": "0.20"
+      },
+      "effort": {
+        "wall_s": 32462.0,
+        "lbfgs_evals": 5376,
+        "adam_ran": true,
+        "final_total_loss": 0.0011841028463095427,
+        "final_physics_loss": 0.00116785429418087,
+        "final_measurement_loss": 1.624854667170439e-05,
+        "stop_reason": "ftol_rel_reduction",
+        "iterations": 5026,
+        "projg_at_exit": "8.626D-03",
+        "objective_at_exit": "1.233D-03"
+      }
+    },
+    "prior_noise_05pct": {
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_12_prior_noise_05pct",
+      "run_label": "prior_noise_05pct",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_12_prior_noise_05pct/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint_exists": true,
+      "checkpoint_sha256": "42f085a7dbfc408c9dbb3300d05e7f7da686c571204a17a99c121826bc81c5ea",
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_12_prior_noise_05pct/training_run/NN_functions.py",
+      "nn_functions_exists": true,
+      "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
+      "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_12_prior_noise_05pct/street_prior_used.npz",
+      "flags": {
+        "Tmax": "9",
+        "SparseData": true,
+        "PressureOnly": true,
+        "NTaps": "32",
+        "Seed": "0",
+        "Nmes": "5000",
+        "Nint": "50000",
+        "multigrid": true,
+        "Ngrid": "5",
+        "NgridTurn": "200",
+        "WidthLayer": "25",
+        "Nmodes": "4",
+        "FreestreamBC": true,
+        "SkipDiagnostics": true,
+        "ExitAfterSafetySave": true,
+        "Noise": "2.3633e-03",
+        "V1RadialTrust": true,
+        "StreetPrior": "street_prior_Ntap32.npz",
+        "V1TrustRho": "0.60",
+        "V1TrustXStart": "3.0",
+        "V1TrustXWidth": "0.30",
+        "V1TrustYMax": "2.0",
+        "V1TrustYWidth": "0.20"
+      },
+      "effort": {
+        "wall_s": 32448.3,
+        "lbfgs_evals": 12047,
+        "adam_ran": true,
+        "final_total_loss": 0.0011144854361191392,
+        "final_physics_loss": 0.0010977806523442268,
+        "final_measurement_loss": 1.6704814697732218e-05,
+        "stop_reason": "ftol_rel_reduction",
+        "iterations": 11004,
+        "projg_at_exit": "9.436D-03",
+        "objective_at_exit": "1.143D-03"
+      }
+    },
+    "prior_noise_10pct": {
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_13_prior_noise_10pct",
+      "run_label": "prior_noise_10pct",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_13_prior_noise_10pct/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint_exists": true,
+      "checkpoint_sha256": "810d105f53630b04d987656be03daa48867606f92ea858ec5b2364962958d8fa",
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_13_prior_noise_10pct/training_run/NN_functions.py",
+      "nn_functions_exists": true,
+      "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
+      "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_13_prior_noise_10pct/street_prior_used.npz",
+      "flags": {
+        "Tmax": "9",
+        "SparseData": true,
+        "PressureOnly": true,
+        "NTaps": "32",
+        "Seed": "0",
+        "Nmes": "5000",
+        "Nint": "50000",
+        "multigrid": true,
+        "Ngrid": "5",
+        "NgridTurn": "200",
+        "WidthLayer": "25",
+        "Nmodes": "4",
+        "FreestreamBC": true,
+        "LBFGSCheckpointIters": "5000,10000,20000,30000,40000",
+        "SkipDiagnostics": true,
+        "ExitAfterSafetySave": true,
+        "Noise": "4.7265e-03",
+        "V1RadialTrust": true,
+        "StreetPrior": "street_prior_Ntap32.npz",
+        "V1TrustRho": "0.60",
+        "V1TrustXStart": "3.0",
+        "V1TrustXWidth": "0.30",
+        "V1TrustYMax": "2.0",
+        "V1TrustYWidth": "0.20"
+      },
+      "effort": {
+        "wall_s": 32458.6,
+        "lbfgs_evals": 3156,
+        "adam_ran": true,
+        "final_total_loss": 0.0018255735049024224,
+        "final_physics_loss": 0.0017659022705629468,
+        "final_measurement_loss": 5.967126344330609e-05,
+        "stop_reason": "ftol_rel_reduction",
+        "iterations": 2963,
+        "projg_at_exit": "7.611D-02",
+        "objective_at_exit": "2.433D-03"
+      }
+    }
+  },
+  "controlled_comparison": {
+    "methods": [
+      "prior_noise_00pct",
+      "prior_noise_01pct",
+      "prior_noise_05pct",
+      "prior_noise_10pct"
+    ],
+    "intended_change": "standard deviation of additive noise on the cylinder tap pressures",
+    "intended_change_flags": [
+      "Noise"
+    ],
+    "flag_differences": [
+      {
+        "flag": "LBFGSCheckpointIters",
+        "values": {
+          "prior_noise_00pct": null,
+          "prior_noise_01pct": "5000,10000,20000,30000,40000",
+          "prior_noise_05pct": null,
+          "prior_noise_10pct": "5000,10000,20000,30000,40000"
+        }
+      },
+      {
+        "flag": "Noise",
+        "values": {
+          "prior_noise_00pct": null,
+          "prior_noise_01pct": "4.7265e-04",
+          "prior_noise_05pct": "2.3633e-03",
+          "prior_noise_10pct": "4.7265e-03"
+        }
+      }
+    ],
+    "unintended_flag_differences": [
+      {
+        "flag": "LBFGSCheckpointIters",
+        "values": {
+          "prior_noise_00pct": null,
+          "prior_noise_01pct": "5000,10000,20000,30000,40000",
+          "prior_noise_05pct": null,
+          "prior_noise_10pct": "5000,10000,20000,30000,40000"
+        }
+      }
+    ],
+    "identical_forward_code": true
+  },
+  "effort_audit": {
+    "lbfgs_evals": {
+      "prior_noise_00pct": 34643,
+      "prior_noise_01pct": 5376,
+      "prior_noise_05pct": 12047,
+      "prior_noise_10pct": 3156
+    },
+    "spread_ratio": 10.98,
+    "matched_within_20pct": false,
+    "stop_reasons": {
+      "prior_noise_00pct": "ftol_rel_reduction",
+      "prior_noise_01pct": "ftol_rel_reduction",
+      "prior_noise_05pct": "ftol_rel_reduction",
+      "prior_noise_10pct": "ftol_rel_reduction"
+    },
+    "note": "All arms here were stopped by SciPy's ftol test, which is below float32 resolution for this loss and so fires on rounding noise at an unpredictable iteration. Effort is therefore NOT a controlled variable under --Tmax and must be reported alongside every metric. An arm with less effort that still performs well supports its claim as a lower bound; an arm with less effort that performs badly is uninformative."
+  },
+  "noise_levels": {
+    "flag_values": {
+      "prior_noise_00pct": 0.0,
+      "prior_noise_01pct": 0.00047265,
+      "prior_noise_05pct": 0.0023633,
+      "prior_noise_10pct": 0.0047265
+    },
+    "labels_pct": {
+      "prior_noise_00pct": 0.0,
+      "prior_noise_01pct": 1.0,
+      "prior_noise_05pct": 5.0,
+      "prior_noise_10pct": 10.0
+    },
+    "units": "absolute standard deviation on tap pressure (nondimensional)"
+  }
+}

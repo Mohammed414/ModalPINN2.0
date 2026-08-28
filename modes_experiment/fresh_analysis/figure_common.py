@@ -53,9 +53,14 @@ REGION_COLORS = {
 
 METHOD_LABELS = {
     "arm01": "Pressure only (32 taps)",
+    "arm1_baseline": "Pressure-only + physics",
+    "pressure_only_physics": "Pressure-only + physics",
     "arm04": "Pressure taps + velocity probes",
+    "pressure_and_velocity_probes_physics": "Pressure + velocity probes + physics",
     "arm05": "Dense observations",
+    "dense_observations": "Dense observations (ceiling)",
     "arm15": "Kármán prior (32 taps)",
+    "arm15_v1_radial_trust": "Pressure-only + physics + Kármán prior",
     "prior_only": "Kármán prior only",
     "dns": "CFD reference",
 }
@@ -177,12 +182,13 @@ def check_text_overlaps(fig):
     texts = [(t, t.get_window_extent(r)) for t in fig.findobj(mpl.text.Text)
              if t.get_text().strip() and t.get_visible()]
     ticks = {ax: set(ax.get_xticklabels() + ax.get_yticklabels()) for ax in fig.axes}
+    tick_texts = {id(t) for tick_set in ticks.values() for t in tick_set}
     bad = [(a.get_text(), b.get_text())
            for i, (a, ba) in enumerate(texts) for b, bb in texts[i + 1:]
-           if ba.overlaps(bb)]
+           if id(a) not in tick_texts and id(b) not in tick_texts and ba.overlaps(bb)]
     for t, bt in texts:
         for ax in fig.axes:
-            if t in ticks[ax]:
+            if id(t) in tick_texts:
                 continue
             for s in ax.spines.values():
                 if s.get_visible() and bt.overlaps(s.get_window_extent(r)):

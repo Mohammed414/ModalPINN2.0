@@ -1,0 +1,620 @@
+{
+  "analysis_id": "A06",
+  "method": "pressure_noise",
+  "status": "verified",
+  "data": "/Users/mohammedhilal/Desktop/try/GappyPOD/data/flow_cache.npz",
+  "snapshots": 201,
+  "crop_nodes": 51654,
+  "regions": {
+    "near-cylinder": 13715,
+    "near-wake": 15248,
+    "far-wake": 16393,
+    "far-core": 12460,
+    "other": 6298,
+    "whole-domain": 51654
+  },
+  "metric_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/data_contract.md",
+  "input_manifest": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a06_input_manifest.json",
+  "v1_phase_convention": {
+    "primary": "absolute time (network convention); a perfect model scores rel_L2 0 and phase 0",
+    "legacy": "window tau = t - t0 (as published for A01/A02/A04); a perfect model scores rel_L2 0.289 and phase +16.63 deg",
+    "rotation_deg": 343.37103022131663,
+    "t0": 400.0,
+    "omega_0": 1.036
+  },
+  "snapshot": {
+    "index": 100,
+    "time": 410.0,
+    "artifact": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a06_snapshot_fields.npz"
+  },
+  "models": {
+    "prior_noise_00pct": {
+      "field_metrics": {
+        "near-cylinder": {
+          "u": 0.0592205636203289,
+          "v": 0.0647122859954834,
+          "p": 0.017133427783846855
+        },
+        "near-wake": {
+          "u": 0.16433614492416382,
+          "v": 0.4852791726589203,
+          "p": 0.3067087233066559
+        },
+        "far-wake": {
+          "u": 0.18780824542045593,
+          "v": 0.4490889012813568,
+          "p": 1.5653620958328247
+        },
+        "far-core": {
+          "u": 0.2100825160741806,
+          "v": 0.3913930058479309,
+          "p": 1.276977300643921
+        },
+        "other": {
+          "u": 0.11128376424312592,
+          "v": 0.4498370885848999,
+          "p": 0.680185079574585
+        },
+        "whole-domain": {
+          "u": 0.16075393557548523,
+          "v": 0.3884117901325226,
+          "p": 0.37669020891189575
+        }
+      },
+      "v1_mode_metrics": {
+        "near-cylinder": {
+          "n": 13715,
+          "rel_L2": 0.3986498573379578,
+          "amp_ratio": 0.8003018055450682,
+          "corr": 0.9302835550571199,
+          "phase_deg": 5.735384414413716
+        },
+        "near-wake": {
+          "n": 15248,
+          "rel_L2": 0.38383140890066564,
+          "amp_ratio": 0.8580118281696177,
+          "corr": 0.9267508026289287,
+          "phase_deg": -2.4624810598168367
+        },
+        "far-wake": {
+          "n": 16393,
+          "rel_L2": 0.29220088919846027,
+          "amp_ratio": 0.8405636591923411,
+          "corr": 0.9750197121464105,
+          "phase_deg": -8.490988827110098
+        },
+        "far-core": {
+          "n": 12460,
+          "rel_L2": 0.28949597842624675,
+          "amp_ratio": 0.8387517940246538,
+          "corr": 0.9765788676166026,
+          "phase_deg": -8.622994311329833
+        },
+        "other": {
+          "n": 6298,
+          "rel_L2": 11.281478849190037,
+          "amp_ratio": 11.489159861210807,
+          "corr": 0.35065447214748,
+          "phase_deg": -44.68182376443435
+        },
+        "whole-domain": {
+          "n": 51654,
+          "rel_L2": 0.37069515802150554,
+          "amp_ratio": 0.8647728395492775,
+          "corr": 0.9371953098193957,
+          "phase_deg": -6.52661607589164
+        }
+      },
+      "metadata": {
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/training_run/NN_functions.py",
+        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/street_prior_used.npz",
+        "one_sided_mode_conversion": "network_v1 / 2"
+      },
+      "v1_mode_metrics_window_convention": {
+        "near-cylinder": {
+          "n": 13715,
+          "rel_L2": 0.5132904835173723,
+          "amp_ratio": 0.8003018055450682,
+          "corr": 0.9302835550571199,
+          "phase_deg": 22.364354193097085
+        },
+        "near-wake": {
+          "n": 15248,
+          "rel_L2": 0.44070619498279645,
+          "amp_ratio": 0.8580118281696177,
+          "corr": 0.9267508026289287,
+          "phase_deg": 14.16648871886656
+        },
+        "far-wake": {
+          "n": 16393,
+          "rel_L2": 0.28969119960103407,
+          "amp_ratio": 0.8405636591923411,
+          "corr": 0.9750197121464105,
+          "phase_deg": 8.137980951573297
+        },
+        "far-core": {
+          "n": 12460,
+          "rel_L2": 0.28505577663469084,
+          "amp_ratio": 0.8387517940246538,
+          "corr": 0.9765788676166026,
+          "phase_deg": 8.00597546735355
+        },
+        "other": {
+          "n": 6298,
+          "rel_L2": 11.220070420706776,
+          "amp_ratio": 11.489159861210807,
+          "corr": 0.35065447214748,
+          "phase_deg": -28.05285398575097
+        },
+        "whole-domain": {
+          "n": 51654,
+          "rel_L2": 0.3899240721288276,
+          "amp_ratio": 0.8647728395492775,
+          "corr": 0.9371953098193957,
+          "phase_deg": 10.102353702791731
+        }
+      },
+      "effort": {
+        "wall_s": 32449.6,
+        "lbfgs_evals": 34643,
+        "adam_ran": true,
+        "final_total_loss": 0.00029793550493195653,
+        "final_physics_loss": 0.0002928291214630008,
+        "final_measurement_loss": 5.106393018650124e-06,
+        "stop_reason": "ftol_rel_reduction",
+        "iterations": 32442,
+        "projg_at_exit": "2.032D-03",
+        "objective_at_exit": "2.644D-04"
+      },
+      "provenance": {
+        "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off",
+        "checkpoint_sha256": "4a84f4e22daa0128845ddaf013bb89588ecf53f69a5a726009486cf57634ae3a",
+        "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
+        "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/street_prior_used.npz"
+      },
+      "noise_pct": 0.0
+    },
+    "prior_noise_01pct": {
+      "field_metrics": {
+        "near-cylinder": {
+          "u": 0.07373108714818954,
+          "v": 0.10867218673229218,
+          "p": 0.02000579424202442
+        },
+        "near-wake": {
+          "u": 0.17008616030216217,
+          "v": 0.5298383235931396,
+          "p": 0.3615548610687256
+        },
+        "far-wake": {
+          "u": 0.19777055084705353,
+          "v": 0.45726364850997925,
+          "p": 1.0677814483642578
+        },
+        "far-core": {
+          "u": 0.2304695099592209,
+          "v": 0.4294816255569458,
+          "p": 0.9905796647071838
+        },
+        "other": {
+          "u": 0.0572129525244236,
+          "v": 0.3909766674041748,
+          "p": 0.40695708990097046
+        },
+        "whole-domain": {
+          "u": 0.16344581544399261,
+          "v": 0.4013257622718811,
+          "p": 0.296927809715271
+        }
+      },
+      "v1_mode_metrics": {
+        "near-cylinder": {
+          "n": 13715,
+          "rel_L2": 0.6999103834236227,
+          "amp_ratio": 0.6084748092946866,
+          "corr": 0.7518662120288071,
+          "phase_deg": -15.81065529549928
+        },
+        "near-wake": {
+          "n": 15248,
+          "rel_L2": 0.44878696617869035,
+          "amp_ratio": 0.8928871173386282,
+          "corr": 0.9304627814251119,
+          "phase_deg": -16.173148811783793
+        },
+        "far-wake": {
+          "n": 16393,
+          "rel_L2": 0.32750394083486484,
+          "amp_ratio": 0.8113977736232508,
+          "corr": 0.9676859042948462,
+          "phase_deg": -8.98019266938192
+        },
+        "far-core": {
+          "n": 12460,
+          "rel_L2": 0.3249072452981911,
+          "amp_ratio": 0.8110603267772551,
+          "corr": 0.9693862586189862,
+          "phase_deg": -9.195351535111259
+        },
+        "other": {
+          "n": 6298,
+          "rel_L2": 9.978337335012958,
+          "amp_ratio": 10.364851180213302,
+          "corr": 0.47685145370807236,
+          "phase_deg": 26.284745229539226
+        },
+        "whole-domain": {
+          "n": 51654,
+          "rel_L2": 0.40752948311166604,
+          "amp_ratio": 0.8516581303594639,
+          "corr": 0.9336156017305978,
+          "phase_deg": -11.331940087529448
+        }
+      },
+      "metadata": {
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_11_prior_noise_01pct/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_11_prior_noise_01pct/training_run/NN_functions.py",
+        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_11_prior_noise_01pct/street_prior_used.npz",
+        "one_sided_mode_conversion": "network_v1 / 2"
+      },
+      "v1_mode_metrics_window_convention": {
+        "near-cylinder": {
+          "n": 13715,
+          "rel_L2": 0.67479746056577,
+          "amp_ratio": 0.6084748092946866,
+          "corr": 0.7518662120288071,
+          "phase_deg": 0.8183144831841105
+        },
+        "near-wake": {
+          "n": 15248,
+          "rel_L2": 0.36837959342773674,
+          "amp_ratio": 0.8928871173386282,
+          "corr": 0.9304627814251119,
+          "phase_deg": 0.45582096689958007
+        },
+        "far-wake": {
+          "n": 16393,
+          "rel_L2": 0.3193463283669929,
+          "amp_ratio": 0.8113977736232508,
+          "corr": 0.9676859042948462,
+          "phase_deg": 7.648777109301477
+        },
+        "far-core": {
+          "n": 12460,
+          "rel_L2": 0.3139637860779942,
+          "amp_ratio": 0.8110603267772551,
+          "corr": 0.9693862586189862,
+          "phase_deg": 7.433618243572084
+        },
+        "other": {
+          "n": 6298,
+          "rel_L2": 10.05935249553974,
+          "amp_ratio": 10.364851180213302,
+          "corr": 0.47685145370807236,
+          "phase_deg": 42.913715008222596
+        },
+        "whole-domain": {
+          "n": 51654,
+          "rel_L2": 0.37665646093720867,
+          "amp_ratio": 0.8516581303594639,
+          "corr": 0.9336156017305978,
+          "phase_deg": 5.297029691153909
+        }
+      },
+      "effort": {
+        "wall_s": 32462.0,
+        "lbfgs_evals": 5376,
+        "adam_ran": true,
+        "final_total_loss": 0.0011841028463095427,
+        "final_physics_loss": 0.00116785429418087,
+        "final_measurement_loss": 1.624854667170439e-05,
+        "stop_reason": "ftol_rel_reduction",
+        "iterations": 5026,
+        "projg_at_exit": "8.626D-03",
+        "objective_at_exit": "1.233D-03"
+      },
+      "provenance": {
+        "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_11_prior_noise_01pct",
+        "checkpoint_sha256": "b5d51166c3ec76edb2237209b2d6a6c1e0efb9f7ed32c3c33f5dd5cf6068ea63",
+        "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
+        "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_11_prior_noise_01pct/street_prior_used.npz"
+      },
+      "noise_pct": 1.0
+    },
+    "prior_noise_05pct": {
+      "field_metrics": {
+        "near-cylinder": {
+          "u": 0.06289372593164444,
+          "v": 0.09839047491550446,
+          "p": 0.017139922827482224
+        },
+        "near-wake": {
+          "u": 0.15660448372364044,
+          "v": 0.5128588080406189,
+          "p": 0.35345929861068726
+        },
+        "far-wake": {
+          "u": 0.17741991579532623,
+          "v": 0.4179736375808716,
+          "p": 1.1285940408706665
+        },
+        "far-core": {
+          "u": 0.2050587683916092,
+          "v": 0.39045074582099915,
+          "p": 1.018853783607483
+        },
+        "other": {
+          "u": 0.0621359720826149,
+          "v": 0.41323941946029663,
+          "p": 0.4176536500453949
+        },
+        "whole-domain": {
+          "u": 0.14874812960624695,
+          "v": 0.3803679943084717,
+          "p": 0.3033050000667572
+        }
+      },
+      "v1_mode_metrics": {
+        "near-cylinder": {
+          "n": 13715,
+          "rel_L2": 0.6544942735235596,
+          "amp_ratio": 0.6579906034251627,
+          "corr": 0.7769054187135748,
+          "phase_deg": -10.708296256981402
+        },
+        "near-wake": {
+          "n": 15248,
+          "rel_L2": 0.4553615305680055,
+          "amp_ratio": 0.9266840978207586,
+          "corr": 0.9363587299680133,
+          "phase_deg": -17.90260771410457
+        },
+        "far-wake": {
+          "n": 16393,
+          "rel_L2": 0.2794755820666644,
+          "amp_ratio": 0.875904817655558,
+          "corr": 0.9764000442348895,
+          "phase_deg": -9.065218383461948
+        },
+        "far-core": {
+          "n": 12460,
+          "rel_L2": 0.27761348481092896,
+          "amp_ratio": 0.8757066245469506,
+          "corr": 0.9775554934848204,
+          "phase_deg": -9.259827576240536
+        },
+        "other": {
+          "n": 6298,
+          "rel_L2": 10.617562860298005,
+          "amp_ratio": 11.00489351603509,
+          "corr": 0.4559837850404911,
+          "phase_deg": 20.911757976022788
+        },
+        "whole-domain": {
+          "n": 51654,
+          "rel_L2": 0.38843130799860315,
+          "amp_ratio": 0.9067116131268358,
+          "corr": 0.9416613123486878,
+          "phase_deg": -11.848588395796424
+        }
+      },
+      "metadata": {
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_12_prior_noise_05pct/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_12_prior_noise_05pct/training_run/NN_functions.py",
+        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_12_prior_noise_05pct/street_prior_used.npz",
+        "one_sided_mode_conversion": "network_v1 / 2"
+      },
+      "v1_mode_metrics_window_convention": {
+        "near-cylinder": {
+          "n": 13715,
+          "rel_L2": 0.6449903041560383,
+          "amp_ratio": 0.6579906034251627,
+          "corr": 0.7769054187135748,
+          "phase_deg": 5.9206735217019855
+        },
+        "near-wake": {
+          "n": 15248,
+          "rel_L2": 0.3517878281039982,
+          "amp_ratio": 0.9266840978207586,
+          "corr": 0.9363587299680133,
+          "phase_deg": -1.2736379354212204
+        },
+        "far-wake": {
+          "n": 16393,
+          "rel_L2": 0.2676284591673135,
+          "amp_ratio": 0.875904817655558,
+          "corr": 0.9764000442348895,
+          "phase_deg": 7.563751395221402
+        },
+        "far-core": {
+          "n": 12460,
+          "rel_L2": 0.2624876527814262,
+          "amp_ratio": 0.8757066245469506,
+          "corr": 0.9775554934848204,
+          "phase_deg": 7.369142202442845
+        },
+        "other": {
+          "n": 6298,
+          "rel_L2": 10.68409322294349,
+          "amp_ratio": 11.00489351603509,
+          "corr": 0.4559837850404911,
+          "phase_deg": 37.540727754706154
+        },
+        "whole-domain": {
+          "n": 51654,
+          "rel_L2": 0.3470382217818265,
+          "amp_ratio": 0.9067116131268358,
+          "corr": 0.9416613123486878,
+          "phase_deg": 4.780381382886958
+        }
+      },
+      "effort": {
+        "wall_s": 32448.3,
+        "lbfgs_evals": 12047,
+        "adam_ran": true,
+        "final_total_loss": 0.0011144854361191392,
+        "final_physics_loss": 0.0010977806523442268,
+        "final_measurement_loss": 1.6704814697732218e-05,
+        "stop_reason": "ftol_rel_reduction",
+        "iterations": 11004,
+        "projg_at_exit": "9.436D-03",
+        "objective_at_exit": "1.143D-03"
+      },
+      "provenance": {
+        "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_12_prior_noise_05pct",
+        "checkpoint_sha256": "42f085a7dbfc408c9dbb3300d05e7f7da686c571204a17a99c121826bc81c5ea",
+        "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
+        "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_12_prior_noise_05pct/street_prior_used.npz"
+      },
+      "noise_pct": 5.0
+    },
+    "prior_noise_10pct": {
+      "field_metrics": {
+        "near-cylinder": {
+          "u": 0.09370756894350052,
+          "v": 0.13249947130680084,
+          "p": 0.02617809548974037
+        },
+        "near-wake": {
+          "u": 0.1566605120897293,
+          "v": 0.532444953918457,
+          "p": 0.35618773102760315
+        },
+        "far-wake": {
+          "u": 0.16219256818294525,
+          "v": 0.3795958459377289,
+          "p": 0.8997705578804016
+        },
+        "far-core": {
+          "u": 0.1878928542137146,
+          "v": 0.3712204396724701,
+          "p": 0.8129088878631592
+        },
+        "other": {
+          "u": 0.04985698312520981,
+          "v": 0.3529984951019287,
+          "p": 0.42527011036872864
+        },
+        "whole-domain": {
+          "u": 0.14260299503803253,
+          "v": 0.36724621057510376,
+          "p": 0.2745418846607208
+        }
+      },
+      "v1_mode_metrics": {
+        "near-cylinder": {
+          "n": 13715,
+          "rel_L2": 0.7895757607677257,
+          "amp_ratio": 0.5842884424809394,
+          "corr": 0.7122371534716474,
+          "phase_deg": -30.38780418028048
+        },
+        "near-wake": {
+          "n": 15248,
+          "rel_L2": 0.502112675552949,
+          "amp_ratio": 0.8703991366700872,
+          "corr": 0.9338909808746328,
+          "phase_deg": -22.17432822177604
+        },
+        "far-wake": {
+          "n": 16393,
+          "rel_L2": 0.279168343306454,
+          "amp_ratio": 0.8581488073081793,
+          "corr": 0.9748272375066555,
+          "phase_deg": -7.57718690669494
+        },
+        "far-core": {
+          "n": 12460,
+          "rel_L2": 0.2765392647790837,
+          "amp_ratio": 0.857607241922333,
+          "corr": 0.9762484319928335,
+          "phase_deg": -7.791604813187759
+        },
+        "other": {
+          "n": 6298,
+          "rel_L2": 9.045155025269532,
+          "amp_ratio": 9.45925550687276,
+          "corr": 0.5025465724755647,
+          "phase_deg": 24.335417682621653
+        },
+        "whole-domain": {
+          "n": 51654,
+          "rel_L2": 0.39923193704389887,
+          "amp_ratio": 0.8721426773085287,
+          "corr": 0.9391180596051768,
+          "phase_deg": -12.174878090808534
+        }
+      },
+      "metadata": {
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_13_prior_noise_10pct/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_13_prior_noise_10pct/training_run/NN_functions.py",
+        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_13_prior_noise_10pct/street_prior_used.npz",
+        "one_sided_mode_conversion": "network_v1 / 2"
+      },
+      "v1_mode_metrics_window_convention": {
+        "near-cylinder": {
+          "n": 13715,
+          "rel_L2": 0.73004912752297,
+          "amp_ratio": 0.5842884424809394,
+          "corr": 0.7122371534716474,
+          "phase_deg": -13.758834401597085
+        },
+        "near-wake": {
+          "n": 15248,
+          "rel_L2": 0.37347983106986404,
+          "amp_ratio": 0.8703991366700872,
+          "corr": 0.9338909808746328,
+          "phase_deg": -5.545358443092653
+        },
+        "far-wake": {
+          "n": 16393,
+          "rel_L2": 0.2901060040695993,
+          "amp_ratio": 0.8581488073081793,
+          "corr": 0.9748272375066555,
+          "phase_deg": 9.05178287198845
+        },
+        "far-core": {
+          "n": 12460,
+          "rel_L2": 0.28441770155619656,
+          "amp_ratio": 0.857607241922333,
+          "corr": 0.9762484319928335,
+          "phase_deg": 8.837364965495624
+        },
+        "other": {
+          "n": 6298,
+          "rel_L2": 9.126789607864321,
+          "amp_ratio": 9.45925550687276,
+          "corr": 0.5025465724755647,
+          "phase_deg": 40.96438746130502
+        },
+        "whole-domain": {
+          "n": 51654,
+          "rel_L2": 0.35705770028981965,
+          "amp_ratio": 0.8721426773085287,
+          "corr": 0.9391180596051768,
+          "phase_deg": 4.454091687874836
+        }
+      },
+      "effort": {
+        "wall_s": 32458.6,
+        "lbfgs_evals": 3156,
+        "adam_ran": true,
+        "final_total_loss": 0.0018255735049024224,
+        "final_physics_loss": 0.0017659022705629468,
+        "final_measurement_loss": 5.967126344330609e-05,
+        "stop_reason": "ftol_rel_reduction",
+        "iterations": 2963,
+        "projg_at_exit": "7.611D-02",
+        "objective_at_exit": "2.433D-03"
+      },
+      "provenance": {
+        "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_13_prior_noise_10pct",
+        "checkpoint_sha256": "810d105f53630b04d987656be03daa48867606f92ea858ec5b2364962958d8fa",
+        "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
+        "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_13_prior_noise_10pct/street_prior_used.npz"
+      },
+      "noise_pct": 10.0
+    }
+  }
+}

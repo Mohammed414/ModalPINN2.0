@@ -1,0 +1,10 @@
+# Raw Colab output archive of the matched-effort re-run (~8.5 MB).
+#
+# The run it contains was analysed and DISCARDED (see 01b_matched_effort_outcome.md
+# and fresh_analysis/decisions.md, 2026-08-28). Everything of record from it --
+# effort, losses, stop reason, wall clock, and the v1 diagnostics -- is distilled
+# into 01b_matched_effort_outcome.md and 01b_matched_effort_comparison.csv, which
+# ARE tracked. The archive is kept on disk as raw evidence but not in git.
+#
+# Delete this line if the archive should be versioned after all.
+baseline_physics_only_K3_matched-*.zip

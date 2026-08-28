@@ -1,0 +1,97 @@
+comparison,region,metric_group,quantity,metric,value,unit,reference,notes
+network_gain_over_karman_prior,near-cylinder,field,u,rel_L2_reduction_pct,96.9610028486,percent,karman_prior_only,Positive values indicate lower relative L2 after adding the network.
+network_gain_over_karman_prior,near-cylinder,field,v,rel_L2_reduction_pct,96.5911222534,percent,karman_prior_only,Positive values indicate lower relative L2 after adding the network.
+network_gain_over_karman_prior,near-cylinder,field,p,rel_L2_reduction_pct,97.7896303429,percent,karman_prior_only,Positive values indicate lower relative L2 after adding the network.
+network_gain_over_karman_prior,near-cylinder,v1_mode,v,rel_L2_reduction_pct,62.5938898666,percent,karman_prior_only,First-harmonic v1 relative L2 reduction; positive is better.
+network_gain_over_karman_prior,near-cylinder,v1_mode,v,amplitude_abs_error_reduction_pct,38.925998524,percent,ideal_amplitude_ratio_1,Reduction in absolute distance from amplitude ratio 1.
+network_gain_over_karman_prior,near-cylinder,v1_mode,v,correlation_gain_pp,20.8598154869,percentage_points,karman_prior_only,Signed increase in normalized complex correlation; ideal value is 1.
+network_gain_over_karman_prior,near-cylinder,v1_mode,v,phase_abs_error_reduction_pct,80.7656876478,percent,ideal_phase_0_deg,Reduction in absolute phase offset from zero degrees.
+network_gain_over_karman_prior,near-wake,field,u,rel_L2_reduction_pct,66.1695507495,percent,karman_prior_only,Positive values indicate lower relative L2 after adding the network.
+network_gain_over_karman_prior,near-wake,field,v,rel_L2_reduction_pct,51.7356335705,percent,karman_prior_only,Positive values indicate lower relative L2 after adding the network.
+network_gain_over_karman_prior,near-wake,field,p,rel_L2_reduction_pct,66.2143293917,percent,karman_prior_only,Positive values indicate lower relative L2 after adding the network.
+network_gain_over_karman_prior,near-wake,v1_mode,v,rel_L2_reduction_pct,36.6639784529,percent,karman_prior_only,First-harmonic v1 relative L2 reduction; positive is better.
+network_gain_over_karman_prior,near-wake,v1_mode,v,amplitude_abs_error_reduction_pct,-59.6157573361,percent,ideal_amplitude_ratio_1,Reduction in absolute distance from amplitude ratio 1.
+network_gain_over_karman_prior,near-wake,v1_mode,v,correlation_gain_pp,8.44567526175,percentage_points,karman_prior_only,Signed increase in normalized complex correlation; ideal value is 1.
+network_gain_over_karman_prior,near-wake,v1_mode,v,phase_abs_error_reduction_pct,50.6866231707,percent,ideal_phase_0_deg,Reduction in absolute phase offset from zero degrees.
+network_gain_over_karman_prior,far-wake,field,u,rel_L2_reduction_pct,20.6000056672,percent,karman_prior_only,Positive values indicate lower relative L2 after adding the network.
+network_gain_over_karman_prior,far-wake,field,v,rel_L2_reduction_pct,-4.02055761268,percent,karman_prior_only,Positive values indicate lower relative L2 after adding the network.
+network_gain_over_karman_prior,far-wake,field,p,rel_L2_reduction_pct,-74.7622548017,percent,karman_prior_only,Positive values indicate lower relative L2 after adding the network.
+network_gain_over_karman_prior,far-wake,v1_mode,v,rel_L2_reduction_pct,-1.63517849175,percent,karman_prior_only,First-harmonic v1 relative L2 reduction; positive is better.
+network_gain_over_karman_prior,far-wake,v1_mode,v,amplitude_abs_error_reduction_pct,16.8860843569,percent,ideal_amplitude_ratio_1,Reduction in absolute distance from amplitude ratio 1.
+network_gain_over_karman_prior,far-wake,v1_mode,v,correlation_gain_pp,-0.176782807044,percentage_points,karman_prior_only,Signed increase in normalized complex correlation; ideal value is 1.
+network_gain_over_karman_prior,far-wake,v1_mode,v,phase_abs_error_reduction_pct,-51.5942712562,percent,ideal_phase_0_deg,Reduction in absolute phase offset from zero degrees.
+network_gain_over_karman_prior,far-core,field,u,rel_L2_reduction_pct,26.0109195704,percent,karman_prior_only,Positive values indicate lower relative L2 after adding the network.
+network_gain_over_karman_prior,far-core,field,v,rel_L2_reduction_pct,9.03720345942,percent,karman_prior_only,Positive values indicate lower relative L2 after adding the network.
+network_gain_over_karman_prior,far-core,field,p,rel_L2_reduction_pct,-42.6166302761,percent,karman_prior_only,Positive values indicate lower relative L2 after adding the network.
+network_gain_over_karman_prior,far-core,v1_mode,v,rel_L2_reduction_pct,-1.10916150056,percent,karman_prior_only,First-harmonic v1 relative L2 reduction; positive is better.
+network_gain_over_karman_prior,far-core,v1_mode,v,amplitude_abs_error_reduction_pct,15.9175822396,percent,ideal_amplitude_ratio_1,Reduction in absolute distance from amplitude ratio 1.
+network_gain_over_karman_prior,far-core,v1_mode,v,correlation_gain_pp,-0.0967182654036,percentage_points,karman_prior_only,Signed increase in normalized complex correlation; ideal value is 1.
+network_gain_over_karman_prior,far-core,v1_mode,v,phase_abs_error_reduction_pct,-55.0683248014,percent,ideal_phase_0_deg,Reduction in absolute phase offset from zero degrees.
+network_gain_over_karman_prior,other,field,u,rel_L2_reduction_pct,-14.0224194123,percent,karman_prior_only,Positive values indicate lower relative L2 after adding the network.
+network_gain_over_karman_prior,other,field,v,rel_L2_reduction_pct,-5.4404677057,percent,karman_prior_only,Positive values indicate lower relative L2 after adding the network.
+network_gain_over_karman_prior,other,field,p,rel_L2_reduction_pct,30.0689169302,percent,karman_prior_only,Positive values indicate lower relative L2 after adding the network.
+network_gain_over_karman_prior,other,v1_mode,v,rel_L2_reduction_pct,-1199.10996974,percent,karman_prior_only,First-harmonic v1 relative L2 reduction; positive is better.
+network_gain_over_karman_prior,other,v1_mode,v,amplitude_abs_error_reduction_pct,-1538.90621602,percent,ideal_amplitude_ratio_1,Reduction in absolute distance from amplitude ratio 1.
+network_gain_over_karman_prior,other,v1_mode,v,correlation_gain_pp,-20.5326256257,percentage_points,karman_prior_only,Signed increase in normalized complex correlation; ideal value is 1.
+network_gain_over_karman_prior,other,v1_mode,v,phase_abs_error_reduction_pct,-69.2426277699,percent,ideal_phase_0_deg,Reduction in absolute phase offset from zero degrees.
+network_gain_over_karman_prior,whole-domain,field,u,rel_L2_reduction_pct,75.4108647465,percent,karman_prior_only,Positive values indicate lower relative L2 after adding the network.
+network_gain_over_karman_prior,whole-domain,field,v,rel_L2_reduction_pct,66.7954851708,percent,karman_prior_only,Positive values indicate lower relative L2 after adding the network.
+network_gain_over_karman_prior,whole-domain,field,p,rel_L2_reduction_pct,54.5644668539,percent,karman_prior_only,Positive values indicate lower relative L2 after adding the network.
+network_gain_over_karman_prior,whole-domain,v1_mode,v,rel_L2_reduction_pct,18.5057043643,percent,karman_prior_only,First-harmonic v1 relative L2 reduction; positive is better.
+network_gain_over_karman_prior,whole-domain,v1_mode,v,amplitude_abs_error_reduction_pct,15.2599578849,percent,ideal_amplitude_ratio_1,Reduction in absolute distance from amplitude ratio 1.
+network_gain_over_karman_prior,whole-domain,v1_mode,v,correlation_gain_pp,5.41679331468,percentage_points,karman_prior_only,Signed increase in normalized complex correlation; ideal value is 1.
+network_gain_over_karman_prior,whole-domain,v1_mode,v,phase_abs_error_reduction_pct,-83.403723286,percent,ideal_phase_0_deg,Reduction in absolute phase offset from zero degrees.
+learned_correction_snapshot,near-cylinder,learned_correction_snapshot,u,rms_abs_per_node,0.897572012619,field_units,hybrid_minus_karman_prior,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,near-cylinder,learned_correction_snapshot,u,relative_to_reference_rms,1.97509705754,ratio,CFD_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,near-cylinder,learned_correction_snapshot,u,relative_to_prior_rms,0.779410471206,ratio,Karman_prior_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,near-cylinder,learned_correction_snapshot,v,rms_abs_per_node,0.471568989222,field_units,hybrid_minus_karman_prior,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,near-cylinder,learned_correction_snapshot,v,relative_to_reference_rms,1.88979772064,ratio,CFD_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,near-cylinder,learned_correction_snapshot,v,relative_to_prior_rms,0.852937654247,ratio,Karman_prior_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,near-cylinder,learned_correction_snapshot,p,rms_abs_per_node,0.302838193286,field_units,hybrid_minus_karman_prior,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,near-cylinder,learned_correction_snapshot,p,relative_to_reference_rms,0.773187647937,ratio,CFD_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,near-cylinder,learned_correction_snapshot,p,relative_to_prior_rms,0.831805666666,ratio,Karman_prior_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,near-wake,learned_correction_snapshot,u,rms_abs_per_node,0.507816863825,field_units,hybrid_minus_karman_prior,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,near-wake,learned_correction_snapshot,u,relative_to_reference_rms,0.557712031573,ratio,CFD_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,near-wake,learned_correction_snapshot,u,relative_to_prior_rms,0.510453827459,ratio,Karman_prior_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,near-wake,learned_correction_snapshot,v,rms_abs_per_node,0.225932412146,field_units,hybrid_minus_karman_prior,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,near-wake,learned_correction_snapshot,v,relative_to_reference_rms,1.07086940921,ratio,CFD_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,near-wake,learned_correction_snapshot,v,relative_to_prior_rms,1.05819700913,ratio,Karman_prior_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,near-wake,learned_correction_snapshot,p,rms_abs_per_node,0.248932169451,field_units,hybrid_minus_karman_prior,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,near-wake,learned_correction_snapshot,p,relative_to_reference_rms,1.01026530247,ratio,CFD_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,near-wake,learned_correction_snapshot,p,relative_to_prior_rms,5.88371630881,ratio,Karman_prior_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,far-wake,learned_correction_snapshot,u,rms_abs_per_node,0.300972892488,field_units,hybrid_minus_karman_prior,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,far-wake,learned_correction_snapshot,u,relative_to_reference_rms,0.337826959518,ratio,CFD_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,far-wake,learned_correction_snapshot,u,relative_to_prior_rms,0.301540920107,ratio,Karman_prior_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,far-wake,learned_correction_snapshot,v,rms_abs_per_node,0.151245982978,field_units,hybrid_minus_karman_prior,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,far-wake,learned_correction_snapshot,v,relative_to_reference_rms,0.571881066707,ratio,CFD_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,far-wake,learned_correction_snapshot,v,relative_to_prior_rms,0.668550372269,ratio,Karman_prior_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,far-wake,learned_correction_snapshot,p,rms_abs_per_node,0.0994988133719,field_units,hybrid_minus_karman_prior,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,far-wake,learned_correction_snapshot,p,relative_to_reference_rms,1.13245909611,ratio,CFD_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,far-wake,learned_correction_snapshot,p,relative_to_prior_rms,3.21960710491,ratio,Karman_prior_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,far-core,learned_correction_snapshot,u,rms_abs_per_node,0.33845595734,field_units,hybrid_minus_karman_prior,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,far-core,learned_correction_snapshot,u,relative_to_reference_rms,0.398467913431,ratio,CFD_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,far-core,learned_correction_snapshot,u,relative_to_prior_rms,0.339042633075,ratio,Karman_prior_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,far-core,learned_correction_snapshot,v,rms_abs_per_node,0.156251632291,field_units,hybrid_minus_karman_prior,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,far-core,learned_correction_snapshot,v,relative_to_reference_rms,0.518222145053,ratio,CFD_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,far-core,learned_correction_snapshot,v,relative_to_prior_rms,0.604768338342,ratio,Karman_prior_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,far-core,learned_correction_snapshot,p,rms_abs_per_node,0.104030617172,field_units,hybrid_minus_karman_prior,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,far-core,learned_correction_snapshot,p,relative_to_reference_rms,1.03630262121,ratio,CFD_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,far-core,learned_correction_snapshot,p,relative_to_prior_rms,3.06752290792,ratio,Karman_prior_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,other,learned_correction_snapshot,u,rms_abs_per_node,0.123048802342,field_units,hybrid_minus_karman_prior,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,other,learned_correction_snapshot,u,relative_to_reference_rms,0.131743821979,ratio,CFD_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,other,learned_correction_snapshot,u,relative_to_prior_rms,0.122222347324,ratio,Karman_prior_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,other,learned_correction_snapshot,v,rms_abs_per_node,0.154789804562,field_units,hybrid_minus_karman_prior,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,other,learned_correction_snapshot,v,relative_to_reference_rms,0.736258208258,ratio,CFD_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,other,learned_correction_snapshot,v,relative_to_prior_rms,1.08656794131,ratio,Karman_prior_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,other,learned_correction_snapshot,p,rms_abs_per_node,0.171169075528,field_units,hybrid_minus_karman_prior,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,other,learned_correction_snapshot,p,relative_to_reference_rms,1.08424241899,ratio,CFD_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,other,learned_correction_snapshot,p,relative_to_prior_rms,3.26725337577,ratio,Karman_prior_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,whole-domain,learned_correction_snapshot,u,rms_abs_per_node,0.566240375606,field_units,hybrid_minus_karman_prior,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,whole-domain,learned_correction_snapshot,u,relative_to_reference_rms,0.698140963112,ratio,CFD_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,whole-domain,learned_correction_snapshot,u,relative_to_prior_rms,0.543852034936,ratio,Karman_prior_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,whole-domain,learned_correction_snapshot,v,rms_abs_per_node,0.290334909029,field_units,hybrid_minus_karman_prior,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,whole-domain,learned_correction_snapshot,v,relative_to_reference_rms,1.21331552915,ratio,CFD_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,whole-domain,learned_correction_snapshot,v,relative_to_prior_rms,0.862418633924,ratio,Karman_prior_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,whole-domain,learned_correction_snapshot,p,rms_abs_per_node,0.222165261579,field_units,hybrid_minus_karman_prior,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,whole-domain,learned_correction_snapshot,p,relative_to_reference_rms,0.877199570583,ratio,CFD_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."
+learned_correction_snapshot,whole-domain,learned_correction_snapshot,p,relative_to_prior_rms,1.16509932907,ratio,Karman_prior_snapshot_rms,"Representative snapshot index 100, t=410; not time-averaged."

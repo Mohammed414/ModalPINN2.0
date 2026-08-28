@@ -1,0 +1,280 @@
+{
+  "analysis_id": "A02",
+  "method": "tap_count",
+  "status": "verified",
+  "data": "/Users/mohammedhilal/Desktop/try/GappyPOD/data/flow_cache.npz",
+  "snapshots": 201,
+  "crop_nodes": 51654,
+  "regions": {
+    "near-cylinder": 13715,
+    "near-wake": 15248,
+    "far-wake": 16393,
+    "far-core": 12460,
+    "other": 6298,
+    "whole-domain": 51654
+  },
+  "metric_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/data_contract.md",
+  "input_manifest": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a02_input_manifest.json",
+  "snapshot": {
+    "index": 100,
+    "time": 410.0,
+    "artifact": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a02_snapshot_fields.npz"
+  },
+  "models": {
+    "pressure_only_physics_8_taps": {
+      "field_metrics": {
+        "near-cylinder": {
+          "u": 0.06901976466178894,
+          "v": 0.14286431670188904,
+          "p": 0.08502314984798431
+        },
+        "near-wake": {
+          "u": 0.29225000739097595,
+          "v": 1.0818753242492676,
+          "p": 0.6500864028930664
+        },
+        "far-wake": {
+          "u": 0.5480369329452515,
+          "v": 1.0355051755905151,
+          "p": 2.504743814468384
+        },
+        "far-core": {
+          "u": 0.6313831210136414,
+          "v": 1.0138248205184937,
+          "p": 2.0009260177612305
+        },
+        "other": {
+          "u": 0.07508361339569092,
+          "v": 0.17537271976470947,
+          "p": 0.30188801884651184
+        },
+        "whole-domain": {
+          "u": 0.38466066122055054,
+          "v": 0.8278552293777466,
+          "p": 0.605472981929779
+        }
+      },
+      "v1_mode_metrics": {
+        "near-cylinder": {
+          "n": 13715,
+          "rel_L2": 0.770874558696153,
+          "amp_ratio": 0.3066118548942568,
+          "corr": 0.820138431879499,
+          "phase_deg": -6.4313990968371115
+        },
+        "near-wake": {
+          "n": 15248,
+          "rel_L2": 1.0444173748219172,
+          "amp_ratio": 0.13122838476609108,
+          "corr": 0.3462010470495233,
+          "phase_deg": 144.08291082625166
+        },
+        "far-wake": {
+          "n": 16393,
+          "rel_L2": 0.9928936131368976,
+          "amp_ratio": 0.08572913251368051,
+          "corr": 0.13683469320995115,
+          "phase_deg": -23.52321271593309
+        },
+        "far-core": {
+          "n": 12460,
+          "rel_L2": 0.9922809120688576,
+          "amp_ratio": 0.07589276873458732,
+          "corr": 0.1560560966010383,
+          "phase_deg": -26.82374880807862
+        },
+        "other": {
+          "n": 6298,
+          "rel_L2": 2.5732646628964906,
+          "amp_ratio": 2.548801810105761,
+          "corr": 0.2463796818175955,
+          "phase_deg": -45.85737285761865
+        },
+        "whole-domain": {
+          "n": 51654,
+          "rel_L2": 1.007830545282121,
+          "amp_ratio": 0.11433658673053135,
+          "corr": 0.04344600294789235,
+          "phase_deg": 105.46742715855312
+        }
+      },
+      "metadata": {
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/08_taps_08/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/08_taps_08/training_run/NN_functions.py",
+        "prior_for_v1_radial": null,
+        "one_sided_mode_conversion": "network_v1 / 2"
+      },
+      "ntaps": 8
+    },
+    "pressure_only_physics_16_taps": {
+      "field_metrics": {
+        "near-cylinder": {
+          "u": 0.053224727511405945,
+          "v": 0.11401001363992691,
+          "p": 0.01895841769874096
+        },
+        "near-wake": {
+          "u": 0.2949351966381073,
+          "v": 1.1257730722427368,
+          "p": 0.6854112148284912
+        },
+        "far-wake": {
+          "u": 0.5786994099617004,
+          "v": 1.0503432750701904,
+          "p": 2.7731873989105225
+        },
+        "far-core": {
+          "u": 0.6747479438781738,
+          "v": 1.0232127904891968,
+          "p": 2.2428393363952637
+        },
+        "other": {
+          "u": 0.06217988580465317,
+          "v": 0.1882726401090622,
+          "p": 0.345451682806015
+        },
+        "whole-domain": {
+          "u": 0.40163329243659973,
+          "v": 0.8465421199798584,
+          "p": 0.6563698649406433
+        }
+      },
+      "v1_mode_metrics": {
+        "near-cylinder": {
+          "n": 13715,
+          "rel_L2": 0.7088253723176763,
+          "amp_ratio": 0.37231059009599216,
+          "corr": 0.8572082040636148,
+          "phase_deg": 4.664014512847771
+        },
+        "near-wake": {
+          "n": 15248,
+          "rel_L2": 1.0595320127381642,
+          "amp_ratio": 0.16826164604830984,
+          "corr": 0.36408852607231523,
+          "phase_deg": 140.31902767891327
+        },
+        "far-wake": {
+          "n": 16393,
+          "rel_L2": 0.993534721472441,
+          "amp_ratio": 0.11138574296058376,
+          "corr": 0.11988853283296688,
+          "phase_deg": -18.715457983500176
+        },
+        "far-core": {
+          "n": 12460,
+          "rel_L2": 0.9923024092308341,
+          "amp_ratio": 0.09844119183470144,
+          "corr": 0.13764491331642495,
+          "phase_deg": -22.557431678229662
+        },
+        "other": {
+          "n": 6298,
+          "rel_L2": 3.489264177980177,
+          "amp_ratio": 3.4921813271403224,
+          "corr": 0.26994844949577573,
+          "phase_deg": -57.23543800568779
+        },
+        "whole-domain": {
+          "n": 51654,
+          "rel_L2": 1.0133620664521357,
+          "amp_ratio": 0.14799989297918,
+          "corr": 0.06647303979127224,
+          "phase_deg": 104.71736128331936
+        }
+      },
+      "metadata": {
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/09_taps_16/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/09_taps_16/training_run/NN_functions.py",
+        "prior_for_v1_radial": null,
+        "one_sided_mode_conversion": "network_v1 / 2"
+      },
+      "ntaps": 16
+    },
+    "pressure_only_physics_32_taps": {
+      "field_metrics": {
+        "near-cylinder": {
+          "u": 0.04342290014028549,
+          "v": 0.14143913984298706,
+          "p": 0.01867641694843769
+        },
+        "near-wake": {
+          "u": 0.2727372944355011,
+          "v": 1.0366290807724,
+          "p": 0.6163440942764282
+        },
+        "far-wake": {
+          "u": 0.5002196431159973,
+          "v": 1.0139986276626587,
+          "p": 2.3332183361053467
+        },
+        "far-core": {
+          "u": 0.5826302766799927,
+          "v": 1.0038522481918335,
+          "p": 1.9013025760650635
+        },
+        "other": {
+          "u": 0.06775574386119843,
+          "v": 0.12204265594482422,
+          "p": 0.19711746275424957
+        },
+        "whole-domain": {
+          "u": 0.35252973437309265,
+          "v": 0.8035315275192261,
+          "p": 0.5622267723083496
+        }
+      },
+      "v1_mode_metrics": {
+        "near-cylinder": {
+          "n": 13715,
+          "rel_L2": 0.9109855202529975,
+          "amp_ratio": 0.2329956420896799,
+          "corr": 0.5901849294755548,
+          "phase_deg": -35.322581399189
+        },
+        "near-wake": {
+          "n": 15248,
+          "rel_L2": 1.002758461783868,
+          "amp_ratio": 0.05354769742155542,
+          "corr": 0.08222242151454576,
+          "phase_deg": 107.56324823465752
+        },
+        "far-wake": {
+          "n": 16393,
+          "rel_L2": 0.9975692708101322,
+          "amp_ratio": 0.021598274531735875,
+          "corr": 0.1416338488100317,
+          "phase_deg": 29.554766401013815
+        },
+        "far-core": {
+          "n": 12460,
+          "rel_L2": 0.997442441082733,
+          "amp_ratio": 0.018948152768257277,
+          "corr": 0.16035718037970534,
+          "phase_deg": 25.877405514357914
+        },
+        "other": {
+          "n": 6298,
+          "rel_L2": 1.0429656925989803,
+          "amp_ratio": 1.214686575140202,
+          "corr": 0.7087490409532666,
+          "phase_deg": 36.298543210193266
+        },
+        "whole-domain": {
+          "n": 51654,
+          "rel_L2": 0.9982590529322467,
+          "amp_ratio": 0.047024170317109565,
+          "corr": 0.06884213593908428,
+          "phase_deg": 28.49546678561774
+        }
+      },
+      "metadata": {
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only/training_run/NN_functions.py",
+        "prior_for_v1_radial": null,
+        "one_sided_mode_conversion": "network_v1 / 2"
+      },
+      "ntaps": 32
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "analysis_id": "A04",
+  "method": "pressure_gauge_sensitivity",
+  "status": "verified",
+  "models": {
+    "arm1_baseline": {
+      "near-cylinder": {
+        "raw_rel_L2": 0.01867645105796295,
+        "offset": -4.0275175706483424e-05,
+        "offset_corrected_rel_L2": 0.018676171401964075
+      },
+      "near-wake": {
+        "raw_rel_L2": 0.6163447718270593,
+        "offset": -0.10551132261753082,
+        "offset_corrected_rel_L2": 0.44422931377366953
+      },
+      "far-wake": {
+        "raw_rel_L2": 2.333200571871034,
+        "offset": -0.19265660643577576,
+        "offset_corrected_rel_L2": 0.8060704693001458
+      },
+      "far-core": {
+        "raw_rel_L2": 1.9012993120116097,
+        "offset": -0.1767871230840683,
+        "offset_corrected_rel_L2": 0.7236843985229351
+      },
+      "other": {
+        "raw_rel_L2": 0.19711753305831634,
+        "offset": -0.01688755862414837,
+        "offset_corrected_rel_L2": 0.16560757166995935
+      },
+      "whole-domain": {
+        "raw_rel_L2": 0.5622475851687614,
+        "offset": -0.0943579226732254,
+        "offset_corrected_rel_L2": 0.42166412971663086
+      }
+    },
+    "arm15_v1_radial_trust": {
+      "near-cylinder": {
+        "raw_rel_L2": 0.017133489348778574,
+        "offset": -0.0006681941449642181,
+        "offset_corrected_rel_L2": 0.01704861448520385
+      },
+      "near-wake": {
+        "raw_rel_L2": 0.3067095687239259,
+        "offset": -0.031347692012786865,
+        "offset_corrected_rel_L2": 0.2792094208434032
+      },
+      "far-wake": {
+        "raw_rel_L2": 1.565354417216509,
+        "offset": -0.05624891445040703,
+        "offset_corrected_rel_L2": 1.4288706024755922
+      },
+      "far-core": {
+        "raw_rel_L2": 1.2769774883662772,
+        "offset": -0.05484967306256294,
+        "offset_corrected_rel_L2": 1.1546038320494023
+      },
+      "other": {
+        "raw_rel_L2": 0.6801857356280816,
+        "offset": -0.031610578298568726,
+        "offset_corrected_rel_L2": 0.6500822535400874
+      },
+      "whole-domain": {
+        "raw_rel_L2": 0.37670292164509045,
+        "offset": -0.03113650716841221,
+        "offset_corrected_rel_L2": 0.35615388767838196
+      }
+    }
+  }
+}

@@ -24,6 +24,9 @@ write the analysis script and run it. A result is not added to
 - `data_contract.md` — the data paths, variables, units, and preprocessing we
   agree to use.
 - `decisions.md` — a dated record of decisions and changes in scope.
+- `findings.md` — running notes on what the numbers appear to mean, per
+  analysis. Raw material for the Results and Discussion sections, not finished
+  prose. Speculative items are marked `[unverified]`.
 - `design/` — the shared style guide, figure manifest, and one reviewed design
   note per figure.
 - `figure_common.py` — the single source of shared typography, colours, sizes,

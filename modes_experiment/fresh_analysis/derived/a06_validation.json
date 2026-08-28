@@ -1,0 +1,21 @@
+{
+  "analysis_id": "A06",
+  "status": "passed",
+  "checks": {
+    "snapshots_201": true,
+    "crop_nodes_51654": true,
+    "all_metrics_finite": true,
+    "arms_evaluated": [
+      "prior_noise_00pct",
+      "prior_noise_01pct",
+      "prior_noise_05pct",
+      "prior_noise_10pct"
+    ],
+    "rel_L2_identity_verified": true,
+    "trust_geometry_matches_training": true,
+    "distinct_checkpoints": true,
+    "effort_matched_within_20pct": false
+  },
+  "input_manifest": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a06_input_manifest.json",
+  "summary": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a06_pressure_noise_summary.csv"
+}

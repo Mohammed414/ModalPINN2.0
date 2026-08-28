@@ -1,0 +1,12 @@
+{
+  "analysis_id": "A04",
+  "status": "verified",
+  "source_metrics": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a04_prior_attribution_summary.csv",
+  "change_table": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a04_prior_attribution_changes.csv",
+  "formula_error_reduction": "100 * (prior_error - hybrid_error) / prior_error",
+  "formula_correction": "hybrid_snapshot - analytical_prior_snapshot",
+  "snapshot_index": 100,
+  "snapshot_time": 410.0,
+  "snapshot_artifact": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a04_snapshot_fields.npz",
+  "rows": 96
+}

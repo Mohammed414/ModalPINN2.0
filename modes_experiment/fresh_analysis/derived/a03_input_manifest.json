@@ -1,0 +1,93 @@
+{
+  "analysis_id": "A03",
+  "status": "verified_inputs",
+  "question": "Does wake-biased collocation recover information absent from wall measurements?",
+  "data_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/data_contract.md",
+  "candidates": {
+    "uniform_collocation": {
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only",
+      "run_label": "baseline_physics_only_K3",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint_exists": true,
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only/training_run/NN_functions.py",
+      "nn_functions_exists": true,
+      "settings": {
+        "nmodes": 4,
+        "width": 25,
+        "ntaps": 32,
+        "sparse_data": true,
+        "pressure_only": true,
+        "freestream_bc": true,
+        "seed": "0",
+        "nmes": "5000",
+        "nint": "50000",
+        "multigrid": true,
+        "ngrid": "5",
+        "ngrid_turn": "200",
+        "adam_ran": true,
+        "lbfgs_evals": 5503,
+        "sampling": "uniform"
+      }
+    },
+    "wake_biased_random_collocation": {
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_06_wake_biased_random",
+      "run_label": "wake_biased_random",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_06_wake_biased_random/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint_exists": true,
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_06_wake_biased_random/training_run/NN_functions.py",
+      "nn_functions_exists": true,
+      "settings": {
+        "nmodes": 4,
+        "width": 25,
+        "ntaps": 32,
+        "sparse_data": true,
+        "pressure_only": true,
+        "freestream_bc": true,
+        "seed": "0",
+        "nmes": "5000",
+        "nint": "50000",
+        "multigrid": true,
+        "ngrid": "5",
+        "ngrid_turn": "200",
+        "adam_ran": true,
+        "lbfgs_evals": 43676,
+        "sampling": "wake_biased_random"
+      }
+    },
+    "wake_biased_grid_collocation": {
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/07_wake_biased_grid",
+      "run_label": "wake_biased_grid",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/07_wake_biased_grid/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint_exists": true,
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/07_wake_biased_grid/training_run/NN_functions.py",
+      "nn_functions_exists": true,
+      "settings": {
+        "nmodes": 4,
+        "width": 25,
+        "ntaps": 32,
+        "sparse_data": true,
+        "pressure_only": true,
+        "freestream_bc": true,
+        "seed": "0",
+        "nmes": "5000",
+        "nint": "50000",
+        "multigrid": true,
+        "ngrid": "5",
+        "ngrid_turn": "200",
+        "adam_ran": true,
+        "lbfgs_evals": 37713,
+        "sampling": "wake_biased_grid"
+      }
+    }
+  },
+  "controlled_comparison": {
+    "methods": [
+      "uniform_collocation",
+      "wake_biased_random_collocation",
+      "wake_biased_grid_collocation"
+    ],
+    "intended_change": "interior collocation sampling strategy",
+    "interpretation": "All three runs use 32 pressure taps, pressure-only sparse data, the same network/training-size settings, seed 0, FreestreamBC, multigrid settings, and Adam. The intended change is uniform versus wake-biased random versus wake-biased grid sampling of interior physics points."
+  },
+  "mismatches": []
+}

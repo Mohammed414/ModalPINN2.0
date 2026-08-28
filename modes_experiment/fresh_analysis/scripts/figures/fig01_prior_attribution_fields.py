@@ -1,7 +1,8 @@
 """F01 - representative snapshot field comparison for A04.
 
 The midpoint snapshot (t = 410) is shown as three shared-scale rows (u, v, p)
-and four columns (CFD, analytical prior, Arm 1, Arm 15).  A single snapshot is
+and four columns (CFD, analytical prior, pressure-only + physics,
+pressure-only + physics + Kármán prior).  A single snapshot is
 used for visual interpretation; all numerical claims remain the all-snapshot
 metrics in the A04 JSON/CSV outputs.
 """
