@@ -1,10 +1,17 @@
-# Raw Colab output archive of the matched-effort re-run (~8.5 MB).
+# Note: the repository root .gitignore already ignores *.zip, so both archives
+# here are untracked:
 #
-# The run it contains was analysed and DISCARDED (see 01b_matched_effort_outcome.md
-# and fresh_analysis/decisions.md, 2026-08-28). Everything of record from it --
-# effort, losses, stop reason, wall clock, and the v1 diagnostics -- is distilled
-# into 01b_matched_effort_outcome.md and 01b_matched_effort_comparison.csv, which
-# ARE tracked. The archive is kept on disk as raw evidence but not in git.
+#   baseline_physics_only_K3_matched-*.zip
+#       Raw Colab output of the matched-effort re-run. That run was analysed
+#       and DISCARDED (01b_matched_effort_outcome.md, fresh_analysis/decisions.md,
+#       2026-08-28). Everything of record from it is distilled into
+#       01b_matched_effort_outcome.md and 01b_matched_effort_comparison.csv,
+#       which ARE tracked.
 #
-# Delete this line if the archive should be versioned after all.
-baseline_physics_only_K3_matched-*.zip
+#   verification_code.zip
+#       As delivered. The scripts are tracked, unpacked and maintained at
+#       fresh_analysis/scripts/termination_census/ -- edit them there, not here.
+
+# Scratch extraction of the run archive, recreated by
+# ../../fresh_analysis/scripts/termination_census/01_locate_and_extract_run_zip.sh
+zx/

@@ -46,7 +46,8 @@ pins that region to the prior.
 
 **Open loose end (not blocking writing):** A03's upstream leakage is recorded
 as **[unverified]** in `findings.md` pending an absolute-magnitude check of
-the kind run for A04.
+the kind run for A04. The termination census, previously the other loose end,
+was recovered and verified on 2026-08-28.
 
 **Follow-up checks completed this session:**
 - Pressure-gauge sensitivity (`derived/a04_pressure_gauge_check.json`): a
@@ -122,9 +123,7 @@ An arm can be marked `COMPLETE` only when all of these are true:
 
 ## Shared analysis infrastructure
 
-**Status: COMPLETE** — except the termination census below, which is
-`findings.md` supporting material rather than an evaluation-contract item, and
-does not block any arm.
+**Status: COMPLETE**
 
 - [x] Freeze the mathematical definition of regional relative L2 for `u`, `v`,
   and `p`. **Result:** `data_contract.md`.
@@ -141,16 +140,19 @@ does not block any arm.
 - [x] Add deterministic tests for masks, shapes, identity cases, amplitude, and
   phase. **Result:** `scripts/verify_evaluate_common.py` and
   `derived/common_evaluator_verification.json`.
-- [ ] **Rebuild and save the 17-arm L-BFGS termination census.** `findings.md`
-  ("Training effort") quotes median exit-gradient elevations of 4.3x below
-  12,000 iterations against 1.0x past 20,000, ranges of 0.9-26.7x and 0.6-2.1x,
-  and Spearman rho = -0.73 (p = 8e-4, n = 17) — none of which has a saved
-  script, and the two figures cited for them
-  (`F_termination_anatomy.png`, `F_arm1_rerun_breakdown.png`) were never
-  produced. The raw material exists: `runs/arms/*/train_log.txt` for 16 arms
-  plus `notebooks/matched_effort/` for the re-run. **Blocking:** these numbers
-  must not enter the dissertation until a script regenerates them and is saved
-  under `scripts/`. Marked **[unverified]** in `findings.md`.
+- [x] **Rebuild and save the 17-arm L-BFGS termination census.** Recovered
+  2026-08-28 and saved as `scripts/termination_census/` (10 scripts plus a
+  README; `06_all_arms_death_census.py` is the census). Re-run against the 16
+  arm logs plus the matched-effort re-run, it reproduces every quoted value to
+  the digit: Spearman rho = -0.733, p = 8.19e-04, n = 17; median exit
+  elevation 4.3x below 12,000 iterations (0.9-26.7x, n = 9) against 1.0x past
+  20,000 (0.6-2.1x, n = 8); line-search warning present at termination in
+  16/17. **Results:** `figures/final/F_termination_anatomy.png` and
+  `figures/final/F_arm1_rerun_breakdown.png`. One inconsistency fixed on the
+  way: the two figures had printed the same window definition against
+  different numbers (5.7x/25.5x vs 6.5x/26.7x); both now use the census
+  definition, and `05_two_run_divergence.py` prints a note that its own
+  console figures should not be quoted.
 
 ## A00 — Data and region audit
 

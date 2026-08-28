@@ -99,18 +99,29 @@ termination difference, only that it correlates in the arms observed so far.
 2026-08-28 directly from the two runs' `run_record.json`,
 `training_loss_summary.json` and `arm_summary.json`.
 
-**[unverified] — the census behind this section is not reproducible as saved.**
-`F_termination_anatomy.png` (all-17-arm census) and `F_arm1_rerun_breakdown.png`
-(the controlled repeat, iteration-by-iteration) do not exist on disk, and no
-saved script reproduces the statistics quoted above — the 4.3x/1.0x median exit
-gradients, the 0.9-26.7x and 0.6-2.1x ranges, or Spearman rho = -0.73
-(p = 8e-4, n = 17). The raw material is present (`runs/arms/*/train_log.txt`
-for 16 arms, plus the re-run), so the census can be rebuilt, but it has not
-been. Do not put these numbers in the dissertation until a script regenerates
-them and is saved alongside the other analysis scripts.
+**The census is reproducible, and it reproduces exactly.** The scripts were
+recovered on 2026-08-28 and are saved as `scripts/termination_census/`
+(`06_all_arms_death_census.py` is the census itself). Re-run against the 16
+arm logs plus the re-run, they return the quoted values to the digit:
+Spearman rho = -0.733, p = 8.19e-04, n = 17; runs stopping before 12,000
+iterations exit at median 4.3x (range 0.9-26.7x, n = 9), runs surviving past
+20,000 at median 1.0x (0.6-2.1x, n = 8); the line-search warning is present at
+termination in 16 of 17 runs, the exception being `05_dense_reference`, which
+hit its evaluation cap. The two figures now exist:
+`figures/final/F_termination_anatomy.png` and
+`figures/final/F_arm1_rerun_breakdown.png`.
 
-One number this section does not currently make: the two runs consumed the
-**same wall clock to within 0.04%** (32,433.5 s against 32,420.1 s). The
+One caveat carried over from the recovery: the terminal blow-up ratio depends
+mildly on how the baseline window is sliced. The census (and both figures, and
+every number quoted here) uses an array-index window, giving 6.5x for arm 01
+and 26.7x for the re-run. `05_two_run_divergence.py` slices by iteration
+number instead and prints 5.7x and 25.5x for the same two runs; its output
+carries a note saying so. The conclusion does not turn on the choice --
+rho = -0.733 against -0.721 across the 17 runs -- but only the census
+definition should be quoted.
+
+The wall-clock comparison is worth stating alongside the effort one: the two
+runs consumed the **same wall clock to within 0.04%** (32,433.5 s against 32,420.1 s). The
 re-run turned an identical budget into 1.30x the evaluations and a 1.77x worse
 loss, which is a sharper statement of the pathology than "more effort, worse
 result".
