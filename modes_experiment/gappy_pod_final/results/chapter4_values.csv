@@ -1,7 +1,7 @@
 figure_id,method,noise_percent,far_core_v_relative_L2,source
-G02,Pressure only + physics,,1.0038522481918335,fresh_analysis/results_master.csv A01
-G02,Pressure + physics + Karman prior,,0.3913930058479309,fresh_analysis/results_master.csv A04
-G02,Dense observations,,0.051149044185876846,fresh_analysis/results_master.csv A01
+G02,Pressure only + physics,,1.0038522481918335,ModalPINN fresh_analysis/results_master.csv A01
+G02,Pressure + physics + Karman prior,,0.3913930058479309,ModalPINN fresh_analysis/results_master.csv A04
+G02,Dense observations,,0.051149044185876846,ModalPINN fresh_analysis/results_master.csv A01
 G02,Gappy POD (supplied basis),,0.047995716276749305,GappyPOD gappy_pod_final/results/metrics.csv
 G03,Gappy POD (supplied basis),0,0.047995716276749305,GappyPOD gappy_pod_final/results/metrics.csv
 G03,Gappy POD (supplied basis),1,0.1884571393550932,GappyPOD gappy_pod_final/results/metrics.csv
