@@ -40,9 +40,9 @@ training is planned.
 **Next action:** begin writing from `section_blueprint.md`, using only rows
 carrying `status: accepted`. Three arms must be written with their caveat
 attached — A03 (effort not controlled, 6.9-7.9x), A05 (effort not controlled,
-1.33x) and A06 (single seed, 11x effort spread) — and far-field $v_1$ must
-never be quoted as a network result in A04/A05/A06, since `--V1RadialTrust`
-pins that region to the prior.
+1.33x) and A06 (single seed, 11x effort spread) — and far-core $v_1$ must
+never be quoted as an unconstrained network result in A04/A05/A06, since
+`--V1RadialTrust` anchors it to the prior with a bounded learned correction.
 
 **No open analysis items remain.** Both loose ends were closed on 2026-08-28:
 the 17-arm termination census was recovered and reproduces exactly, and A03's
@@ -75,9 +75,9 @@ as the writing is done.
   completed run reached only 7,173 of a 35,000-evaluation target and finished
   **worse** than the original (loss 5.25e-4 vs 2.97e-4, 1.77x). Root cause and
   full 17-arm census now in `findings.md` under "Training effort — the
-  L-BFGS termination pathology"; decision was to keep
-  `01_baseline_physics_only` as a declared non-converged lower bound and not
-  attempt a third re-run. Full record:
+  L-BFGS termination pathology"; decision was to keep the observed
+  `01_baseline_physics_only` endpoint, without treating it as a one-sided
+  accuracy bound, and not attempt a third re-run. Full record:
   `../notebooks/matched_effort/01b_matched_effort_outcome.md` and
   `../notebooks/matched_effort/01b_matched_effort_comparison.csv`, both
   rebuilt from the two runs' own records on 2026-08-28. The two figures
@@ -96,9 +96,9 @@ as the writing is done.
 | A00 — data and regions | COMPLETE | Figures approved (F0b split into two) | — | `derived/a00_geometry.npz`, `figures/final/F00_evaluation_regions.png`, `figures/final/F00a_probe_locations.png`, `figures/final/F00b_tap_layout.png` |
 | Metric contract | COMPLETE | Equations and choices frozen | — | `data_contract.md`, `section_blueprint.md` |
 | Common evaluator | COMPLETE | Evaluator and identity tests pass | — | `scripts/evaluate_common.py`, `scripts/verify_evaluate_common.py`, `derived/common_evaluator_verification.json` |
-| A04 — prior attribution | COMPLETE | Prior-only, pressure-only + physics, and pressure-only + physics + Kármán prior evaluated under the common contract; network-only arm is a non-converged lower bound (matched-effort re-run attempted, discarded 2026-08-28) | — | `derived/a04_prior_only_metrics.json`, `derived/a04_prior_attribution_metrics.json`, `derived/a04_prior_attribution_changes.csv`, `results_master.csv`, `figures/final/F01_prior_attribution_fields.png`, `figures/final/F02_prior_attribution.png`, `figures/final/F02b_upstream_artefact.png` |
+| A04 — prior attribution | COMPLETE | Prior-only, pressure-only + physics, and pressure-only + physics + Kármán prior evaluated under the common contract; network-only result is the observed endpoint, not a one-sided bound | — | `derived/a04_prior_only_metrics.json`, `derived/a04_prior_attribution_metrics.json`, `derived/a04_prior_attribution_changes.csv`, `results_master.csv`, `figures/final/F01_prior_attribution_fields.png`, `figures/final/F02_prior_attribution.png`, `figures/final/F02b_upstream_artefact.png` |
 | A01 — information comparison | COMPLETE | Controlled sparse comparison accepted; dense run retained as a representational ceiling | — | `derived/a01_input_manifest.json`, `derived/a01_information_comparison_metrics.json`, `derived/a01_information_comparison_summary.csv`, `derived/a01_validation.json`, `results_master.csv`, `figures/final/F03_information_comparison.png` |
-| A02 — tap count | COMPLETE | Three tap-count candidates evaluated and accepted under the common contract; 32-tap arm is a non-converged lower bound (matched-effort re-run attempted, discarded 2026-08-28) | — | `derived/a02_input_manifest.json`, `derived/a02_tap_count_metrics.json`, `derived/a02_tap_count_summary.csv`, `derived/a02_validation.json`, `results_master.csv`, `figures/final/F04a_tap_count.png` |
+| A02 — tap count | COMPLETE | Three tap-count candidates evaluated and accepted under the common contract; effort differs and the endpoints are not assigned a causal tap-count effect | — | `derived/a02_input_manifest.json`, `derived/a02_tap_count_metrics.json`, `derived/a02_tap_count_summary.csv`, `derived/a02_validation.json`, `results_master.csv`, `figures/final/F04a_tap_count.png` |
 | A03 — collocation strategy | COMPLETE WITH CAVEAT | Three strategies evaluated and accepted; effort not controlled (6.9-7.9x) | Optional: absolute-magnitude check of the upstream leakage | `derived/a03_input_manifest.json`, `derived/a03_collocation_metrics.json`, `derived/a03_collocation_summary.csv`, `derived/a03_validation.json`, `results_master.csv`, `figures/final/F04b_collocation_strategy.png` |
 | A05 — prior plus collocation | COMPLETE WITH CAVEAT | Arms 15 and 10 evaluated and accepted; effort not controlled (1.33x) | — | `derived/a05_input_manifest.json`, `derived/a05_prior_collocation_metrics.json`, `derived/a05_prior_collocation_summary.csv`, `derived/a05_validation.json`, `results_master.csv`, `figures/final/F04c_prior_collocation.png` |
 | A06 — pressure noise | COMPLETE WITH CAVEAT | Arms 15 and 11-13 evaluated and accepted; one seed per level, 11x effort spread | — | `derived/a06_input_manifest.json`, `derived/a06_pressure_noise_metrics.json`, `derived/a06_pressure_noise_summary.csv`, `derived/a06_validation.json`, `results_master.csv`, `figures/final/F04d_pressure_noise.png` |
@@ -170,11 +170,11 @@ An arm can be marked `COMPLETE` only when all of these are true:
 - [x] Save the reproducible inventory builder. **Result:**
   `scripts/00_build_inventory.py`.
 - [x] Generate the evaluation-region PNG draft. **Result:**
-  `figures/draft/F00_evaluation_regions.png`; generator:
+  `figures/final/F00_evaluation_regions.png`; generator:
   `scripts/figures/fig00_evaluation_regions.py`.
 - [x] Generate the two measurement-location PNG drafts. **Results:**
-  `figures/draft/F00a_probe_locations.png` and
-  `figures/draft/F00b_tap_layout.png`; generators:
+  `figures/final/F00a_probe_locations.png` and
+  `figures/final/F00b_tap_layout.png`; generators:
   `scripts/figures/fig00a_probe_locations.py` and
   `scripts/figures/fig00b_tap_layout.py`.
 
@@ -267,7 +267,10 @@ it?
   prior in each region. **Result:** F02 states the near-field gain and far-core
   no-gain result; F02b records the upstream ratio caveat.
 - [x] Add accepted rows to `results_master.csv` with the A04 source paths.
-- [ ] Record the final dissertation subsection path here when writing begins.
+- [x] Record the final dissertation subsection. **Result:**
+  `msc-report/sections/04_results.tex`,
+  Section~`sec:results-attribution`, Figures F01/F02 and the regional
+  attribution table.
 
 ## A01 — Information comparison (priority 2)
 
@@ -287,7 +290,7 @@ Question: how does available measurement information affect reconstruction?
   `scripts/a01_information_comparison.py`.
 - [x] Save validation checks. **Result:** `derived/a01_validation.json`.
 - [x] Generate F3. **Draft result:**
-  `figures/draft/F03_information_comparison.png`; generator:
+  `figures/final/F03_information_comparison.png`; generator:
   `scripts/figures/fig03_information_comparison.py`.
 - [x] Review and approve F3; promote the PNG. **Result:**
   `figures/final/F03_information_comparison.png`; generator:
@@ -296,7 +299,9 @@ Question: how does available measurement information affect reconstruction?
   representational ceiling. **Result:** `findings.md` (A01 section).
 - [x] Add accepted rows to `results_master.csv` with the A01 source paths.
   **Generator:** `scripts/a01_finalize_results.py`.
-- [ ] Record the final dissertation subsection path here when writing begins.
+- [x] Record the final dissertation subsection. **Result:**
+  `msc-report/sections/04_results.tex`,
+  Section~`sec:results-pressure-collapse` and Figure F05.
 
 ## A02 — Pressure-tap count (priority 3)
 
@@ -316,7 +321,7 @@ reconstruction?
 - [x] Save metrics and validation checks. **Result:**
   `derived/a02_validation.json` (`passed`).
 - [x] Generate the focused tap-count figure draft. **Result:**
-  `figures/draft/F04a_tap_count.png`; generator:
+  `figures/final/F04a_tap_count.png`; generator:
   `scripts/figures/fig04a_tap_count.py`.
 - [x] Review whether improvements are monotonic and practically meaningful.
   **Result:** `findings.md` (A02 section). More taps improve selected local
@@ -324,12 +329,15 @@ reconstruction?
   above the zero-prediction baseline.
 - [x] Add accepted rows to `results_master.csv` with the A02 source paths.
   **Generator:** `scripts/a02_finalize_results.py`.
-- [ ] Record the final dissertation subsection path here when writing begins.
+- [x] Record the final dissertation subsection. **Result:**
+  `msc-report/sections/04_results.tex`, Section~`sec:results-controls` and the
+  first row of the compact control table.
 
 ## A03 — Collocation strategy (priority 4)
 
-**Status: COMPLETE WITH CAVEAT** — the negative result is sound; effort is not
-controlled (6.9-7.9x), so the near-body gain is unattributable.
+**Status: COMPLETE WITH CAVEAT** — effort is not controlled (6.9-7.9x), so
+between-arm gains and losses are descriptive rather than causal. No endpoint
+recovers the travelling wake.
 
 Question: does wake-biased collocation recover information absent from wall
 measurements?
@@ -357,19 +365,19 @@ measurements?
 - [x] Generate the collocation figure. **Result:**
   `figures/final/F04b_collocation_strategy.png`; generator:
   `scripts/figures/fig04b_collocation_strategy.py`. The caption carries the
-  effort gap and its direction.
+  effort gap without treating evaluation count as an accuracy direction.
 - [x] Review regional trade-offs rather than relying only on a whole-domain
-  average. **Result:** `findings.md` (A03). Wake-biased sampling roughly halves
-  near-cylinder $v_1$ error (0.911 to 0.504) and worsens every downstream
-  region (near wake 1.003 to 1.156, far core 0.997 to 1.016). Far-core
+  average. **Result:** `findings.md` (A03). Wake-biased sampling more than halves
+  near-cylinder $v_1$ error (0.941 to 0.422) and worsens every downstream
+  region (near wake 1.002 to 1.131, far core 0.997 to 1.016). Far-core
   amplitude rises ~16x (0.019 to 0.298) while correlation falls ~40% (0.160 to
   0.096): amplitude without phase, the pathology A04 records. No arm recovers
   the wake — every downstream value sits at or above the zero-prediction
   baseline.
-- [x] Split the claims by whether they survive the effort confound. The gap
-  favours the wake-biased arms, so their *losses* are conservative and safe to
-  report, while the near-body gain cannot be separated from the extra
-  training. **Result:** `findings.md` (A03, "Limitation").
+- [x] State the effort confound without a directional bound. Evaluation count
+  is not an accuracy proxy, so neither the downstream losses nor near-body gain
+  is assigned causally to sampling. **Result:** `findings.md` (A03,
+  "Limitation").
 - [x] Add accepted rows to `results_master.csv` with the A03 source paths.
   147 rows (49 per arm: 144 metric rows plus one effort-audit row each).
   **Generator:** `scripts/a03_finalize_results.py`.
@@ -383,12 +391,16 @@ measurements?
   x >= 3 and is inactive upstream. Leakage instead tracks each arm's overall
   oscillation amplitude. Cross-check: A03's uniform arm and A04's arm 1 are the
   same checkpoint and the two scripts agree to six decimals (0.006839).
-- [ ] Record the final dissertation subsection path here when writing begins.
+- [x] Record the final dissertation subsection. **Result:**
+  `msc-report/sections/04_results.tex`, Section~`sec:results-controls`; the
+  wavelength and control tables carry the accepted result without the detailed
+  control plot.
 
 ## A05 — Prior plus collocation (priority 5)
 
-**Status: COMPLETE WITH CAVEAT** — conclusion is a negative result; effort is
-not controlled (1.33x), so the magnitude of the harm is a bound.
+**Status: COMPLETE WITH CAVEAT** — the observed endpoint comparison is
+negative, but effort is not controlled (1.33x), so neither its direction nor
+magnitude is isolated as a causal sampling effect.
 
 Question: does wake-biased collocation improve the prior-assisted
 reconstruction?
@@ -410,20 +422,23 @@ reconstruction?
   `figures/final/F04c_prior_collocation.png`; generator:
   `scripts/figures/fig04c_prior_collocation.py`.
 - [x] Review whether any gain comes from the prior, collocation, or their
-  interaction. **Result:** neither arm's far field is its own — both sit on the
-  analytical prior level (0.2819) because of the `--V1RadialTrust` blend. The
+  interaction. **Result:** neither arm's far-core $v_1$ is an unconstrained
+  network result: `--V1RadialTrust` constrains it to the analytical prior plus
+  a bounded correction of less than 60% of the local prior amplitude. The
   learned contribution is near-body: uniform +0.974 near cylinder and +0.312
   near wake, wake-biased +0.913 and +0.090, with the wake-biased far field
   *below* the prior at -0.223. No interaction gain exists to attribute.
 - [x] Add accepted rows to `results_master.csv` with the A05 source paths.
   96 rows (48 per arm: 6 regions x 3 field errors, plus 6 regions x rel_L2,
   amp_ratio, corr, phase_deg and `v1_mode.v.learned_contribution`).
-- [ ] Record the final dissertation subsection path here when writing begins.
+- [x] Record the final dissertation subsection. **Result:**
+  `msc-report/sections/04_results.tex`, Section~`sec:results-controls` and the
+  third row of the compact control table.
 
 ## A06 — Pressure-noise robustness (priority 6)
 
 **Status: COMPLETE WITH CAVEAT** — direction only. One seed per level, 11x
-effort spread, and the far-field metric is prior-determined.
+effort spread, and the far-core metric is strongly prior-anchored.
 
 Question: is the prior-assisted result robust to pressure noise?
 
@@ -449,18 +464,20 @@ Question: is the prior-assisted result robust to pressure noise?
   `figures/final/F04d_pressure_noise.png`; generator:
   `scripts/figures/fig04d_pressure_noise.py`.
 - [x] Review what can be claimed from a one-seed sensitivity study. **Result:**
-  two claims survive. (i) Far-field invariance is not robustness: all four arms
-  sit within 0.043 of the prior-alone level (0.2819), so `--V1RadialTrust` pins
-  that region and far-field v1 must not be quoted as a noise result anywhere in
-  A04/A05/A06. (ii) Noise erodes the learned near-body contribution,
+  two claims survive. (i) Far-core invariance is not purely learned robustness:
+  all four arms sit within 0.043 of the prior-alone level (0.2819), and
+  `--V1RadialTrust` constrains that region to the prior plus a correction below
+  60% of local prior amplitude. It must be described as a prior-assisted result
+  in A04/A05/A06. (ii) Noise erodes the learned near-body contribution,
   monotonically in the near wake (+0.312, +0.247, +0.241, +0.194); the
   near-cylinder ordering is non-monotonic, so amplitude dependence is a
   direction, not a curve. A magnitude would need Arms 11--13 re-run at matched
   effort via `notebooks/matched_effort/`.
 - [x] Add accepted rows to `results_master.csv` with the A06 source paths.
   192 rows (48 per arm, same layout as A05).
-- [ ] Record the final dissertation Results and Limitations paths here when
-  writing begins.
+- [x] Record the final dissertation Results and Limitations paths. **Results:**
+  `msc-report/sections/04_results.tex`, Section~`sec:results-noise`, and the
+  matched cross-method figure `figures/final/F06_noise_tradeoff.png`.
 
 ## Completion log
 
@@ -469,8 +486,10 @@ evidence; drafts do not belong here.
 
 | Date accepted | Item | Main result | Figure(s) | Validation | Dissertation location |
 |---|---|---|---|---|---|
-| 2026-08-28 | Matched-effort re-run of arm 01 | Attempted to give the A02/A04 baseline more L-BFGS effort; completed but finished worse than the original (loss 1.77x higher). Traced to a termination pathology affecting all 17 arms: SciPy's ftol test sits below float32 resolution and fires on any failed line search; early stops are cut off mid gradient spike (median 4.3x elevation) vs quiet stops at genuine plateaus (1.0x), Spearman rho=-0.73 (p=8e-4, n=17). Decision: keep the original arm 01 as a declared non-converged lower bound. | `F_arm1_rerun_breakdown.png`, `F_termination_anatomy.png` | verified against optimizer iterate logs for all 17 arms; wake metrics unchanged between original and re-run (far-core amp_ratio 0.019 vs 0.023) | Methods/Limitations (pending) |
+| 2026-08-31 | Results-table and first-harmonic audit | Corrected the A01--A04 direct-mode time-origin mismatch; consolidated 945 ModalPINN and 210 Gappy POD rows into one filter-ready table. Full-field errors and Gappy POD pairwise metrics were unchanged. | Rebuilt F02, F03, F04a and F04b from corrected tables | `derived/verified_results_audit.json` passed; all 36 learned-contribution rows re-derived exactly; legacy-to-corrected values in `derived/v1_phase_correction_audit.csv` | Abstract, Results, Discussion, Conclusions and Appendix updated; canonical table `derived/verified_results.csv` |
+| 2026-08-30 | Results synthesis | The pressure-only model is at the zero-field baseline; downstream measurements or supplied spatial structure recover the wake. Matched Gappy POD proves clean in-sample identifiability, while prior attribution locates the neural correction mainly near the body. | `F05_information_structure.png`, `F06_noise_tradeoff.png`, plus F01/F02 and G01 in the dissertation | Values re-read from `results_master.csv` and `gappy_pod_final/results/chapter4_values.csv`; full dissertation PDF compiled and Results pages visually reviewed | `msc-report/sections/04_results.tex`, Sections 4.1--4.5 |
+| 2026-08-28 | Matched-effort re-run of arm 01 | Attempted to give the A02/A04 baseline more L-BFGS effort; completed but finished worse than the original (loss 1.77x higher). Traced to a termination pathology affecting all 17 arms. Decision updated 2026-08-31: retain the original observed endpoint, but do not call it a lower bound because iteration count and loss do not rank field accuracy. | `F_arm1_rerun_breakdown.png`, `F_termination_anatomy.png` | verified against optimizer iterate logs for all 17 arms; wake metrics unchanged between original and re-run (far-core amp_ratio 0.019 vs 0.023) | Methods/Limitations (pending) |
 | 2026-08-27 | A05 — prior plus collocation | Wake-biased grid sampling does not improve the prior-assisted reconstruction; it costs most of the learned near-wake contribution (+0.312 to +0.090) and drives the far field 0.223 below the analytical prior | `figures/final/F04c_prior_collocation.png` | `derived/a05_validation.json` passed; inputs `verified_inputs`; effort not matched (1.33x) | Results (pending) |
 | 2026-08-27 | A06 — pressure-noise robustness | Far-field v1 invariance under noise is the prior's, not the network's (all arms within 0.043 of prior-alone 0.2819); noise erodes the learned near-body contribution, monotonic in the near wake | `figures/final/F04d_pressure_noise.png` | `derived/a06_validation.json` passed; inputs `input_mismatch` (LBFGSCheckpointIters, read-only); one seed, 11x effort spread | Results and Limitations (pending) |
-| 2026-08-28 | A03 — collocation strategy | Wake-biased collocation does not recover the wake: every downstream $v_1$ value sits at or above the zero-prediction baseline and is worse than uniform, while far-core amplitude rises ~16x as correlation falls ~40%. Near-body gain (0.911 to 0.504) is real but unattributable between sampling and effort | `figures/final/F04b_collocation_strategy.png` | `derived/a03_validation.json` passed; inputs `verified_inputs`; effort not controlled (5,503 vs 43,676 and 37,713 L-BFGS evals), gap favours the wake-biased arms so the negative result is conservative | Results (pending) |
+| 2026-08-28 | A03 — collocation strategy | All three endpoints retain order-one downstream $v_1$ error. Wake-biased endpoints contain more amplitude but less correlation; near-body and downstream differences are not assigned causally because effort differs. | `figures/final/F04b_collocation_strategy.png` | `derived/a03_validation.json` passed; inputs `verified_inputs`; effort not controlled (5,503 vs 43,676 and 37,713 L-BFGS evals) | Results (pending) |
 | 2026-08-27 | A00 — data and region audit | `derived/a00_geometry.npz` | `figures/final/F00_evaluation_regions.png`, `figures/final/F00a_probe_locations.png`, `figures/final/F00b_tap_layout.png` | Partition sums to 51,654; far core ⊂ far wake; taps nested at r=0.5 | Methodology (pending) |

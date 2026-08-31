@@ -1,0 +1,52 @@
+{
+  "status": "passed",
+  "generated": "2026-08-31",
+  "checks": {
+    "all_a01_to_a06_validations_passed": true,
+    "all_values_finite": true,
+    "no_duplicate_primary_keys": true,
+    "expected_modal_rows_945": true,
+    "expected_gappy_rows_210": true,
+    "no_legacy_window_metrics_in_primary_table": true,
+    "same_checkpoint_identical_across_a01_to_a04": true,
+    "all_36_learned_contributions_rederived_exactly": true,
+    "phase_correction_rows_present": true,
+    "dataset_hash_matches_gappy_configuration": true
+  },
+  "validation_statuses": {
+    "a01_validation": "passed",
+    "a02_validation": "passed",
+    "a03_validation": "passed",
+    "a04_validation": "passed",
+    "a05_validation": "passed",
+    "a06_validation": "passed"
+  },
+  "row_counts": {
+    "A05": 96,
+    "A06": 192,
+    "A01": 144,
+    "A02": 144,
+    "A04": 222,
+    "A03": 147,
+    "GPOD": 210
+  },
+  "same_checkpoint_max_abs_difference": 0.0,
+  "learned_contribution_max_abs_difference": 3.3306690738754696e-16,
+  "first_harmonic_primary_convention": "absolute time; a perfect direct ModalPINN mode scores relative L2 0 and phase 0",
+  "superseded_convention": "window tau=t-t0; retained only in v1_phase_correction_audit.csv",
+  "key_verified_values": {
+    "pressure_only_far_core_v1_relative_L2": 0.9971765558242203,
+    "prior_only_far_core_v1_relative_L2": 0.28192873168383625,
+    "hybrid_far_core_v1_relative_L2": 0.28949597842624675,
+    "dense_far_core_field_v_relative_L2": 0.051149044185876846,
+    "gappy_far_core_field_v_relative_L2": 0.047995716276749305,
+    "gappy_far_core_v1_relative_L2": 2.1704818480387155e-05
+  },
+  "sources": {
+    "modal_results": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/results_master.csv",
+    "gappy_results": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/gappy_pod_final/results/metrics.csv",
+    "data_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/data_contract.md",
+    "dataset": "/Users/mohammedhilal/Desktop/try/GappyPOD/data/flow_cache.npz",
+    "dataset_sha256": "6335be20db7e26944fc203098ed9be6f2cda4f96f039c67e35bb7830f72d5775"
+  }
+}

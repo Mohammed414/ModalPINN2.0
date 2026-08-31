@@ -1,10 +1,9 @@
 """F04d - pressure-noise robustness: noise degrades the learned part only.
 
-Left panel is the reason this figure exists: the far-wake curve sits on the
-prior-only level at every noise amplitude, so far-field agreement is a property
-of the prior blend, not evidence that the reconstruction tolerates noise. Right
-panel isolates what the network itself contributes, which is where noise
-actually costs something.
+Left panel is the reason this figure exists: the far-core curve stays close to
+the prior-only level at every noise amplitude, so far-field agreement is a
+property of the bounded prior blend, not evidence that the learned correction
+tolerates noise. The right panel reports improvement relative to the prior.
 
 Training length is deliberately kept off the axes (it belongs to the caveat, not
 to the variable being studied) and reported in the caption instead.
@@ -35,7 +34,7 @@ LEVELS = [
 REGIONS = [
     ("near-cylinder", "near cylinder ($r<0.75$)"),
     ("near-wake", "near wake ($0\\leq x<3$)"),
-    ("far-core", "far wake core ($x\\geq3$)"),
+    ("far-core", "far-wake core ($x\\geq3$, $|y|\\leq2$)"),
 ]
 
 
@@ -77,7 +76,7 @@ ax.set_xlabel("pressure-tap noise level")
 ax.set_ylabel(r"$v_1$ relative $L^2$ error" + "\n" + r"$\it{(0=exact,\ 1=zero\ prediction)}$", fontsize=8.2)
 ax.set_ylim(0.0, 1.0)
 ax.set_xlim(-0.13, 3.13)
-ax.set_title("Far wake never leaves the prior level", loc="left", pad=7.0, fontsize=8.6)
+ax.set_title("Far-wake core stays near the prior level", loc="left", pad=7.0, fontsize=8.6)
 ax.grid(axis="y", color=COLORS["grid"], linewidth=0.55, zorder=0)
 ax.set_axisbelow(True)
 for spine in ("top", "right"):
@@ -113,14 +112,14 @@ for spine in ("top", "right"):
 ax2.tick_params(axis="x", length=0, pad=3)
 ax2.tick_params(axis="y", length=2.5, width=0.6)
 
-fig.suptitle("Tap noise degrades the learned near-body field, not the prior-set far wake",
+fig.suptitle("Tap noise changes the learned near-body field, while the prior anchors the far-wake core",
              y=0.955, fontsize=10.4, color=COLORS["reference"])
 fig.text(
     0.115, 0.025,
     "All four models: 32 wall pressure taps, physics residual, and the same analytical Karman-street prior\n"
     "(identical prior file, so the prior itself never saw the noise); only the tap noise differs. Dashed lines\n"
     "are that prior evaluated with no network; its near-cylinder level, 1.37, is above the left panel.\n"
-    "Downstream the prior sets the field by construction, so the far-wake curve staying put is not robustness.\n"
+    "Downstream the bounded $v_1$ trust anchors the result around the prior, so a flat far-wake curve is not learned robustness.\n"
     "One training run per noise level, and training length was not equalised (%s optimiser steps for clean,\n"
     "1%%, 5%%, 10%% respectively), so the near-body trend is a direction, not a dose-response curve."
     % ", ".join(format(steps(key), ",") for key, _pct, _lab in LEVELS),
@@ -130,5 +129,5 @@ fig.text(
 bad = check_text_overlaps(fig)
 if bad:
     print("TEXT ISSUES:", bad)
-out = save_figure(fig, ROOT / "figures" / "draft" / "F04d_pressure_noise")
+out = save_figure(fig, ROOT / "figures" / "final" / "F04d_pressure_noise")
 print(out)

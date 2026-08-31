@@ -1,0 +1,137 @@
+{
+  "analysis_id": "A05",
+  "status": "verified_inputs",
+  "question": "Does wake-biased collocation improve the prior-assisted reconstruction?",
+  "data_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/data_contract.md",
+  "candidates": {
+    "prior_uniform_collocation": {
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off",
+      "run_label": "prior_no_fluct_inlet",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint_exists": true,
+      "checkpoint_sha256": "4a84f4e22daa0128845ddaf013bb89588ecf53f69a5a726009486cf57634ae3a",
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/training_run/NN_functions.py",
+      "nn_functions_exists": true,
+      "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
+      "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/street_prior_used.npz",
+      "flags": {
+        "Tmax": "9",
+        "SparseData": true,
+        "PressureOnly": true,
+        "NTaps": "32",
+        "Seed": "0",
+        "Nmes": "5000",
+        "Nint": "50000",
+        "multigrid": true,
+        "Ngrid": "5",
+        "NgridTurn": "200",
+        "WidthLayer": "25",
+        "Nmodes": "4",
+        "FreestreamBC": true,
+        "SkipDiagnostics": true,
+        "ExitAfterSafetySave": true,
+        "V1RadialTrust": true,
+        "StreetPrior": "street_prior_Ntap32.npz",
+        "V1TrustRho": "0.60",
+        "V1TrustXStart": "3.0",
+        "V1TrustXWidth": "0.30",
+        "V1TrustYMax": "2.0",
+        "V1TrustYWidth": "0.20"
+      },
+      "effort": {
+        "wall_s": 32449.6,
+        "lbfgs_evals": 34643,
+        "adam_ran": true,
+        "final_total_loss": 0.00029793550493195653,
+        "final_physics_loss": 0.0002928291214630008,
+        "final_measurement_loss": 5.106393018650124e-06,
+        "stop_reason": "ftol_rel_reduction",
+        "iterations": 32442,
+        "projg_at_exit": "2.032D-03",
+        "objective_at_exit": "2.644D-04"
+      }
+    },
+    "prior_wake_biased_grid": {
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_10_prior_wake_biased_grid",
+      "run_label": "prior_wake_biased_grid",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_10_prior_wake_biased_grid/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint_exists": true,
+      "checkpoint_sha256": "1955e52f37a14c5a5680b1d2ba70acb024ed3a19e368ca4d87ae666431a07dc6",
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_10_prior_wake_biased_grid/training_run/NN_functions.py",
+      "nn_functions_exists": true,
+      "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
+      "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_10_prior_wake_biased_grid/street_prior_used.npz",
+      "flags": {
+        "Tmax": "9",
+        "SparseData": true,
+        "PressureOnly": true,
+        "NTaps": "32",
+        "Seed": "0",
+        "Nmes": "5000",
+        "Nint": "50000",
+        "multigrid": true,
+        "Ngrid": "5",
+        "NgridTurn": "200",
+        "WidthLayer": "25",
+        "Nmodes": "4",
+        "FreestreamBC": true,
+        "SkipDiagnostics": true,
+        "ExitAfterSafetySave": true,
+        "WakeBiasedGridSampling": true,
+        "V1RadialTrust": true,
+        "StreetPrior": "street_prior_Ntap32.npz",
+        "V1TrustRho": "0.60",
+        "V1TrustXStart": "3.0",
+        "V1TrustXWidth": "0.30",
+        "V1TrustYMax": "2.0",
+        "V1TrustYWidth": "0.20"
+      },
+      "effort": {
+        "wall_s": 32451.3,
+        "lbfgs_evals": 26129,
+        "adam_ran": true,
+        "final_total_loss": 0.00043780324631370604,
+        "final_physics_loss": 0.0004183927667327225,
+        "final_measurement_loss": 1.941047412401531e-05,
+        "stop_reason": "ftol_rel_reduction",
+        "iterations": 24577,
+        "projg_at_exit": "7.217D-04",
+        "objective_at_exit": "4.428D-04"
+      }
+    }
+  },
+  "controlled_comparison": {
+    "methods": [
+      "prior_uniform_collocation",
+      "prior_wake_biased_grid"
+    ],
+    "intended_change": "interior collocation sampling strategy, with the Karman v1 radial prior active in both arms",
+    "intended_change_flags": [
+      "WakeBiasedGridSampling"
+    ],
+    "flag_differences": [
+      {
+        "flag": "WakeBiasedGridSampling",
+        "values": {
+          "prior_uniform_collocation": null,
+          "prior_wake_biased_grid": true
+        }
+      }
+    ],
+    "unintended_flag_differences": [],
+    "identical_forward_code": true
+  },
+  "effort_audit": {
+    "lbfgs_evals": {
+      "prior_uniform_collocation": 34643,
+      "prior_wake_biased_grid": 26129
+    },
+    "spread_ratio": 1.33,
+    "matched_within_20pct": false,
+    "stop_reasons": {
+      "prior_uniform_collocation": "ftol_rel_reduction",
+      "prior_wake_biased_grid": "ftol_rel_reduction"
+    },
+    "note": "All arms here were stopped by SciPy's ftol test, which is below float32 resolution for this loss and so fires on rounding noise at an unpredictable iteration. Effort is therefore NOT a controlled variable under --Tmax and must be reported alongside every metric. An arm with less effort that still performs well supports its claim as a lower bound; an arm with less effort that performs badly is uninformative."
+  }
+}

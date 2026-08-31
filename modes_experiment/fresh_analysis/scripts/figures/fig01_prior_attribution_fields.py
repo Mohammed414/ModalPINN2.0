@@ -121,6 +121,6 @@ fig.text(0.055, 0.018,
 bad = check_text_overlaps(fig)
 if bad:
     print("TEXT COLLISIONS:", bad)
-out = save_figure(fig, ROOT / "figures" / "draft" / "F01_prior_attribution_fields")
+out = save_figure(fig, ROOT / "figures" / "final" / "F01_prior_attribution_fields")
 print(out)
 print(f"snapshot index = 100, time = {T:.1f}, nodes = {X.size}")

@@ -109,7 +109,14 @@ def relative_l2(prediction: np.ndarray, reference: np.ndarray) -> float:
 
 
 def temporal_modes(field: np.ndarray, times: np.ndarray, kmax: int = 3) -> np.ndarray:
-    """Use the exact least-squares Fourier convention of the ModalPINN audit."""
+    """Use the absolute-time Fourier convention of the ModalPINN audit.
+
+    The fit is conditioned with ``tau=t-t0`` and then rotated back to the
+    coefficient multiplying ``exp(i*k*omega*t)``.  Gappy POD metrics are
+    unchanged by this common rotation of prediction and reference, but keeping
+    the stored coefficients in the same convention prevents phase ambiguity
+    when they are compared with a direct ModalPINN mode.
+    """
 
     tau = times - times[0]
     columns = [np.ones_like(tau)]
@@ -120,9 +127,10 @@ def temporal_modes(field: np.ndarray, times: np.ndarray, kmax: int = 3) -> np.nd
     modes = np.empty((kmax + 1, field.shape[1]), dtype=np.complex128)
     modes[0] = coefficients[0]
     for k in range(1, kmax + 1):
-        modes[k] = 0.5 * (
+        window_coefficient = 0.5 * (
             coefficients[2 * k - 1] - 1j * coefficients[2 * k]
         )
+        modes[k] = window_coefficient * np.exp(-1j * k * OMEGA_0 * times[0])
     return modes
 
 

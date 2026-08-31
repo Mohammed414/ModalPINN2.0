@@ -128,17 +128,20 @@ area, and sensitivity to a pressure-gauge offset if raw pressure is retained.
 
 Let \(\tau=t-t_0\), \(\omega_0=1.036\), and construct the temporal design
 matrix with columns (1,\cos(k\omega_0\tau),\sin(k\omega_0\tau)). A least-squares
-fit is performed independently at every spatial node. Under the real-signal
+fit is performed independently at every spatial node. The shifted time is used
+only to condition the fit. Its fitted coefficient is subsequently rotated by
+\(\exp(-ik\omega_0t_0)\), so the reported coefficient uses the same absolute-
+time convention as the ModalPINN forward model. Under the real-signal
 convention
 
 \[
-q(t)=q_0+q_1e^{i\omega_0\tau}+q_1^*e^{-i\omega_0\tau}+\cdots,
+q(t)=q_0+q_1e^{i\omega_0 t}+q_1^*e^{-i\omega_0 t}+\cdots,
 \]
 
 the conventional complex first-harmonic coefficient is
 
 \[
-q_1=\tfrac12\left(c_{\cos}-i\,c_{\sin}\right).
+q_1=\tfrac12\left(c_{\cos}-i\,c_{\sin}\right)e^{-i\omega_0t_0}.
 \]
 
 The saved ModalPINN mode is one-sided, so the evaluator divides that mode by
@@ -191,6 +194,10 @@ be reported as unavailable rather than as zero degrees.
    \(\Delta\phi=\arg(w^H z)\) above alongside the magnitude-only correlation.
    Positive values mean the prediction leads the CFD reference in the stated
    complex-coefficient convention.
+3. **Time origin:** all primary first-harmonic errors and phases use absolute
+   time in both prediction and CFD reference. Window-referenced values based on
+   \(\tau=t-t_0\) may be retained only as explicitly labelled legacy audit
+   values; they must not be used as dissertation results.
 
 **Contract status: FROZEN.** Any later change requires an entry in
 `decisions.md`, regeneration of dependent results, and a note in

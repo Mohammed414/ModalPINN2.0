@@ -1,0 +1,12 @@
+{
+  "analysis_id": "A02",
+  "status": "passed",
+  "checks": {
+    "snapshots_201": true,
+    "crop_nodes_51654": true,
+    "all_metrics_finite": true,
+    "three_tap_counts": true
+  },
+  "input_manifest": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a02_input_manifest.json",
+  "summary": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a02_tap_count_summary.csv"
+}

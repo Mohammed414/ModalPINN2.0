@@ -2,6 +2,7 @@
 __pycache__/
 .DS_Store
 *.zip
+~$*.xlsx
 .venv_tf_eval/
 PROJECT_LOG.md
 PLAN_E3_pressure_only.md

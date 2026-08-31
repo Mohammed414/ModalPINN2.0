@@ -17,7 +17,7 @@ than by reconstruction quality. It is the subject of F02b instead.
 
 Input:  derived/a04_prior_only_metrics.json,
         derived/a04_prior_attribution_metrics.json
-Output: figures/draft/F02_prior_attribution.png
+Output: figures/final/F02_prior_attribution.png
 """
 from __future__ import annotations
 
@@ -148,7 +148,7 @@ fig.text(0.085, 0.055,
 bad = check_text_overlaps(fig)
 if bad:
     print("TEXT ISSUES:", bad)
-out = save_figure(fig, ROOT / "figures" / "draft" / "F02_prior_attribution")
+out = save_figure(fig, ROOT / "figures" / "final" / "F02_prior_attribution")
 print(out)
 for r in REGIONS:
     print(f"  {r:14s} noPrior={v1_l2(BASE, r):.4f} "

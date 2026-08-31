@@ -110,4 +110,4 @@ fig.text(0.088, 0.020,
 bad = check_text_overlaps(fig)
 if bad:
     print('TEXT ISSUES:', [b[0][:38] for b in bad[:5]])
-print(save_figure(fig, pathlib.Path('/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/figures/draft') / 'F_arm1_rerun_breakdown'))
+print(save_figure(fig, pathlib.Path('/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/figures/final') / 'F_arm1_rerun_breakdown'))

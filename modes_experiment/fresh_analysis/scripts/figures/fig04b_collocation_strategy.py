@@ -104,14 +104,14 @@ fig.text(
     "Lower relative $L^2$ is better; dashed line = zero prediction (1.0).\n"
     "Wake-biased sampling reduces near-cylinder $v_1$ error, but the far-core mode stays structurally\n"
     "incorrect: amplitude rises ~16x while correlation falls ~40%.\n"
-    "Effort is not controlled (5,503 L-BFGS evaluations uniform vs 43,676 and 37,713 wake-biased) and the\n"
-    "gap favours the wake-biased arms, so the downstream losses are conservative and the near-cylinder\n"
-    "gain cannot be separated from the extra training.",
+    "Effort is not controlled (5,503 L-BFGS evaluations uniform vs 43,676 and 37,713 wake-biased).\n"
+    "Evaluation count is not an accuracy proxy, so the between-arm gains and losses are descriptive;\n"
+    "the common result is that no endpoint recovers the downstream travelling wake.",
     ha="left", va="bottom", fontsize=6.9, color=COLORS["muted"], linespacing=1.45,
 )
 
 bad = check_text_overlaps(fig)
 if bad:
     print("TEXT ISSUES:", bad)
-out = save_figure(fig, ROOT / "figures" / "draft" / "F04b_collocation_strategy")
+out = save_figure(fig, ROOT / "figures" / "final" / "F04b_collocation_strategy")
 print(out)

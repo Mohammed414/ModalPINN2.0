@@ -41,10 +41,10 @@ text disagree.
 ## Training effort — the L-BFGS termination pathology affecting arm 01
 
 **Claim:** the pressure-only + physics baseline (`01_baseline_physics_only`, the
-network-only reference used by A02 and A04) is under-trained relative to its
+network-only reference used by A02 and A04) stopped much earlier than several
 partner arms, for a reason that is characterised and reproducible rather than
-incidental, and this is why it is reported as a non-converged lower bound
-wherever it appears below.
+incidental. This limits causal comparisons, but does not make its reconstruction
+error a one-sided bound.
 
 **Evidence:** across all 17 arms with a recorded L-BFGS iterate log, 16
 terminate on SciPy's `REL_REDUCTION_OF_F` test immediately after a
@@ -232,21 +232,21 @@ v1 relative L2 (lower better; 1.0 = no better than predicting zero):
 
 | region | pressure-only + physics | Kármán prior alone | pressure + physics + Kármán prior | network's effect |
 |---|---|---|---|---|
-| near-cylinder | 0.911 | 1.372 | 0.513 | +62.6% |
-| near-wake | 1.003 | 0.696 | 0.441 | +36.7% |
-| far-wake | 0.998 | 0.285 | 0.290 | −1.6% |
-| far-core | 0.997 | 0.282 | 0.285 | −1.1% |
+| near-cylinder | 0.941 | 1.372 | 0.399 | +70.9% |
+| near-wake | 1.002 | 0.696 | 0.384 | +44.8% |
+| far-wake | 0.997 | 0.285 | 0.292 | −2.5% |
+| far-core | 0.997 | 0.282 | 0.289 | −2.7% |
 
 Two things to say in the writing:
 
 1. **In the far wake the network does not measurably improve the prior for this
-   configuration and metric.** The far-core change is −1.1% (far-wake −1.6%),
+   configuration and metric.** The far-core change is −2.7% (far-wake −2.5%),
    so the hybrid is marginally worse than the analytical prior alone. Because
    this is a single seed, it supports “no improvement” rather than a claim that
    the prior-assisted network is reliably worse. The good far-wake structure is
    therefore supplied primarily by the prior, not learned from the sparse data.
-2. **Near the body the network contributes strongly** (+62.6% near-cylinder,
-   +36.7% near-wake). This is consistent with the 32 wall-pressure taps being
+2. **Near the body the network contributes strongly** (+70.9% near-cylinder,
+   +44.8% near-wake). This is consistent with the 32 wall-pressure taps being
    directly informative near the cylinder, while the far-field street prior is
    least accurate there (near-cylinder v1 error 1.372, worse than predicting
    zero). The comparison does not prove that the taps alone cause the gain;
@@ -254,7 +254,7 @@ Two things to say in the writing:
 
 The pressure-only + physics method confirms the collapse rather than merely underperforming:
 far-core amplitude ratio 0.019, correlation 0.160, rel L2 0.997. Note near-wake
-at 1.003, i.e. *worse* than zero — consistent with the earlier wavenumber
+at 1.002, i.e. *worse* than zero — consistent with the earlier wavenumber
 finding that the failure is wrong phase structure, not only missing amplitude.
 
 ### Upstream region: a ratio artefact, not a defect
@@ -297,12 +297,12 @@ raw value as primary (contract) with this as the stated sensitivity.
 
 ### Loose ends from A04
 
-- The pressure-only + physics arm above (`01_baseline_physics_only`) is a
-  non-converged lower bound — see "Training effort — the L-BFGS termination
-  pathology" above. Its numbers can only get better with more training, so
-  the network's measured contribution (+62.6% near-cylinder, +36.7%
-  near-wake) is a floor, not a ceiling; the true division of labour may
-  favour the network somewhat more than shown.
+- The pressure-only + physics arm above (`01_baseline_physics_only`) stopped
+  after fewer L-BFGS evaluations than several comparison arms. Its result is
+  therefore the outcome of the recorded training protocol, not a proven
+  optimum. More optimisation is not guaranteed to improve reconstruction
+  error, because a lower training objective need not imply a more accurate
+  global wake.
 - The upstream leakage suggests an upstream damping condition or a broader
   trust region as future work. **[unverified]** — never tested in any arm.
 - Why the prior-assisted method's pressure error is *less* offset-explained
@@ -311,17 +311,17 @@ raw value as primary (contract) with this as the stated sensitivity.
   not been checked.
 - Everything here is single-seed (Seed 0, n = 1 per configuration), so
   differences of a few percent cannot be separated from initialisation
-  scatter. This applies to the −1.1% far-core result: it supports "no
+  scatter. This applies to the −2.7% far-core result: it supports "no
   improvement", not "reliably slightly worse".
 
 ### Cross-reference with A01
 
 A01 reaches the far wake by adding velocity probes; A04 reaches it by adding
-the analytical prior. The prior gets further (far-core $v_1$ 0.285 versus
-0.373) and needs no extra sensors, but loses badly near the cylinder where its
-assumed form does not hold. See the comparison table in the A01 section — the
-two analyses should be written up as one argument about where wake information
-can come from, not as two separate sensitivity studies.
+the analytical prior. The probes are more accurate in the far core ($v_1$
+0.189 versus 0.289), while the prior needs no extra sensors and still prevents
+wake collapse. See the comparison table in the A01 section — the two analyses
+should be written up as one argument about where wake information can come
+from, not as two separate sensitivity studies.
 
 ### Figures carrying these claims
 
@@ -348,9 +348,9 @@ errors for pressure-only versus pressure + velocity probes are:
 
 | region | pressure-only + physics | pressure + velocity probes + physics |
 |---|---:|---:|
-| near-cylinder | 0.911 | 0.360 |
-| near-wake | 1.003 | 0.295 |
-| far-core | 0.997 | 0.373 |
+| near-cylinder | 0.941 | 0.317 |
+| near-wake | 1.002 | 0.026 |
+| far-core | 0.997 | 0.189 |
 
 **Interpretation:** the velocity probes provide information that pressure-only
 training cannot infer reliably, especially for the oscillatory wake field. The
@@ -358,7 +358,7 @@ near-wake harmonic correlation rises from 0.082 to 0.999 and the amplitude
 ratio rises from 0.054 to 0.992, showing that the improvement is structural,
 not merely a reduction in overall magnitude.
 
-### The dense arm did not converge — it is a lower bound on the ceiling
+### The dense arm is a fixed-budget reference, not a convergence claim
 
 The dense run stopped on its **function-evaluation** cap, not on its own
 convergence test. Its log ends with
@@ -368,25 +368,23 @@ iteration budget: Tit = 37,924, still under `--LBFGSMaxit 40000`. It was also
 launched with `--SkipAdam`, so the reported field is the L-BFGS endpoint at a
 fixed budget.
 
-This is worth stating positively rather than as a caveat: a non-converged dense
-run is a **lower bound** on what full-field observation could achieve, so every
-comparison against it is conservative. The gap between probes and dense would
-only widen with more budget, never narrow.
+This endpoint is still useful as the observed full-information reference, but
+the stopping message does not prove that it is an optimum. It must not be
+called a lower bound: additional optimisation could lower the training loss
+without necessarily lowering reconstruction error.
 
-### The ceiling is closer than expected: 40 probes get most of the way
+### Dense observations resolve the harmonic much more accurately
 
-On far-core $v_1$ relative $L^2$, dense observations reach 0.292 against 0.373
-for 40 velocity probes — only about 22% better, despite dense having the entire
-field rather than 40 point measurements. Since the dense number is a
-non-converged lower bound, the true gap is somewhat larger, but the order of
-magnitude holds.
+On far-core $v_1$ relative $L^2$, dense observations reach 0.0054 against
+0.1889 for 40 velocity probes. The probes recover the wake structure very
+substantially compared with pressure-only training (0.9972), but dense
+observations remain the clearly superior reference for this harmonic.
 
-**Why this matters for the writing:** it is a design result, not just a
-sensitivity check. Sparse velocity probing recovers most of the reconstruction
-quality of full-field observation, which is the practically relevant statement
-for anyone instrumenting a real experiment.
+**Why this matters for the writing:** sparse velocity probing supplies the
+missing wake-sensitive information, but it does not reproduce the nearly exact
+harmonic available when the entire field is observed.
 
-### Cross-reference with A04: the prior beats the probes in the far wake
+### Cross-reference with A04: two routes to far-wake information
 
 A01 and A04 answer the same question — where does far-wake structure come
 from? — by two different routes, and they should be read together:
@@ -397,26 +395,25 @@ is added:
 | route to far-core $v_1$ | rel $L^2$ | extra sensors needed |
 |---|---:|---|
 | nothing added (pressure + physics) | 0.997 | — (fails) |
-| + 40 velocity probes (A01) | 0.373 | 40 probes |
-| + analytical Kármán prior (A04) | 0.285 | none |
+| + 40 velocity probes (A01) | 0.189 | 40 probes |
+| + analytical Kármán prior (A04) | 0.289 | none |
 
 (For reference, the prior with *no* network scores 0.282 in this region — see
-the A04 section. The 0.285 above is the trained prior-assisted arm, which is
+the A04 section. The 0.289 above is the trained prior-assisted arm, which is
 the like-for-like comparison against the probe arm.)
 
-**The analytical prior outperforms 40 velocity probes in the far wake, with no
-additional instrumentation.** Both are ways of injecting the wake structure that
-wall pressure cannot supply; the prior injects it as an assumption, the probes as
-data. Stated together this is a stronger claim than either section makes alone.
+**The velocity probes outperform the analytical-prior hybrid in the far core,
+while the prior requires no extra instrumentation.** Both inject wake structure
+that wall pressure cannot supply: the prior provides an assumption, whereas the
+probes provide measurements.
 
-The honest counterweight, which belongs in the same paragraph: the prior only
-wins where its assumed form is correct. In near-cylinder it scores 1.372, worse
-than predicting zero, where the probes reach 0.360. So this is not "priors beat
-sensors" — it is that each supplies information in the region where the other
-cannot.
+Near the cylinder, the prior alone scores 1.372, worse than predicting zero,
+whereas the probe-assisted network reaches 0.317. The comparison is therefore
+a trade-off between measurement burden and reconstruction accuracy, not
+evidence that the prior is intrinsically superior to sensors.
 
-**Limitation:** this is one seed per method. The dense-observation curve is a
-non-converged ceiling (see above), not a fair third controlled arm, because its
+**Limitation:** this is one seed per method. The dense-observation result is a
+fixed-budget reference, not a fair third controlled arm, because its
 optimizer/training budget differs from the other two.
 
 **Figure/result:** `figures/final/F03_information_comparison.png`, generated by
@@ -444,9 +441,9 @@ network and training settings; only the tap count changes as an input setting.
 | $v$ | 0.143 | 0.114 | 0.141 |
 | $p$ | 0.085 | 0.019 | 0.019 |
 
-For the first shedding harmonic $v_1$, the near-cylinder errors are 0.771,
-0.709, and 0.911, while the near-wake errors are 1.044, 1.060, and 1.003.
-The far-core errors are 0.992, 0.992, and 0.997. The zero-prediction baseline
+For the first shedding harmonic $v_1$, the near-cylinder errors are 0.795,
+0.717, and 0.941, while the near-wake errors are 1.036, 1.047, and 1.002.
+The far-core errors are 0.994, 0.994, and 0.997. The zero-prediction baseline
 is 1.0 for this relative-$L^2$ metric.
 
 **Interpretation:** additional wall pressure information improves the local
@@ -462,14 +459,13 @@ harmful. The result establishes that more wall-pressure taps alone are not a
 reliable substitute for wake-sensitive information such as velocity probes or
 an appropriate prior.
 
-**Limitation (training):** the 32-tap arm is the same non-converged
+**Limitation (training):** the 32-tap arm is the same early-stopping
 `01_baseline_physics_only` checkpoint discussed under "Training effort — the
 L-BFGS termination pathology" (5,503 evaluations against 27,130 for 8 taps
-and 21,868 for 16 taps). The $u$/$p$ improvements above are unaffected —
-an under-trained arm can only make 32 taps look worse, so those hold as
-lower bounds. The $v_1$ non-monotonicity just above is the one claim that
-does depend on 32 taps being fairly trained, and should not be read as a
-tap-count effect for that reason.
+and 21,868 for 16 taps). Evaluation count does not rank reconstruction quality,
+so no difference involving the 32-tap endpoint receives a directional bound.
+The non-monotonic $v_1$ ordering should be reported as an observed comparison,
+not a causal tap-count effect.
 
 **Figure/result:** `figures/final/F04a_tap_count.png`, generated by
 `scripts/figures/fig04a_tap_count.py`; numerical sources:
@@ -498,13 +494,13 @@ better; 1.0 = no better than predicting zero):
 
 | region | uniform | wake-biased random | wake-biased grid |
 |---|---:|---:|---:|
-| near cylinder | 0.9110 | 0.5039 | 0.5064 |
-| near wake | 1.0028 | 1.1559 | 1.1325 |
-| far wake | 0.9976 | 1.0312 | 1.0175 |
-| far core | 0.9974 | 1.0156 | 1.0062 |
+| near cylinder | 0.9406 | 0.4215 | 0.4258 |
+| near wake | 1.0015 | 1.1308 | 1.1073 |
+| far wake | 0.9972 | 1.0307 | 1.0178 |
+| far core | 0.9972 | 1.0161 | 1.0076 |
 
-Near the body the wake-biased arms roughly halve the $v_1$ error (0.911 →
-0.504), and the supporting diagnostics agree that this is a real local gain:
+Near the body the wake-biased arms more than halve the $v_1$ error (0.941 →
+0.422), and the supporting diagnostics agree that this is a real local gain:
 near-cylinder amplitude ratio rises 0.233 → 0.711 and complex correlation
 0.590 → 0.935. Downstream every wake-biased number is *worse* than uniform,
 and all six downstream values sit at or above 1.0.
@@ -529,7 +525,7 @@ beyond the cylinder, in every arm.
 |---|---:|---:|---:|
 | amplitude ratio (ideal 1) | 0.0189 | 0.2975 | 0.2540 |
 | complex correlation (ideal 1) | 0.1604 | 0.0963 | 0.1026 |
-| rel $L^2$ (ideal 0) | 0.9974 | 1.0156 | 1.0062 |
+| rel $L^2$ (ideal 0) | 0.9972 | 1.0161 | 1.0076 |
 
 **Interpretation:** wake-biased collocation raises the far-core shedding
 amplitude by roughly 16x (0.019 → 0.298) while the correlation with the true
@@ -562,24 +558,16 @@ termination is the characterised `ftol`/float32 pathology documented under
 version of this comparison at matched effort available from the existing arm
 set, and no reason to expect a third attempt to produce one.
 
-**What this costs and what it does not.** The gap favours the wake-biased
-arms, which splits the findings cleanly:
+**What this costs.** Evaluation count is not an accuracy proxy, so the gap
+cannot be assigned a favourable direction. Neither the downstream losses nor
+the near-body gain can be interpreted as a causal effect of sampling alone.
+Report them as observed endpoint differences. The defensible common result is
+that all three pressure-only endpoints retain order-one downstream $v_1$ error;
+none recovers the travelling wake.
 
-- **Conservative, and safe to report.** Every result in which the wake-biased
-  arms are *worse* — all six downstream $v_1$ values, the near-wake and
-  far-wake field $v$ errors, the upstream leakage below — survives the
-  confound, because a wake-biased arm would have had to lose *in spite of*
-  7-8x the optimizer mileage. The headline negative claim is therefore sound.
-- **Unattributable, and must be hedged.** The near-body $v_1$ gain (0.911 →
-  0.504) and the mean-field $u$ gains cannot be assigned to sampling rather
-  than to effort. Report them as observed differences between arms, never as
-  "wake-biased collocation improves the near-body reconstruction".
-
-Note the symmetry with A05: there the *losing* arm was the less-trained one,
-and here the losing arms are the better-trained ones. Both point the same way
-— no evidence that wake-biased collocation helps — and for opposite reasons,
-which is worth a line in the Discussion because two independent confound
-directions agreeing is stronger than either arm alone.
+A05 has the same limitation despite a smaller effort spread. Agreement between
+the two studies is useful descriptive evidence, but it does not remove the
+optimisation confound.
 
 Secondary limitations: single seed per arm, as everywhere in this project;
 and the two wake-biased arms are not independent evidence of each other, being
@@ -704,12 +692,10 @@ the wake-biased arm departs from it in the wrong direction.
 
 **Limitation:** the arms are not effort-matched — 34,643 L-BFGS evaluations
 (uniform) against 26,129 (wake-biased), a 1.33x spread, the closest match in
-the arm set but not a controlled budget. The losing arm is also the
-less-trained one, so the *magnitude* of the harm is an upper bound on the
-sampling effect and a lower bound on the arm's achievable quality. What is not
-at risk is the negative direction of the claim: there is no evidence that
-wake-biased grid sampling improves the prior-assisted reconstruction, since a
-gain would have had to appear in spite of the effort deficit, and none did.
+the arm set but not a controlled budget. Because evaluation count is not an
+accuracy ordering, neither the direction nor magnitude can be isolated as a
+pure sampling effect. The descriptive result remains that the tested
+wake-biased endpoint is worse in both the near and far wake.
 
 **Figure/result:** `figures/final/F04c_prior_collocation.png`, generated by
 `scripts/figures/fig04c_prior_collocation.py`; numerical sources:
@@ -739,25 +725,26 @@ the packed parameter vector and writes five `.npy` files; it does not enter the
 objective, the data, or the search direction, and is recorded rather than
 assumed away (`derived/a06_input_manifest.json`).
 
-### Finding: far-field invariance is the prior's, not the network's
+### Finding: far-core invariance is strongly prior-anchored
 
 **Evidence:** the four arms' far-core $v_1$ errors are 0.2895, 0.3249, 0.2776
 and 0.2765 for 0 %, 1 %, 5 % and 10 % noise. The analytical prior alone scores
 0.2819 in the same region. Every arm is within 0.043 of the prior level, and
 the two highest-noise arms are *closer* to the truth than the clean arm is.
 
-**Interpretation:** downstream of the trust radius the $v_1$ radial blend pins
-the field to the analytical Kármán street, so tap noise cannot degrade it — and
-equally, agreement there is not evidence that the reconstruction tolerates
-noise. The point is sharper than the blend alone: `street_prior_used.npz` is
+**Interpretation:** in the far-wake core the $v_1$ radial blend constrains the
+field to the analytical Kármán street plus a learned correction whose magnitude
+is less than 60% of the local prior amplitude. Agreement there therefore cannot
+be credited wholly to learned noise tolerance. The point is reinforced by the
+fact that `street_prior_used.npz` is
 byte-identical across all four arms (sha256 `18e905159e09af39`), i.e. the prior
 parameters ($\Gamma = 2.527$, $U_c = 0.821$, $\omega = 1.036$, phase 0.731,
 amp_scale 0.743) were fitted beforehand on clean data and passed in unchanged,
-while `--Noise` perturbs only the tap-measurement term. Far downstream the
-arms therefore share a fixed analytical field by construction, and their
-agreement there is close to tautological. Far-field $v_1$ must not be quoted as a robustness result for any
-prior-assisted arm. This applies to A04 and A05 as well: no conclusion in those
-sections should rest on far-field $v_1$.
+while `--Noise` perturbs only the tap-measurement term. The arms share the same
+analytical anchor and bounded correction geometry, although their learned
+corrections differ. Far-core $v_1$ may be reported only as a prior-assisted
+result, not as an unconstrained network robustness result. This applies to A04
+and A05 as well: conclusions there must compare the hybrid with the prior alone.
 
 ### Finding: noise erodes the learned near-body contribution
 
@@ -793,7 +780,7 @@ noise sensitivity would need Arms 11--13 re-run at matched effort
 ### Cross-cutting note added by A05 and A06
 
 Both sections needed the prior-alone column to be interpretable, and both found
-the far field prior-determined. The practical consequence for the remaining
+the far-wake core strongly prior-anchored. The practical consequence for the remaining
 write-up: for any arm trained with `--V1RadialTrust`, report the learned
 contribution relative to the prior rather than the raw regional error, or the
 prior's accuracy will be read as the network's.

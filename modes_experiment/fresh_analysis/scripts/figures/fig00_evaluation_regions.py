@@ -10,7 +10,7 @@ earlier draft plotted the mesh nodes themselves, which turned the figure into a
 mesh-density map and left the boundaries invisible wherever the mesh is coarse.
 
 Input:  derived/a00_geometry.npz
-Output: figures/draft/F00_evaluation_regions.png
+Output: figures/final/F00_evaluation_regions.png
 """
 from __future__ import annotations
 
@@ -131,6 +131,6 @@ ax.text(XMIN + 0.18, YMIN + 0.28,
 bad = check_text_overlaps(fig)
 if bad:
     print("TEXT COLLISIONS:", bad)
-out = save_figure(fig, ROOT / "figures" / "draft" / "F00_evaluation_regions")
+out = save_figure(fig, ROOT / "figures" / "final" / "F00_evaluation_regions")
 print(out)
 print(f"partition sum = {sum(counts.values()):,}  (crop {N_WHOLE:,})")

@@ -13,7 +13,7 @@ framings are shown so the reader can see why they differ.
 
 Input:  derived/a04_v1_absolute_check.json,
         derived/a04_prior_attribution_metrics.json
-Output: figures/draft/F02b_upstream_artefact.png
+Output: figures/final/F02b_upstream_artefact.png
 """
 from __future__ import annotations
 
@@ -127,7 +127,7 @@ fig.text(0.085, 0.045,
 bad = check_text_overlaps(fig)
 if bad:
     print("TEXT ISSUES:", bad)
-out = save_figure(fig, ROOT / "figures" / "draft" / "F02b_upstream_artefact")
+out = save_figure(fig, ROOT / "figures" / "final" / "F02b_upstream_artefact")
 print(out)
 for r in REGIONS:
     print(f"  {r:14s} true={ABS[HYB][r]['true_rms_per_node']:.5f} "

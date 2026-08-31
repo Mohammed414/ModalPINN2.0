@@ -168,16 +168,16 @@ fig.suptitle("Concentrating collocation points in the wake does not improve the 
 fig.text(
     0.105, 0.022,
     "Both models use 32 wall pressure taps, the physics residual, and the analytical Karman-street prior;\n"
-    "the only difference is where the 50,000 interior points that enforce the equations are placed. Top:\n"
+    "the recorded input-setting difference is where the 50,000 interior physics points are placed. Top:\n"
     "those point sets, regenerated from each run's own training code with its seed, 7,000 of 50,000 shown.\n"
-    "Bottom: errors over 201 common snapshots. Downstream of $x=3$ the prior sets the field by construction,\n"
-    "so both models sit on the prior line there and only the near-body bars reflect what was learned.\n"
-    "Training length was not equalised: 34,643 optimiser steps for uniform against 26,129 for wake-biased.",
+    "Bottom: errors over 201 common snapshots. In the far core the radial trust constrains $v_1$ to the prior\n"
+    "plus a bounded correction; the dashed prior-only level is therefore the necessary attribution baseline.\n"
+    "Training length was not equalised (34,643 vs 26,129 evaluations), so differences are descriptive, not causal.",
     ha="left", va="bottom", fontsize=6.8, color=COLORS["muted"], linespacing=1.45,
 )
 
 bad = check_text_overlaps(fig)
 if bad:
     print("TEXT ISSUES:", bad)
-out = save_figure(fig, ROOT / "figures" / "draft" / "F04c_prior_collocation")
+out = save_figure(fig, ROOT / "figures" / "final" / "F04c_prior_collocation")
 print(out)

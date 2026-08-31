@@ -43,7 +43,8 @@ def main() -> None:
     with OUT.open("w", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=["method", "region",
                                                      "metric_group", "quantity",
-                                                     "metric", "value"])
+                                                     "metric", "value"],
+                                lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     print("Wrote", OUT, "rows", len(rows))

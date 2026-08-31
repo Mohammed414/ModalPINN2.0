@@ -128,5 +128,5 @@ fig.text(
 bad = check_text_overlaps(fig)
 if bad:
     print("TEXT ISSUES:", bad)
-out = save_figure(fig, ROOT / "figures" / "draft" / "F04a_tap_count")
+out = save_figure(fig, ROOT / "figures" / "final" / "F04a_tap_count")
 print(out)

@@ -11,7 +11,7 @@ adding nothing (taps are not an evaluation region). This version:
       pattern in angle rather than three overlapping rings.
 
 Input:  derived/a00_geometry.npz
-Output: figures/draft/F00b_tap_layout.png
+Output: figures/final/F00b_tap_layout.png
 """
 from __future__ import annotations
 
@@ -98,5 +98,5 @@ axs.set_title("Same quadrant, unrolled: each tier adds taps\nbetween the previou
 bad = check_text_overlaps(fig)
 if bad:
     print("TEXT COLLISIONS:", bad)
-out = save_figure(fig, ROOT / "figures" / "draft" / "F00b_tap_layout")
+out = save_figure(fig, ROOT / "figures" / "final" / "F00b_tap_layout")
 print(out)

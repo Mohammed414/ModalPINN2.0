@@ -9,7 +9,7 @@ regions the probes actually cover. The final section is requested at x/D = 3;
 there are no probe sections farther downstream.
 
 Input:  derived/a00_geometry.npz
-Output: figures/draft/F00a_probe_locations.png
+Output: figures/final/F00a_probe_locations.png
 """
 from __future__ import annotations
 
@@ -75,6 +75,6 @@ ax.text(5.25, -2.9, "no probe sections\ndownstream of $x/D=3$",
 bad = check_text_overlaps(fig)
 if bad:
     print("TEXT COLLISIONS:", bad)
-out = save_figure(fig, ROOT / "figures" / "draft" / "F00a_probe_locations")
+out = save_figure(fig, ROOT / "figures" / "final" / "F00a_probe_locations")
 print(out)
 print("probes/section:", dict(zip(sections.tolist(), per_section)))

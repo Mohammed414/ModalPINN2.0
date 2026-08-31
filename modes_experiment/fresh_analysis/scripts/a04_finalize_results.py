@@ -274,6 +274,12 @@ def main() -> None:
     summary_source = "modes_experiment/fresh_analysis/derived/a04_prior_attribution_summary.csv"
     for row in summary_rows:
         metric = f"{row['metric_group']}.{row['quantity']}.{row['metric']}"
+        if row["metric"] == "phase_deg":
+            unit, reference = "degrees", "ideal phase 0 deg"
+        elif row["metric"] in {"amp_ratio", "corr"}:
+            unit, reference = "dimensionless", "ideal 1"
+        else:
+            unit, reference = "dimensionless", "CFD"
         master_rows.append({
             "analysis_id": "A04",
             "arm_id": METHOD_IDS[row["method"]],
@@ -281,8 +287,8 @@ def main() -> None:
             "metric": metric,
             "region": row["region"],
             "value": row["value"],
-            "unit": "dimensionless",
-            "reference": "CFD",
+            "unit": unit,
+            "reference": reference,
             "value_type": "raw_metric",
             "source": summary_source,
             "status": "accepted",

@@ -1,0 +1,90 @@
+{
+  "arm1_baseline": {
+    "near-cylinder": {
+      "n": 13715,
+      "pred_l2_norm": 0.7089082714661521,
+      "true_l2_norm": 3.0425817114756235,
+      "pred_rms_per_node": 0.006053299160132881,
+      "true_rms_per_node": 0.02598031093729513
+    },
+    "near-wake": {
+      "n": 15248,
+      "pred_l2_norm": 0.8497093290020757,
+      "true_l2_norm": 15.86827060709053,
+      "pred_rms_per_node": 0.006881196262360583,
+      "true_rms_per_node": 0.12850592627937465
+    },
+    "far-wake": {
+      "n": 16393,
+      "pred_l2_norm": 0.5016846180027197,
+      "true_l2_norm": 23.2280089885216,
+      "pred_rms_per_node": 0.00391833502304297,
+      "true_rms_per_node": 0.18141899884757418
+    },
+    "far-core": {
+      "n": 12460,
+      "pred_l2_norm": 0.43784510816976835,
+      "true_l2_norm": 23.107547402478005,
+      "pred_rms_per_node": 0.003922486709500947,
+      "true_rms_per_node": 0.20701167121465036
+    },
+    "other": {
+      "n": 6298,
+      "pred_l2_norm": 0.5427162956125446,
+      "true_l2_norm": 0.446795317085925,
+      "pred_rms_per_node": 0.00683866821121255,
+      "true_rms_per_node": 0.005629985604956876
+    },
+    "whole-domain": {
+      "n": 51654,
+      "pred_l2_norm": 1.3307085761391322,
+      "true_l2_norm": 28.298398243665122,
+      "pred_rms_per_node": 0.005855054969159335,
+      "true_rms_per_node": 0.12451161751474103
+    }
+  },
+  "arm15_v1_radial_trust": {
+    "near-cylinder": {
+      "n": 13715,
+      "pred_l2_norm": 2.43498368456823,
+      "true_l2_norm": 3.0425817114756235,
+      "pred_rms_per_node": 0.020792090156106894,
+      "true_rms_per_node": 0.02598031093729513
+    },
+    "near-wake": {
+      "n": 15248,
+      "pred_l2_norm": 13.615161589194118,
+      "true_l2_norm": 15.86827060709053,
+      "pred_rms_per_node": 0.11025958623877727,
+      "true_rms_per_node": 0.12850592627937465
+    },
+    "far-wake": {
+      "n": 16393,
+      "pred_l2_norm": 19.5246150884657,
+      "true_l2_norm": 23.2280089885216,
+      "pred_rms_per_node": 0.1524941773521819,
+      "true_rms_per_node": 0.18141899884757418
+    },
+    "far-core": {
+      "n": 12460,
+      "pred_l2_norm": 19.3814917459522,
+      "true_l2_norm": 23.107547402478005,
+      "pred_rms_per_node": 0.17363136498563483,
+      "true_rms_per_node": 0.20701167121465036
+    },
+    "other": {
+      "n": 6298,
+      "pred_l2_norm": 5.133302236157643,
+      "true_l2_norm": 0.446795317085925,
+      "pred_rms_per_node": 0.06468379723394128,
+      "true_rms_per_node": 0.005629985604956876
+    },
+    "whole-domain": {
+      "n": 51654,
+      "pred_l2_norm": 24.47168071147684,
+      "true_l2_norm": 28.298398243665122,
+      "pred_rms_per_node": 0.10767424086882278,
+      "true_rms_per_node": 0.12451161751474103
+    }
+  }
+}

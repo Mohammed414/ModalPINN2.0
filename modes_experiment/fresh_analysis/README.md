@@ -33,7 +33,14 @@ write the analysis script and run it. A result is not added to
   axes, and export behaviour.
 - `derived/` — machine-readable outputs produced by analysis scripts; never
   hand-edited.
-- `figures/draft/` and `figures/final/` — generated figures only.
+- `derived/verified_results.csv` — the single filter-friendly table containing
+  every accepted ModalPINN and Gappy POD result, with method, region, metric,
+  units, phase convention, provenance, and caveat columns.
+- `derived/verified_results_audit.json` — automated checks for the consolidated
+  table. `status: passed` is required before numbers are used in writing.
+- `derived/v1_phase_correction_audit.csv` — an explicit old-versus-corrected
+  audit for first-harmonic metrics affected by the time-origin convention.
+- `figures/final/` — generated figures only; the figure scripts write here directly.
 - `scripts/` — data and metric builders; `scripts/figures/` contains short
   figure-specific generators that load prepared data.
 

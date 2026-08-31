@@ -9,10 +9,11 @@ Interpretation: `findings.md`. Frozen definitions: `data_contract.md`. Scope
 choices and their reasons: `decisions.md`. Figures: `figures/final/` (13 PNGs,
 300 dpi), indexed in `design/figure_manifest.csv`.
 
-**Standing rule.** Far-field $v_1$ must never be quoted as a network result in
-A04, A05 or A06. `--V1RadialTrust` pins that region to the analytical prior, so
-far-field agreement there measures the prior, not the reconstruction. This is
-the single easiest error to make when writing from the results table.
+**Standing rule.** Far-core $v_1$ must never be quoted as an unconstrained
+network result in A04, A05 or A06. For $x\geq3$, $|y|\leq2$,
+`--V1RadialTrust` uses the analytical prior plus a learned correction bounded
+below 60% of the local prior amplitude. Far-core agreement is therefore a
+prior-assisted result and must always be compared with the prior alone.
 
 ---
 
@@ -140,16 +141,16 @@ core — i.e. the prior is worst exactly where the sensors are.
 ### R3. Network-only reconstruction
 
 What the network produces without the prior, under the same protocol. Report as
-a non-converged lower bound (M5).
+the observed endpoint, not a one-sided bound (M5).
 
 - **Evidence:** `findings.md` (A04, "Training effort"), A02 and A03 rows in
   `results_master.csv`.
 
 ### R4. Prior plus network — the division of labour
 
-The central result. Near the body the network contributes strongly (+62.6%
-near cylinder, +36.7% near wake); in the far field it does not measurably
-improve the prior (−1.6% far wake, −1.1% far core), so the good far-wake
+The central result. Near the body the network contributes strongly (+70.9%
+near cylinder, +44.8% near wake); in the far field it does not measurably
+improve the prior (−2.5% far wake, −2.7% far core), so the good far-wake
 structure is supplied by the prior, not learned from sparse data. Single seed,
 so this supports "no improvement", not "reliably worse".
 
@@ -161,15 +162,16 @@ Each subsection states its caveat *with* its result, not in a footnote.
 
 | study | arms | status | caveat to state inline |
 |---|---|---|---|
-| Information content | 1, 4, 5 | accepted | dense arm is a non-converged ceiling |
-| Tap count | 8, 9, 1 | accepted | reference arm is a lower bound |
+| Information content | 1, 4, 5 | accepted | dense arm is a fixed-budget representational reference |
+| Tap count | 8, 9, 1 | accepted | effort differs; endpoint comparison only |
 | Collocation strategy | 1, 6, 7 | with caveat | effort not controlled, 6.9–7.9x |
 | Prior + collocation | 15, 10 | with caveat | effort not controlled, 1.33x |
 | Pressure noise | 15, 11–13 | with caveat | one seed, 11x effort spread |
 
-For A03 and A05, use the confound-direction argument rather than a bare
-caveat: the effort gap favours the arms that lost, so the negative findings are
-conservative, while the near-body gains are unattributable.
+For A03 and A05, state the effort gap without assigning it a favourable
+direction. Evaluation count is not an accuracy proxy, so neither gains nor
+losses are causal estimates of sampling alone. The shared endpoint result is
+that neither tested collocation change recovers the travelling wake.
 
 - **Figures:** F03, F04a, F04b, F04c, F04d. **Evidence:** `findings.md`
   (A01, A02, A03, A05, A06).

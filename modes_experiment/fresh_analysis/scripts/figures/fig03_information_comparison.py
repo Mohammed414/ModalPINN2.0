@@ -131,5 +131,5 @@ fig.text(
 bad = check_text_overlaps(fig)
 if bad:
     print("TEXT ISSUES:", bad)
-out = save_figure(fig, ROOT / "figures" / "draft" / "F03_information_comparison")
+out = save_figure(fig, ROOT / "figures" / "final" / "F03_information_comparison")
 print(out)

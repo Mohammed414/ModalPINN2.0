@@ -1,0 +1,49 @@
+{
+  "analysis_id": "A07",
+  "method": "centreline_phase_gradient",
+  "fit_window": {
+    "x_min": 2.0,
+    "x_max": 8.0,
+    "y_halfwidth": 0.75
+  },
+  "snapshots": 201,
+  "crop_nodes": 51654,
+  "arms": {
+    "pressure_only_physics": {
+      "phase_gradient_rad_per_D": -0.04868522614639649,
+      "wavelength_D": 129.0573302111414,
+      "fit_r2": 0.5460309345102636,
+      "n_bins": 60
+    },
+    "pressure_and_velocity_probes": {
+      "phase_gradient_rad_per_D": -1.2881531084022935,
+      "wavelength_D": 4.8776696389551635,
+      "fit_r2": 0.9943811360855128,
+      "n_bins": 60
+    },
+    "wake_biased_random_collocation": {
+      "phase_gradient_rad_per_D": -0.07206438247578449,
+      "wavelength_D": 87.18849855253946,
+      "fit_r2": 0.9750545702914174,
+      "n_bins": 60
+    },
+    "wake_biased_grid_collocation": {
+      "phase_gradient_rad_per_D": -0.07699428094589279,
+      "wavelength_D": 81.60587033204521,
+      "fit_r2": 0.9665275814503287,
+      "n_bins": 60
+    },
+    "pressure_only_physics_karman_prior": {
+      "phase_gradient_rad_per_D": -1.2527034615464103,
+      "wavelength_D": 5.015700443122633,
+      "fit_r2": 0.9896223471603887,
+      "n_bins": 60
+    }
+  },
+  "dns_reference": {
+    "phase_gradient_rad_per_D": -1.3534291319777234,
+    "wavelength_D": 4.642419140186649,
+    "fit_r2": 0.9972495633966599,
+    "n_bins": 60
+  }
+}
