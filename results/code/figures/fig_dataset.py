@@ -30,13 +30,12 @@ def main() -> None:
     d = np.load(DATA)
     x, y, times = d["x"], d["y"], d["times"]
 
-    # panel (a) is drawn at equal aspect on a 12 x 6.2 domain, so its height is
-    # dictated by the width it is given; the figure is sized to let it fill the
-    # column rather than sit as a narrow strip in the middle.
-    fig = new_figure(width="full", height=6.9)
-    gs = fig.add_gridspec(2, 1, height_ratios=[2.55, 1.0], hspace=0.30,
-                          left=0.075, right=0.975, bottom=0.085, top=0.955)
-    ax0, ax1 = fig.add_subplot(gs[0]), fig.add_subplot(gs[1])
+    # A horizontal composition keeps the dataset overview readable without
+    # turning it into a dedicated full page in the report.
+    fig = new_figure(width="full", height=3.25)
+    gs = fig.add_gridspec(1, 2, width_ratios=[1.55, 1.0], wspace=0.30,
+                          left=0.070, right=0.980, bottom=0.205, top=0.885)
+    ax0, ax1 = fig.add_subplot(gs[0, 0]), fig.add_subplot(gs[0, 1])
 
     # ---------------------------------------------------------------- panel (a)
     tri = Triangulation(x, y)
@@ -46,7 +45,7 @@ def main() -> None:
     j = int(d["snapshot_index"])
     f = d["v_snapshot"]
     lim = float(np.percentile(np.abs(f), 99))
-    ax0.tricontourf(tri, f, levels=48, cmap="RdBu_r", vmin=-lim, vmax=lim)
+    cf = ax0.tricontourf(tri, f, levels=48, cmap="RdBu_r", vmin=-lim, vmax=lim)
     ax0.add_patch(__import__("matplotlib").patches.Circle(
         (0, 0), 0.5, facecolor="white", edgecolor=COLORS["reference"],
         linewidth=1.0, zorder=4))
@@ -55,8 +54,12 @@ def main() -> None:
     ax0.set_aspect("equal")
     ax0.set_xlabel("$x/D$")
     ax0.set_ylabel("$y/D$")
-    ax0.set_title("Transverse velocity at one instant, on the evaluation crop",
-                  loc="left", pad=6.0, fontsize=8.6)
+    ax0.set_title("Reference transverse velocity", loc="left", pad=6.0,
+                  fontsize=8.6)
+    cb = fig.colorbar(cf, ax=ax0, orientation="horizontal", pad=0.20,
+                      fraction=0.065, aspect=35)
+    cb.set_label(r"$v/U_\infty$", labelpad=2.0)
+    cb.ax.tick_params(labelsize=7.0, length=2.5)
 
     # the probe used in panel (b)
     probe = int(d["probe_index"])
@@ -79,21 +82,22 @@ def main() -> None:
              label=r"single harmonic at $\omega_0$")
     ax1.set_xlim(times[0], times[-1] + 0.12)
     ax1.set_xlabel("$t$")
-    ax1.set_ylabel("$v$")
-    ax1.legend(loc="lower center", bbox_to_anchor=(0.5, 1.0), frameon=False,
-               fontsize=7.2, ncols=2, handlelength=2.4, columnspacing=1.6)
-    ax1.set_title("One clean limit cycle: 3.30 shedding periods, no transient",
-                  loc="left", pad=20.0, fontsize=8.6)
+    ax1.set_ylabel(r"$v/U_\infty$")
+    ax1.set_xticks([400, 405, 410, 415, 420])
+    ax1.legend(loc="upper right", frameon=False, fontsize=6.9,
+               handlelength=2.2)
+    ax1.set_title("Wake-probe signal and first harmonic", loc="left",
+                  pad=6.0, fontsize=8.6)
 
     T = 2 * np.pi / OMEGA_0
     for k in range(1, 4):
         ax1.axvline(times[0] + k * T, lw=0.8, color=COLORS["grid"], zorder=0)
-    ax1.annotate(rf"$T = 2\pi/\omega_0 = {T:.3f}$", xy=(0.012, 0.90),
-                 xycoords="axes fraction", fontsize=7.2, color=COLORS["muted"])
+    ax1.annotate(rf"$T = 2\pi/\omega_0 = {T:.3f}$", xy=(0.025, 0.06),
+                 xycoords="axes fraction", fontsize=7.0, color=COLORS["muted"])
 
-    fig.text(0.075, 0.014,
-             rf"A single harmonic at $\omega_0$ leaves a relative residual of {resid:.2f}: "
-             rf"the departure is the higher modes, not a drift in frequency.",
+    fig.text(0.070, 0.035,
+             rf"201 snapshots cover 3.30 shedding periods. The first-harmonic residual "
+             rf"is {resid:.2f}; the remaining signal is higher-harmonic content.",
              fontsize=6.9, color=COLORS["muted"], ha="left")
 
     bad = check_text_overlaps(fig)
