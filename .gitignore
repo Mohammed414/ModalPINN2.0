@@ -23,6 +23,11 @@ extras/flow_cache.npz
 # recreate via src/fast_flow_parser.py - ~180MB, not source data)
 src/pressure_only/_flow_cache.npz
 
+# Same cache again, at the path modes_experiment/gappy_pod_final/run_analysis.py
+# resolves to. Hardlinked to src/pressure_only/_flow_cache.npz, so it is one
+# copy on disk, not two - but it must never enter git either way.
+data/flow_cache.npz
+
 # R9_wake_rescue: regenerable truth-field cache (re-run any script that
 # calls src/common.py::load_truth_fields() to recreate)
 R9_wake_rescue/cache/

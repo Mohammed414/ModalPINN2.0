@@ -2,7 +2,8 @@
 
 This folder is the dissertation-facing GappyPOD calculation copied into the
 ModalPINN2.0 repository for the Results chapter. It replaces the broader
-exploratory workflow in `GappyPOD/fresh_analysis_GappyPOD` with one matched
+exploratory workflow now archived at
+`archive/gappy_pod_history/5_fresh_analysis_GappyPOD/` with one matched
 diagnostic for the ModalPINN study.
 
 ## Question
@@ -19,8 +20,10 @@ unseen flow.
 
 ## Frozen configuration
 
-- Dataset: the external `GappyPOD/data/flow_cache.npz` CFD cache. It is not
-  duplicated in this repository.
+- Dataset: `data/flow_cache.npz`, resolved automatically by `run_analysis.py`.
+  It is a hardlink to `src/pressure_only/_flow_cache.npz`, so it is one copy
+  on disk rather than two, and it is git-ignored. The original GappyPOD
+  workspace it came from is now at `archive/GappyPOD/`.
 - Evaluation crop: `-4 < x < 8`, `-4 < y < 4` (51,654 nodes).
 - State: unscaled joint vector `[u; v; p]` on the crop.
 - POD library and reconstruction interval: all 201 snapshots.
