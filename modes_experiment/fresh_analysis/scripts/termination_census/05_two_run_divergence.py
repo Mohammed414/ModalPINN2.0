@@ -10,7 +10,7 @@ import re
 import numpy as np
 
 ARMS = pathlib.Path('/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms')
-NEWLOG = pathlib.Path('/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/notebooks/matched_effort/zx/baseline_physics_only_K3_matched/train_log.txt')
+NEWLOG = pathlib.Path('/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/experiment/notebooks/matched_effort/zx/baseline_physics_only_K3_matched/train_log.txt')
 
 
 def fort(x):

@@ -10,7 +10,7 @@ import sys
 import numpy as np
 
 ARMS = pathlib.Path('/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms')
-NEWLOG = pathlib.Path('/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/notebooks/matched_effort/zx/baseline_physics_only_K3_matched/train_log.txt')
+NEWLOG = pathlib.Path('/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/experiment/notebooks/matched_effort/zx/baseline_physics_only_K3_matched/train_log.txt')
 FA = pathlib.Path('/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis')
 sys.path.insert(0, str(FA))
 from figure_common import COLORS, new_figure, save_figure, check_text_overlaps  # noqa: E402

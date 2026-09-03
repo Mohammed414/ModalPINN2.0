@@ -47,14 +47,14 @@ directly into the report without carrying the exploratory study alongside it.
 From the `ModalPINN2.0` repository root in the shared workspace:
 
 ```bash
-python3 modes_experiment/gappy_pod_final/run_analysis.py
+python3 modes_experiment/baselines/gappy_pod_final/run_analysis.py
 ```
 
 In another checkout, point the script to the CFD cache explicitly:
 
 ```bash
 GAPPYPOD_FLOW_CACHE=/path/to/flow_cache.npz \
-  python3 modes_experiment/gappy_pod_final/run_analysis.py
+  python3 modes_experiment/baselines/gappy_pod_final/run_analysis.py
 ```
 
 The script writes:

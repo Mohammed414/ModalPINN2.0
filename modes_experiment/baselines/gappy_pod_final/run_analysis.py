@@ -30,8 +30,8 @@ def resolve_data_file() -> Path:
     if configured:
         return Path(configured).expanduser().resolve()
     candidates = (
-        HERE.parents[2] / "GappyPOD" / "data" / "flow_cache.npz",
-        HERE.parents[1] / "data" / "flow_cache.npz",
+        HERE.parents[3] / "GappyPOD" / "data" / "flow_cache.npz",
+        HERE.parents[2] / "data" / "flow_cache.npz",
         HERE.parent / "data" / "flow_cache.npz",
     )
     for candidate in candidates:

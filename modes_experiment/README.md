@@ -1,5 +1,20 @@
 # K = 3 experiment series
 
+## Layout
+
+| folder | role |
+|---|---|
+| `experiment/` | **what ran** — `notebooks/` (the 16 arm notebooks), `code/` (the exact source they used, including the `--KMAX` fix), `bvf_targets/` (the verification that the fix is behaviour-preserving) |
+| `runs/` | **what came out** — `arms/`, one folder per arm: weights, checkpoints, `run_record.json`, `train_log.txt` |
+| `fresh_analysis/` | **what it means** — the live analysis workspace. `results_master.csv` and `findings.md` are the numbers the dissertation quotes |
+| `baselines/` | **what to compare against** — `prior_only_evaluation/` (the analytical Kármán prior alone, 0.8082) and `gappy_pod_final/` (the frozen Gappy POD diagnostic) |
+| `figures/` | **evaluation machinery** — `modalpinn_eval.py` evaluates a trained arm exactly as it was trained; `dns_raw.npz` is the parsed DNS cache. `viva/build.py` imports both |
+
+Loose files at this level: `arm_matrix.csv` (the 16 arms), `arms_master_results.csv`
+(their headline metrics), `FORCE_ERROR.md` and `force_error_summary.csv`.
+
+Dissertation-facing figures are **not** here — they are in `ModalPINN2.0/results/figures/`.
+
 Three training runs at the **source paper's mode truncation**, using the **original ModalPINN
 schedule unchanged**. Purpose: establish whether the pressure-only wake collapse depends on the
 truncation, and how the two remedies behave once the truncation is correct.
@@ -61,7 +76,7 @@ caused it.
 
 ## The one code change, verified
 
-`code/bvf_targets.py` is a modified copy. The original hardcodes `KMAX = 2`, so the wall-flux
+`experiment/code/bvf_targets.py` is a modified copy. The original hardcodes `KMAX = 2`, so the wall-flux
 target `G` it builds contains only k = 0,1,2 harmonics. A 4-mode network has a k = 3 mode, so
 training it against a k = 0..2 target would penalise that mode's wall flux toward zero. The copy
 here exposes `--KMAX`.
@@ -71,7 +86,7 @@ here exposes `--KMAX`.
 keys — float64 round-off. The only added key is `kmax` metadata. The change is provably
 behaviour-preserving.
 
-**What the k = 3 harmonic actually contributes** (`bvf_targets/bvf_kmax_verification.json`):
+**What the k = 3 harmonic actually contributes** (`experiment/bvf_targets/bvf_kmax_verification.json`):
 
 | harmonic | wall-flux RMS |
 |---|---|

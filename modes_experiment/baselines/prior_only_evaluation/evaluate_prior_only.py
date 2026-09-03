@@ -30,8 +30,8 @@ import numpy as np
 
 
 HERE = pathlib.Path(__file__).resolve().parent
-REPO_ROOT = HERE.parents[1]       # ModalPINN2.0/
-WORKSPACE_ROOT = HERE.parents[2]  # directory containing ModalPINN2.0/
+REPO_ROOT = HERE.parents[2]       # ModalPINN2.0/
+WORKSPACE_ROOT = HERE.parents[3]  # directory containing ModalPINN2.0/
 SRC = REPO_ROOT / "src" / "R9" / "src"
 sys.path.insert(0, str(SRC))
 # street_prior imports the repository's lightweight text-flow reader.
