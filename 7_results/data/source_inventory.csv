@@ -1,7 +1,7 @@
 category,item,value,unit,source,check
-dataset,raw_path,ModalPINN2.0/data/fixed_cylinder_atRe100,workspace-relative path,fixed_cylinder_atRe100,exists
+dataset,raw_path,ModalPINN2.0/1_data/fixed_cylinder_atRe100,workspace-relative path,fixed_cylinder_atRe100,exists
 dataset,raw_sha256,218099d4f56eaf8c49e34e94c8b30bb580df204d3dd513d92334bb26f2c36996,sha256,fixed_cylinder_atRe100,
-dataset,cache_path,GappyPOD/data/flow_cache.npz,workspace-relative path,flow_cache.npz,exists
+dataset,cache_path,ModalPINN2.0/1_data/flow_cache.npz,workspace-relative path,flow_cache.npz,exists
 dataset,cache_sha256,6335be20db7e26944fc203098ed9be6f2cda4f96f039c67e35bb7830f72d5775,sha256,flow_cache.npz,
 dataset,cache_raw_first_snapshot_coordinate_max_abs_diff,3.812e-06,D,raw versus float32 cache,pass < 5e-6
 dataset,cache_raw_first_snapshot_field_max_abs_diff,5.960e-08,field units,raw versus float32 cache,pass < 1e-6

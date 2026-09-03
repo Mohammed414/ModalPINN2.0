@@ -2,9 +2,9 @@
   "analysis_id": "A04",
   "method": "prior_only",
   "status": "verified",
-  "prior": "modes_experiment/runs/arms/15_karman_prior_fluct_off/street_prior_used.npz",
-  "data": "/Users/mohammedhilal/Desktop/try/GappyPOD/data/flow_cache.npz",
-  "geometry": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a00_geometry.npz",
+  "prior": "4_runs/15_karman_prior_fluct_off/street_prior_used.npz",
+  "data": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/1_data/flow_cache.npz",
+  "geometry": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/derived/a00_geometry.npz",
   "snapshots": 201,
   "crop_nodes": 51654,
   "prior_parameters": {

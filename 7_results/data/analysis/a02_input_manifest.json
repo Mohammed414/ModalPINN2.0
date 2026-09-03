@@ -2,14 +2,14 @@
   "analysis_id": "A02",
   "status": "verified_inputs",
   "question": "Does increasing the cylinder pressure-tap count improve reconstruction?",
-  "data_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/data_contract.md",
+  "data_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/data_contract.md",
   "candidates": {
     "pressure_only_physics_8_taps": {
-      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/08_taps_08",
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/08_taps_08",
       "run_label": "taps_08",
-      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/08_taps_08/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/08_taps_08/training_run/DNN2_100_100_4_tanh.pickle",
       "checkpoint_exists": true,
-      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/08_taps_08/training_run/NN_functions.py",
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/08_taps_08/training_run/NN_functions.py",
       "nn_functions_exists": true,
       "settings": {
         "nmodes": 4,
@@ -29,11 +29,11 @@
       }
     },
     "pressure_only_physics_16_taps": {
-      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/09_taps_16",
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/09_taps_16",
       "run_label": "taps_16",
-      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/09_taps_16/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/09_taps_16/training_run/DNN2_100_100_4_tanh.pickle",
       "checkpoint_exists": true,
-      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/09_taps_16/training_run/NN_functions.py",
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/09_taps_16/training_run/NN_functions.py",
       "nn_functions_exists": true,
       "settings": {
         "nmodes": 4,
@@ -53,11 +53,11 @@
       }
     },
     "pressure_only_physics_32_taps": {
-      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only",
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/01_baseline_physics_only",
       "run_label": "baseline_physics_only_K3",
-      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/01_baseline_physics_only/training_run/DNN2_100_100_4_tanh.pickle",
       "checkpoint_exists": true,
-      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only/training_run/NN_functions.py",
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/01_baseline_physics_only/training_run/NN_functions.py",
       "nn_functions_exists": true,
       "settings": {
         "nmodes": 4,

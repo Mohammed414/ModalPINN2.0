@@ -1,20 +1,10 @@
-# K = 3 experiment series
+# The K = 3 experiment — sixteen arms
 
-## Layout
+This folder holds the runs. For the repository layout see the root `README.md`;
+for what the numbers mean see `6_analysis/findings.md`.
 
-| folder | role |
-|---|---|
-| `experiment/` | **what ran** — `notebooks/` (the 16 arm notebooks), `code/` (the exact source they used, including the `--KMAX` fix), `bvf_targets/` (the verification that the fix is behaviour-preserving) |
-| `runs/` | **what came out** — `arms/`, one folder per arm: weights, checkpoints, `run_record.json`, `train_log.txt` |
-| `6_analysis/` | **what it means** — the live analysis workspace. `results_master.csv` and `findings.md` are the numbers the dissertation quotes |
-| `baselines/` | **what to compare against** — `prior_only_evaluation/` (the analytical Kármán prior alone, 0.8082) and `gappy_pod_final/` (the frozen Gappy POD diagnostic) |
-| `figures/` | **evaluation machinery** — `modalpinn_eval.py` evaluates a trained arm exactly as it was trained; `dns_raw.npz` is the parsed DNS cache. `viva/build.py` imports both |
-
-Loose files at this level: `arm_matrix.csv` (the 16 arms) and
-`arms_master_results.csv` (their headline metrics). Those two are the current
-tables — earlier partial summaries were archived, see below.
-
-Dissertation-facing figures are **not** here — they are in `ModalPINN2.0/results/figures/`.
+`arm_matrix.csv` defines the sixteen arms; `arms_master_results.csv` carries
+their headline metrics. Dissertation figures are in `7_results/figures/`.
 
 Three training runs at the **source paper's mode truncation**, using the **original ModalPINN
 schedule unchanged**. Purpose: establish whether the pressure-only wake collapse depends on the
@@ -77,7 +67,7 @@ caused it.
 
 ## The one code change, verified
 
-`experiment/code/bvf_targets.py` is a modified copy. The original hardcodes `KMAX = 2`, so the wall-flux
+`2_source/as_run/bvf_targets.py` is a modified copy. The original hardcodes `KMAX = 2`, so the wall-flux
 target `G` it builds contains only k = 0,1,2 harmonics. A 4-mode network has a k = 3 mode, so
 training it against a k = 0..2 target would penalise that mode's wall flux toward zero. The copy
 here exposes `--KMAX`.
@@ -87,7 +77,7 @@ here exposes `--KMAX`.
 keys — float64 round-off. The only added key is `kmax` metadata. The change is provably
 behaviour-preserving.
 
-**What the k = 3 harmonic actually contributes** (`experiment/bvf_targets/bvf_kmax_verification.json`):
+**What the k = 3 harmonic actually contributes** (`2_source/bvf_verification/bvf_kmax_verification.json`):
 
 | harmonic | wall-flux RMS |
 |---|---|
@@ -102,7 +92,7 @@ real but small. The corrected target is used because it costs nothing and remove
 One genuine gain: admitting the third harmonic improves the per-tap temporal fit R² from 0.99972
 to 0.99998.
 
-`ModalPINN2.0/src/pressure_only/bvf_targets.py` is **untouched**.
+`2_source/bvf_targets.py` is **untouched**.
 
 ## The one deviation from the original invocation
 
@@ -154,6 +144,6 @@ that evaluator is a separate change and was not made here.
 
 | what | where | why |
 |---|---|---|
-| `runs/INDEX.md`, `runs/arms_1_to_16_results.csv`, `runs/ARMS_4_7_15_RESULTS.md`, `runs/arms_4_7_15.png` | `archive/modalpinn2.0_archive/superseded_summaries/` | mid-experiment snapshots. `INDEX.md` still said "seven arms done, nine queued" and the CSV covered 7 of 16. `arms_master_results.csv` and `fresh_analysis/results_master.csv` supersede them. |
-| `FORCE_ERROR.md`, `force_error_summary.csv`, `code/force_error.py` | `archive/modalpinn2.0_archive/force_analysis_out_of_scope/` | force and drag/lift analysis was removed from scope on 2026-08-27 (`6_analysis/decisions.md`). Nothing in the report or the live analysis reads them. The per-arm force columns remain in `arm_matrix.csv`. |
-| `experiment/notebooks/matched_effort/*.zip` | `archive/modalpinn2.0_archive/matched_effort_zips/` | the raw Colab downloads. `matched_effort/zx/` is the extracted copy, and six scripts read its `train_log.txt`. |
+| `INDEX.md`, `arms_1_to_16_results.csv`, `ARMS_4_7_15_RESULTS.md`, `arms_4_7_15.png` | `archive/modalpinn2.0_archive/superseded_summaries/` | mid-experiment snapshots. `INDEX.md` still said "seven arms done, nine queued" and the CSV covered 7 of 16. `arms_master_results.csv` and `6_analysis/results_master.csv` supersede them. |
+| `FORCE_ERROR.md`, `force_error_summary.csv`, `2_source/as_run/force_error.py` | `archive/modalpinn2.0_archive/force_analysis_out_of_scope/` | force and drag/lift analysis was removed from scope on 2026-08-27 (`6_analysis/decisions.md`). Nothing in the report or the live analysis reads them. The per-arm force columns remain in `arm_matrix.csv`. |
+| `3_notebooks/matched_effort/*.zip` | `archive/modalpinn2.0_archive/matched_effort_zips/` | the raw Colab downloads. `matched_effort/zx/` is the extracted copy, and six scripts read its `train_log.txt`. |

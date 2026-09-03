@@ -2,7 +2,7 @@
   "analysis_id": "A03",
   "method": "collocation_strategy",
   "status": "verified",
-  "data": "/Users/mohammedhilal/Desktop/try/GappyPOD/data/flow_cache.npz",
+  "data": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/1_data/flow_cache.npz",
   "snapshots": 201,
   "crop_nodes": 51654,
   "regions": {
@@ -13,12 +13,12 @@
     "other": 6298,
     "whole-domain": 51654
   },
-  "metric_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/data_contract.md",
-  "input_manifest": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a03_input_manifest.json",
+  "metric_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/data_contract.md",
+  "input_manifest": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/derived/a03_input_manifest.json",
   "snapshot": {
     "index": 100,
     "time": 410.0,
-    "artifact": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a03_snapshot_fields.npz"
+    "artifact": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/derived/a03_snapshot_fields.npz"
   },
   "models": {
     "uniform_collocation": {
@@ -99,8 +99,8 @@
         }
       },
       "metadata": {
-        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only/training_run/DNN2_100_100_4_tanh.pickle",
-        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only/training_run/NN_functions.py",
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/01_baseline_physics_only/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/01_baseline_physics_only/training_run/NN_functions.py",
         "prior_for_v1_radial": null,
         "one_sided_mode_conversion": "network_v1 / 2"
       },
@@ -184,8 +184,8 @@
         }
       },
       "metadata": {
-        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_06_wake_biased_random/training_run/DNN2_100_100_4_tanh.pickle",
-        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_06_wake_biased_random/training_run/NN_functions.py",
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_06_wake_biased_random/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_06_wake_biased_random/training_run/NN_functions.py",
         "prior_for_v1_radial": null,
         "one_sided_mode_conversion": "network_v1 / 2"
       },
@@ -269,8 +269,8 @@
         }
       },
       "metadata": {
-        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/07_wake_biased_grid/training_run/DNN2_100_100_4_tanh.pickle",
-        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/07_wake_biased_grid/training_run/NN_functions.py",
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/07_wake_biased_grid/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/07_wake_biased_grid/training_run/NN_functions.py",
         "prior_for_v1_radial": null,
         "one_sided_mode_conversion": "network_v1 / 2"
       },

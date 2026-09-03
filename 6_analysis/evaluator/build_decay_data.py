@@ -20,7 +20,7 @@ import numpy as np
 import modalpinn_eval as me
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ARMS = os.path.join(HERE, "..", "runs", "arms")
+ARMS = os.path.join(HERE, os.pardir, os.pardir, "4_runs")
 OUT = os.path.join(HERE, "decay_profiles.json")
 
 # Arms shown in figure 7: the collapsed baseline, the amplitude-without-phase
@@ -32,8 +32,10 @@ SHOW = {1: "pressure only", 4: "velocity probes",
 # the report covers these too, so they must be computed here rather than quoted.
 VALIDATE_ONLY = {13: "pressure + prior, 10% noise"}
 
-FOLD = {int(re.match(r"(?:arm_)?(\d+)_", d).group(1)): d
-        for d in sorted(os.listdir(ARMS))}
+FOLD = {int(m.group(1)): d
+        for d in sorted(os.listdir(ARMS))
+        if os.path.isdir(os.path.join(ARMS, d))
+        for m in [re.match(r"(?:arm_)?(\d+)_", d)] if m}
 
 
 def paths(n):

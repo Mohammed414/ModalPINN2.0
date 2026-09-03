@@ -1,5 +1,5 @@
 """
-Fast parser for the raw CFD flow file (../data/fixed_cylinder_atRe100).
+Fast parser for the raw CFD flow file (../1_data/fixed_cylinder_atRe100).
 
 Canonical shared copy (previously duplicated separately in extras/,
 enkf_pressure_only/evaluation/, and effectively depended on by

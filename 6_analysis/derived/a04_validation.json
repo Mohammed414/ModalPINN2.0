@@ -16,7 +16,7 @@
     "arm15_v1_radial_trust": 3.620533615424429e-05
   },
   "legacy_files": {
-    "arm1_baseline": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only/regions.json",
-    "arm15_v1_radial_trust": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/regions.json"
+    "arm1_baseline": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/01_baseline_physics_only/regions.json",
+    "arm15_v1_radial_trust": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/15_karman_prior_fluct_off/regions.json"
   }
 }

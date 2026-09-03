@@ -94,8 +94,8 @@ caveat. This section does not claim collocation placement causes the
 termination difference, only that it correlates in the arms observed so far.
 
 **Figure/result:** full numbers in
-`../notebooks/matched_effort/01b_matched_effort_outcome.md` and
-`../notebooks/matched_effort/01b_matched_effort_comparison.csv`, both rebuilt
+`../3_notebooks/matched_effort/01b_matched_effort_outcome.md` and
+`../3_notebooks/matched_effort/01b_matched_effort_comparison.csv`, both rebuilt
 2026-08-28 directly from the two runs' `run_record.json`,
 `training_loss_summary.json` and `arm_summary.json`.
 

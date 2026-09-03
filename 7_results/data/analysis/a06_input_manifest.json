@@ -2,18 +2,18 @@
   "analysis_id": "A06",
   "status": "input_mismatch",
   "question": "Is the prior-assisted reconstruction robust to pressure noise?",
-  "data_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/data_contract.md",
+  "data_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/data_contract.md",
   "candidates": {
     "prior_noise_00pct": {
-      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off",
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/15_karman_prior_fluct_off",
       "run_label": "prior_no_fluct_inlet",
-      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/15_karman_prior_fluct_off/training_run/DNN2_100_100_4_tanh.pickle",
       "checkpoint_exists": true,
       "checkpoint_sha256": "4a84f4e22daa0128845ddaf013bb89588ecf53f69a5a726009486cf57634ae3a",
-      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/training_run/NN_functions.py",
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/15_karman_prior_fluct_off/training_run/NN_functions.py",
       "nn_functions_exists": true,
       "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
-      "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/street_prior_used.npz",
+      "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/15_karman_prior_fluct_off/street_prior_used.npz",
       "flags": {
         "Tmax": "9",
         "SparseData": true,
@@ -52,15 +52,15 @@
       }
     },
     "prior_noise_01pct": {
-      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_11_prior_noise_01pct",
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_11_prior_noise_01pct",
       "run_label": "prior_noise_01pct",
-      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_11_prior_noise_01pct/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_11_prior_noise_01pct/training_run/DNN2_100_100_4_tanh.pickle",
       "checkpoint_exists": true,
       "checkpoint_sha256": "b5d51166c3ec76edb2237209b2d6a6c1e0efb9f7ed32c3c33f5dd5cf6068ea63",
-      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_11_prior_noise_01pct/training_run/NN_functions.py",
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_11_prior_noise_01pct/training_run/NN_functions.py",
       "nn_functions_exists": true,
       "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
-      "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_11_prior_noise_01pct/street_prior_used.npz",
+      "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_11_prior_noise_01pct/street_prior_used.npz",
       "flags": {
         "Tmax": "9",
         "SparseData": true,
@@ -101,15 +101,15 @@
       }
     },
     "prior_noise_05pct": {
-      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_12_prior_noise_05pct",
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_12_prior_noise_05pct",
       "run_label": "prior_noise_05pct",
-      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_12_prior_noise_05pct/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_12_prior_noise_05pct/training_run/DNN2_100_100_4_tanh.pickle",
       "checkpoint_exists": true,
       "checkpoint_sha256": "42f085a7dbfc408c9dbb3300d05e7f7da686c571204a17a99c121826bc81c5ea",
-      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_12_prior_noise_05pct/training_run/NN_functions.py",
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_12_prior_noise_05pct/training_run/NN_functions.py",
       "nn_functions_exists": true,
       "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
-      "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_12_prior_noise_05pct/street_prior_used.npz",
+      "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_12_prior_noise_05pct/street_prior_used.npz",
       "flags": {
         "Tmax": "9",
         "SparseData": true,
@@ -149,15 +149,15 @@
       }
     },
     "prior_noise_10pct": {
-      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_13_prior_noise_10pct",
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_13_prior_noise_10pct",
       "run_label": "prior_noise_10pct",
-      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_13_prior_noise_10pct/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_13_prior_noise_10pct/training_run/DNN2_100_100_4_tanh.pickle",
       "checkpoint_exists": true,
       "checkpoint_sha256": "810d105f53630b04d987656be03daa48867606f92ea858ec5b2364962958d8fa",
-      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_13_prior_noise_10pct/training_run/NN_functions.py",
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_13_prior_noise_10pct/training_run/NN_functions.py",
       "nn_functions_exists": true,
       "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
-      "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_13_prior_noise_10pct/street_prior_used.npz",
+      "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_13_prior_noise_10pct/street_prior_used.npz",
       "flags": {
         "Tmax": "9",
         "SparseData": true,

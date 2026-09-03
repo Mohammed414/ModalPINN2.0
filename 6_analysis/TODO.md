@@ -78,8 +78,8 @@ as the writing is done.
   L-BFGS termination pathology"; decision was to keep the observed
   `01_baseline_physics_only` endpoint, without treating it as a one-sided
   accuracy bound, and not attempt a third re-run. Full record:
-  `../notebooks/matched_effort/01b_matched_effort_outcome.md` and
-  `../notebooks/matched_effort/01b_matched_effort_comparison.csv`, both
+  `../3_notebooks/matched_effort/01b_matched_effort_outcome.md` and
+  `../3_notebooks/matched_effort/01b_matched_effort_comparison.csv`, both
   rebuilt from the two runs' own records on 2026-08-28. The two figures
   previously cited here, `F_arm1_rerun_breakdown.png` and
   `F_termination_anatomy.png`, were never produced, and the 17-arm census

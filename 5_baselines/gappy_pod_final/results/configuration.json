@@ -1,6 +1,6 @@
 {
   "purpose": "in-sample coefficient-identifiability diagnostic matched to ModalPINN",
-  "data_file": "data/flow_cache.npz",
+  "data_file": "1_data/flow_cache.npz",
   "data_sha256": "6335be20db7e26944fc203098ed9be6f2cda4f96f039c67e35bb7830f72d5775",
   "state": "joint unscaled [u; v; p] on the ModalPINN evaluation crop",
   "snapshot_count": 201,

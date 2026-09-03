@@ -20,8 +20,8 @@ unseen flow.
 
 ## Frozen configuration
 
-- Dataset: `data/flow_cache.npz`, resolved automatically by `run_analysis.py`.
-  It is a hardlink to `src/pressure_only/_flow_cache.npz`, so it is one copy
+- Dataset: `1_data/flow_cache.npz`, resolved automatically by `run_analysis.py`.
+  It is a hardlink to `1_data/flow_cache.npz`, so it is one copy
   on disk rather than two, and it is git-ignored. The original GappyPOD
   workspace it came from is now at `archive/GappyPOD/`.
 - Evaluation crop: `-4 < x < 8`, `-4 < y < 4` (51,654 nodes).

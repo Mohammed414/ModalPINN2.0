@@ -2,51 +2,51 @@
   "analysis_id": "A04",
   "question": "Does the trained network improve the Karman prior or merely reproduce it?",
   "status": "inputs_verified",
-  "evaluation_contract": "modes_experiment/fresh_analysis/data_contract.md",
+  "evaluation_contract": "6_analysis/data_contract.md",
   "artifacts": [
     {
       "role": "canonical CFD reference",
-      "path": "ModalPINN2.0/data/fixed_cylinder_atRe100",
+      "path": "ModalPINN2.0/1_data/fixed_cylinder_atRe100",
       "sha256": "218099d4f56eaf8c49e34e94c8b30bb580df204d3dd513d92334bb26f2c36996",
       "same_as": ""
     },
     {
       "role": "validated float32 cache",
-      "path": "GappyPOD/data/flow_cache.npz",
+      "path": "ModalPINN2.0/1_data/flow_cache.npz",
       "sha256": "6335be20db7e26944fc203098ed9be6f2cda4f96f039c67e35bb7830f72d5775",
       "same_as": ""
     },
     {
       "role": "strict crop, regions, and sensor mapping",
-      "path": "ModalPINN2.0/modes_experiment/fresh_analysis/derived/a00_geometry.npz",
+      "path": "ModalPINN2.0/6_analysis/derived/a00_geometry.npz",
       "sha256": "662d2e87cfd898d9aef2fbb93d0f25fa4ee88efe51c8333dfc60a0a6fae2f6a4",
       "same_as": ""
     },
     {
       "role": "Arm 1 checkpoint",
-      "path": "ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only/training_run/DNN2_100_100_4_tanh.pickle",
+      "path": "ModalPINN2.0/4_runs/01_baseline_physics_only/training_run/DNN2_100_100_4_tanh.pickle",
       "sha256": "1eb616cf774dade7bd3bb16f442a163754d036c2e22f72067dc416c40dae9303",
       "same_as": ""
     },
     {
       "role": "Arm 15 checkpoint",
-      "path": "ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/training_run/DNN2_100_100_4_tanh.pickle",
+      "path": "ModalPINN2.0/4_runs/15_karman_prior_fluct_off/training_run/DNN2_100_100_4_tanh.pickle",
       "sha256": "4a84f4e22daa0128845ddaf013bb89588ecf53f69a5a726009486cf57634ae3a",
       "same_as": ""
     },
     {
       "role": "Arm 15 Karman prior",
-      "path": "ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/street_prior_used.npz",
+      "path": "ModalPINN2.0/4_runs/15_karman_prior_fluct_off/street_prior_used.npz",
       "sha256": "18e905159e09af3908a1e403515ca38216948936415f5b8e47f25dbcebc8a37e",
-      "same_as": "modes_experiment/prior_only_evaluation/street_prior_used.npz"
+      "same_as": "5_baselines/prior_only_evaluation/street_prior_used.npz"
     }
   ],
   "arms": {
     "arm1": {
-      "run_directory": "modes_experiment/runs/arms/01_baseline_physics_only",
-      "run_record": "modes_experiment/runs/arms/01_baseline_physics_only/run_record.json",
-      "arm_summary": "modes_experiment/runs/arms/01_baseline_physics_only/arm_summary.json",
-      "checkpoint": "modes_experiment/runs/arms/01_baseline_physics_only/training_run/DNN2_100_100_4_tanh.pickle",
+      "run_directory": "4_runs/01_baseline_physics_only",
+      "run_record": "4_runs/01_baseline_physics_only/run_record.json",
+      "arm_summary": "4_runs/01_baseline_physics_only/arm_summary.json",
+      "checkpoint": "4_runs/01_baseline_physics_only/training_run/DNN2_100_100_4_tanh.pickle",
       "command_options": {
         "Tmax": "9",
         "SparseData": true,
@@ -66,10 +66,10 @@
       }
     },
     "arm15": {
-      "run_directory": "modes_experiment/runs/arms/15_karman_prior_fluct_off",
-      "run_record": "modes_experiment/runs/arms/15_karman_prior_fluct_off/run_record.json",
-      "arm_summary": "modes_experiment/runs/arms/15_karman_prior_fluct_off/arm_summary.json",
-      "checkpoint": "modes_experiment/runs/arms/15_karman_prior_fluct_off/training_run/DNN2_100_100_4_tanh.pickle",
+      "run_directory": "4_runs/15_karman_prior_fluct_off",
+      "run_record": "4_runs/15_karman_prior_fluct_off/run_record.json",
+      "arm_summary": "4_runs/15_karman_prior_fluct_off/arm_summary.json",
+      "checkpoint": "4_runs/15_karman_prior_fluct_off/training_run/DNN2_100_100_4_tanh.pickle",
       "command_options": {
         "Tmax": "9",
         "SparseData": true,
@@ -94,7 +94,7 @@
         "V1TrustYMax": "2.0",
         "V1TrustYWidth": "0.20"
       },
-      "prior": "modes_experiment/runs/arms/15_karman_prior_fluct_off/street_prior_used.npz"
+      "prior": "4_runs/15_karman_prior_fluct_off/street_prior_used.npz"
     }
   },
   "matched_settings": {

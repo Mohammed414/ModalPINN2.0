@@ -23,8 +23,8 @@ sys.path.insert(0, SRC_DIR)
 from text_flow import read_flow  # noqa: E402
 
 REPO_ROOT = os.path.dirname(SRC_DIR)
-DATA_FILE = os.path.join(REPO_ROOT, 'Data', 'fixed_cylinder_atRe100')
-OUT_DIR = os.path.join(REPO_ROOT, 'data', 'sensor_indices')
+DATA_FILE = os.path.join(REPO_ROOT, '1_data', 'fixed_cylinder_atRe100')
+OUT_DIR = os.path.join(REPO_ROOT, '1_data', 'sensor_indices')
 
 # Same geometry as ModalPINN_VortexShedding.py
 X_C, Y_C, R_C = 0., 0., 0.5

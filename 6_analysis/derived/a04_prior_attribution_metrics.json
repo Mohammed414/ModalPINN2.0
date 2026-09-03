@@ -2,7 +2,7 @@
   "analysis_id": "A04",
   "method": "prior_attribution",
   "status": "verified",
-  "data": "/Users/mohammedhilal/Desktop/try/GappyPOD/data/flow_cache.npz",
+  "data": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/1_data/flow_cache.npz",
   "snapshots": 201,
   "crop_nodes": 51654,
   "regions": {
@@ -13,11 +13,11 @@
     "other": 6298,
     "whole-domain": 51654
   },
-  "metric_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/data_contract.md",
+  "metric_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/data_contract.md",
   "snapshot": {
     "index": 100,
     "time": 410.0,
-    "artifact": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a04_snapshot_fields.npz"
+    "artifact": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/derived/a04_snapshot_fields.npz"
   },
   "models": {
     "arm1_baseline": {
@@ -98,8 +98,8 @@
         }
       },
       "metadata": {
-        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only/training_run/DNN2_100_100_4_tanh.pickle",
-        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only/training_run/NN_functions.py",
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/01_baseline_physics_only/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/01_baseline_physics_only/training_run/NN_functions.py",
         "prior_for_v1_radial": null,
         "one_sided_mode_conversion": "network_v1 / 2"
       }
@@ -182,9 +182,9 @@
         }
       },
       "metadata": {
-        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/training_run/DNN2_100_100_4_tanh.pickle",
-        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/training_run/NN_functions.py",
-        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/street_prior_used.npz",
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/15_karman_prior_fluct_off/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/15_karman_prior_fluct_off/training_run/NN_functions.py",
+        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/15_karman_prior_fluct_off/street_prior_used.npz",
         "one_sided_mode_conversion": "network_v1 / 2"
       }
     }

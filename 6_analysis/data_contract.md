@@ -9,8 +9,8 @@ in `decisions.md` and requires regeneration of dependent results.
 
 | item | fixed decision | source/check |
 |---|---|---|
-| Canonical CFD file | `ModalPINN2.0/data/fixed_cylinder_atRe100` | SHA-256 `218099d4f56eaf8c49e34e94c8b30bb580df204d3dd513d92334bb26f2c36996` |
-| Analysis cache | `GappyPOD/data/flow_cache.npz` | SHA-256 `6335be20db7e26944fc203098ed9be6f2cda4f96f039c67e35bb7830f72d5775` |
+| Canonical CFD file | `ModalPINN2.0/1_data/fixed_cylinder_atRe100` | SHA-256 `218099d4f56eaf8c49e34e94c8b30bb580df204d3dd513d92334bb26f2c36996` |
+| Analysis cache | `1_data/flow_cache.npz` | SHA-256 `6335be20db7e26944fc203098ed9be6f2cda4f96f039c67e35bb7830f72d5775` |
 | Cache validation | Header, dimensions, and first snapshot checked against the canonical text file | maximum field difference `5.960e-08`; coordinate difference `3.812e-06`, consistent with float32 storage |
 | Stored variables | fixed mesh coordinates `X,Y`; snapshots `u,v,p`; time; `Re`; dataset `Ur` | all arrays finite and shape-compatible |
 | Reynolds number | `Re = 100` | dataset header and training code |

@@ -1,6 +1,6 @@
 """
 Generate a tiny synthetic flow file in the format expected by text_flow.read_flow(),
-for use as a stand-in for the real Boudina et al. dataset (Data/fixed_cylinder_atRe100,
+for use as a stand-in for the real Boudina et al. dataset (1_data/fixed_cylinder_atRe100,
 see README) when running a quick smoke test of the training pipeline.
 
 Not physically meaningful data - only shaped correctly (fixed mesh across
@@ -19,8 +19,8 @@ nodes_x = rng.uniform(Lxmin, Lxmax, N_nodes)
 nodes_y = rng.uniform(Lymin, Lymax, N_nodes)
 times = np.linspace(0., 5., Nt)
 
-os.makedirs('Data', exist_ok=True)
-with open('Data/fixed_cylinder_atRe100', 'w') as f:
+os.makedirs('1_data', exist_ok=True)
+with open('1_data/fixed_cylinder_atRe100', 'w') as f:
     f.write('%.1f %.1f\n\n' % (Re, Ur))
     f.write('%d %d\n\n' % (Nt, N_nodes))
     for t in times:
@@ -32,4 +32,4 @@ with open('Data/fixed_cylinder_atRe100', 'w') as f:
             f.write('%.9f %.9f %.9f %.9f %.9f\n' %
                     (nodes_x[k], nodes_y[k], u[k], v[k], p[k]))
 
-print('Wrote Data/fixed_cylinder_atRe100 (%d timesteps x %d nodes)' % (Nt, N_nodes))
+print('Wrote 1_data/fixed_cylinder_atRe100 (%d timesteps x %d nodes)' % (Nt, N_nodes))

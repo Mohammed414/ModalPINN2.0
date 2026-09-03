@@ -3,15 +3,15 @@
 #
 #   baseline_physics_only_K3_matched-*.zip
 #       Raw Colab output of the matched-effort re-run. That run was analysed
-#       and DISCARDED (01b_matched_effort_outcome.md, fresh_analysis/decisions.md,
+#       and DISCARDED (01b_matched_effort_outcome.md, 6_analysis/decisions.md,
 #       2026-08-28). Everything of record from it is distilled into
 #       01b_matched_effort_outcome.md and 01b_matched_effort_comparison.csv,
 #       which ARE tracked.
 #
 #   verification_code.zip
 #       As delivered. The scripts are tracked, unpacked and maintained at
-#       fresh_analysis/scripts/termination_census/ -- edit them there, not here.
+#       6_analysis/scripts/termination_census/ -- edit them there, not here.
 
 # Scratch extraction of the run archive, recreated by
-# ../../fresh_analysis/scripts/termination_census/01_locate_and_extract_run_zip.sh
+# ../../6_analysis/scripts/termination_census/01_locate_and_extract_run_zip.sh
 zx/

@@ -16,6 +16,6 @@
     "distinct_checkpoints": true,
     "effort_matched_within_20pct": false
   },
-  "input_manifest": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a06_input_manifest.json",
-  "summary": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a06_pressure_noise_summary.csv"
+  "input_manifest": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/derived/a06_input_manifest.json",
+  "summary": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/derived/a06_pressure_noise_summary.csv"
 }

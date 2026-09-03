@@ -13,7 +13,7 @@ import pandas as pd
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, os.pardir, os.pardir))
-PATH = os.path.join(REPO, "data", "fixed_cylinder_atRe100")
+PATH = os.path.join(REPO, "1_data", "fixed_cylinder_atRe100")
 OUT = os.path.join(HERE, "dns_raw.npz")
 
 with open(PATH) as f:

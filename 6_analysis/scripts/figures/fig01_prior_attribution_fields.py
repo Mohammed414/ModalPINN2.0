@@ -16,8 +16,8 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT.parents[1] / "src" / "R9" / "src"))
-sys.path.insert(0, str(ROOT.parents[1] / "src"))
+sys.path.insert(0, str(ROOT.parents[0] / "2_source"))
+
 
 from figure_common import (  # noqa: E402
     COLORS, check_text_overlaps, draw_cylinder, domain_axes, new_figure,

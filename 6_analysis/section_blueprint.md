@@ -34,8 +34,8 @@ prior-assisted result and must always be compared with the prior alone.
 All frozen in `data_contract.md` ("Dataset and physical convention"); transcribe
 rather than restate from memory.
 
-- Canonical CFD file `data/fixed_cylinder_atRe100`, SHA-256 recorded; analysis
-  cache `GappyPOD/data/flow_cache.npz`, SHA-256 recorded.
+- Canonical CFD file `1_data/fixed_cylinder_atRe100`, SHA-256 recorded; analysis
+  cache `1_data/flow_cache.npz`, SHA-256 recorded.
 - Cache validated against the canonical text file: max field difference
   5.960e-08, coordinate difference 3.812e-06, consistent with float32 storage.
 - Re = 100, $U_\infty = 1$, cylinder at origin, $R = 0.5$, $D = 1$. Coordinates

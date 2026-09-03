@@ -43,10 +43,10 @@
     "gappy_far_core_v1_relative_L2": 2.1704818480387155e-05
   },
   "sources": {
-    "modal_results": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/results_master.csv",
-    "gappy_results": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/gappy_pod_final/results/metrics.csv",
-    "data_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/data_contract.md",
-    "dataset": "/Users/mohammedhilal/Desktop/try/GappyPOD/data/flow_cache.npz",
+    "modal_results": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/results_master.csv",
+    "gappy_results": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/5_baselines/gappy_pod_final/results/metrics.csv",
+    "data_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/data_contract.md",
+    "dataset": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/1_data/flow_cache.npz",
     "dataset_sha256": "6335be20db7e26944fc203098ed9be6f2cda4f96f039c67e35bb7830f72d5775"
   }
 }

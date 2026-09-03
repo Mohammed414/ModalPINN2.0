@@ -76,7 +76,7 @@ import Load_train_data_desync as ltd
 # Link to simulations data 
 # In the paper, we used those from Boudina et al. (2020) that can be downloaded 
 # at https://zenodo.org/record/5039610
-filename_data = 'Data/fixed_cylinder_atRe100'
+filename_data = '1_data/fixed_cylinder_atRe100'
 
 t0 = time.time()
 # =============================================================================

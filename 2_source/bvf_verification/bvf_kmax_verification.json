@@ -1,7 +1,7 @@
 {
   "what": "KMAX generalisation of bvf_targets.py, verified against the original",
   "change": "KMAX became a --KMAX CLI argument (default 2, unchanged); the npz save loops over k instead of hardcoding k0/k1/k2; the diagnostic plot sizes itself from KMAX.",
-  "source_untouched": "ModalPINN2.0/src/pressure_only/bvf_targets.py is unmodified; the patched copy lives in modes_experiment/code/bvf_targets.py",
+  "source_untouched": "the upstream bvf_targets.py is unmodified; the patched copy lives in 2_source/as_run/bvf_targets.py",
   "regression_test": {
     "command": "--KMAX 2 --NTaps 32 --Seed 0 against the same DNS file",
     "shared_keys": 17,

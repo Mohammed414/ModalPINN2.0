@@ -2,7 +2,7 @@
   "analysis_id": "A06",
   "method": "pressure_noise",
   "status": "verified",
-  "data": "/Users/mohammedhilal/Desktop/try/GappyPOD/data/flow_cache.npz",
+  "data": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/1_data/flow_cache.npz",
   "snapshots": 201,
   "crop_nodes": 51654,
   "regions": {
@@ -13,8 +13,8 @@
     "other": 6298,
     "whole-domain": 51654
   },
-  "metric_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/data_contract.md",
-  "input_manifest": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a06_input_manifest.json",
+  "metric_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/data_contract.md",
+  "input_manifest": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/derived/a06_input_manifest.json",
   "v1_phase_convention": {
     "primary": "absolute time (network convention); a perfect model scores rel_L2 0 and phase 0",
     "legacy": "window tau = t - t0 (as published for A01/A02/A04); a perfect model scores rel_L2 0.289 and phase +16.63 deg",
@@ -25,7 +25,7 @@
   "snapshot": {
     "index": 100,
     "time": 410.0,
-    "artifact": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a06_snapshot_fields.npz"
+    "artifact": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/derived/a06_snapshot_fields.npz"
   },
   "models": {
     "prior_noise_00pct": {
@@ -106,9 +106,9 @@
         }
       },
       "metadata": {
-        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/training_run/DNN2_100_100_4_tanh.pickle",
-        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/training_run/NN_functions.py",
-        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/street_prior_used.npz",
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/15_karman_prior_fluct_off/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/15_karman_prior_fluct_off/training_run/NN_functions.py",
+        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/15_karman_prior_fluct_off/street_prior_used.npz",
         "one_sided_mode_conversion": "network_v1 / 2"
       },
       "v1_mode_metrics_window_convention": {
@@ -168,10 +168,10 @@
         "objective_at_exit": "2.644D-04"
       },
       "provenance": {
-        "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off",
+        "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/15_karman_prior_fluct_off",
         "checkpoint_sha256": "4a84f4e22daa0128845ddaf013bb89588ecf53f69a5a726009486cf57634ae3a",
         "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
-        "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/street_prior_used.npz"
+        "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/15_karman_prior_fluct_off/street_prior_used.npz"
       },
       "noise_pct": 0.0
     },
@@ -253,9 +253,9 @@
         }
       },
       "metadata": {
-        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_11_prior_noise_01pct/training_run/DNN2_100_100_4_tanh.pickle",
-        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_11_prior_noise_01pct/training_run/NN_functions.py",
-        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_11_prior_noise_01pct/street_prior_used.npz",
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_11_prior_noise_01pct/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_11_prior_noise_01pct/training_run/NN_functions.py",
+        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_11_prior_noise_01pct/street_prior_used.npz",
         "one_sided_mode_conversion": "network_v1 / 2"
       },
       "v1_mode_metrics_window_convention": {
@@ -315,10 +315,10 @@
         "objective_at_exit": "1.233D-03"
       },
       "provenance": {
-        "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_11_prior_noise_01pct",
+        "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_11_prior_noise_01pct",
         "checkpoint_sha256": "b5d51166c3ec76edb2237209b2d6a6c1e0efb9f7ed32c3c33f5dd5cf6068ea63",
         "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
-        "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_11_prior_noise_01pct/street_prior_used.npz"
+        "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_11_prior_noise_01pct/street_prior_used.npz"
       },
       "noise_pct": 1.0
     },
@@ -400,9 +400,9 @@
         }
       },
       "metadata": {
-        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_12_prior_noise_05pct/training_run/DNN2_100_100_4_tanh.pickle",
-        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_12_prior_noise_05pct/training_run/NN_functions.py",
-        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_12_prior_noise_05pct/street_prior_used.npz",
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_12_prior_noise_05pct/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_12_prior_noise_05pct/training_run/NN_functions.py",
+        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_12_prior_noise_05pct/street_prior_used.npz",
         "one_sided_mode_conversion": "network_v1 / 2"
       },
       "v1_mode_metrics_window_convention": {
@@ -462,10 +462,10 @@
         "objective_at_exit": "1.143D-03"
       },
       "provenance": {
-        "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_12_prior_noise_05pct",
+        "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_12_prior_noise_05pct",
         "checkpoint_sha256": "42f085a7dbfc408c9dbb3300d05e7f7da686c571204a17a99c121826bc81c5ea",
         "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
-        "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_12_prior_noise_05pct/street_prior_used.npz"
+        "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_12_prior_noise_05pct/street_prior_used.npz"
       },
       "noise_pct": 5.0
     },
@@ -547,9 +547,9 @@
         }
       },
       "metadata": {
-        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_13_prior_noise_10pct/training_run/DNN2_100_100_4_tanh.pickle",
-        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_13_prior_noise_10pct/training_run/NN_functions.py",
-        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_13_prior_noise_10pct/street_prior_used.npz",
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_13_prior_noise_10pct/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_13_prior_noise_10pct/training_run/NN_functions.py",
+        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_13_prior_noise_10pct/street_prior_used.npz",
         "one_sided_mode_conversion": "network_v1 / 2"
       },
       "v1_mode_metrics_window_convention": {
@@ -609,10 +609,10 @@
         "objective_at_exit": "2.433D-03"
       },
       "provenance": {
-        "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_13_prior_noise_10pct",
+        "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_13_prior_noise_10pct",
         "checkpoint_sha256": "810d105f53630b04d987656be03daa48867606f92ea858ec5b2364962958d8fa",
         "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
-        "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_13_prior_noise_10pct/street_prior_used.npz"
+        "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_13_prior_noise_10pct/street_prior_used.npz"
       },
       "noise_pct": 10.0
     }

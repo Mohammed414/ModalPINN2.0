@@ -2,7 +2,7 @@
   "analysis_id": "A05",
   "method": "prior_collocation",
   "status": "verified",
-  "data": "/Users/mohammedhilal/Desktop/try/GappyPOD/data/flow_cache.npz",
+  "data": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/1_data/flow_cache.npz",
   "snapshots": 201,
   "crop_nodes": 51654,
   "regions": {
@@ -13,8 +13,8 @@
     "other": 6298,
     "whole-domain": 51654
   },
-  "metric_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/data_contract.md",
-  "input_manifest": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a05_input_manifest.json",
+  "metric_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/data_contract.md",
+  "input_manifest": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/derived/a05_input_manifest.json",
   "v1_phase_convention": {
     "primary": "absolute time (network convention); a perfect model scores rel_L2 0 and phase 0",
     "legacy": "window tau = t - t0 (as published for A01/A02/A04); a perfect model scores rel_L2 0.289 and phase +16.63 deg",
@@ -25,7 +25,7 @@
   "snapshot": {
     "index": 100,
     "time": 410.0,
-    "artifact": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/derived/a05_snapshot_fields.npz"
+    "artifact": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/derived/a05_snapshot_fields.npz"
   },
   "models": {
     "prior_uniform_collocation": {
@@ -106,9 +106,9 @@
         }
       },
       "metadata": {
-        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/training_run/DNN2_100_100_4_tanh.pickle",
-        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/training_run/NN_functions.py",
-        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/street_prior_used.npz",
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/15_karman_prior_fluct_off/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/15_karman_prior_fluct_off/training_run/NN_functions.py",
+        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/15_karman_prior_fluct_off/street_prior_used.npz",
         "one_sided_mode_conversion": "network_v1 / 2"
       },
       "v1_mode_metrics_window_convention": {
@@ -168,10 +168,10 @@
         "objective_at_exit": "2.644D-04"
       },
       "provenance": {
-        "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off",
+        "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/15_karman_prior_fluct_off",
         "checkpoint_sha256": "4a84f4e22daa0128845ddaf013bb89588ecf53f69a5a726009486cf57634ae3a",
         "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
-        "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/15_karman_prior_fluct_off/street_prior_used.npz"
+        "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/15_karman_prior_fluct_off/street_prior_used.npz"
       }
     },
     "prior_wake_biased_grid": {
@@ -252,9 +252,9 @@
         }
       },
       "metadata": {
-        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_10_prior_wake_biased_grid/training_run/DNN2_100_100_4_tanh.pickle",
-        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_10_prior_wake_biased_grid/training_run/NN_functions.py",
-        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_10_prior_wake_biased_grid/street_prior_used.npz",
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_10_prior_wake_biased_grid/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_10_prior_wake_biased_grid/training_run/NN_functions.py",
+        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_10_prior_wake_biased_grid/street_prior_used.npz",
         "one_sided_mode_conversion": "network_v1 / 2"
       },
       "v1_mode_metrics_window_convention": {
@@ -314,10 +314,10 @@
         "objective_at_exit": "4.428D-04"
       },
       "provenance": {
-        "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_10_prior_wake_biased_grid",
+        "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_10_prior_wake_biased_grid",
         "checkpoint_sha256": "1955e52f37a14c5a5680b1d2ba70acb024ed3a19e368ca4d87ae666431a07dc6",
         "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
-        "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_10_prior_wake_biased_grid/street_prior_used.npz"
+        "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_10_prior_wake_biased_grid/street_prior_used.npz"
       }
     }
   }

@@ -1,6 +1,6 @@
 {
-  "prior": "modes_experiment/runs/arms/15_karman_prior_fluct_off/street_prior_used.npz",
-  "data": "GappyPOD/data/flow_cache.npz",
+  "prior": "4_runs/15_karman_prior_fluct_off/street_prior_used.npz",
+  "data": "ModalPINN2.0/1_data/flow_cache.npz",
   "parameters": {
     "Gamma": 2.5270509798460594,
     "Uc": 0.8205005499091238,
@@ -79,5 +79,5 @@
       "amp_ratio": 0.8423169437650957
     }
   },
-  "figure": "modes_experiment/prior_only_fields.png"
+  "figure": "6_analysis/prior_only_fields.png"
 }

@@ -2,14 +2,14 @@
   "analysis_id": "A03",
   "status": "verified_inputs",
   "question": "Does wake-biased collocation recover information absent from wall measurements?",
-  "data_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/fresh_analysis/data_contract.md",
+  "data_contract": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/6_analysis/data_contract.md",
   "candidates": {
     "uniform_collocation": {
-      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only",
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/01_baseline_physics_only",
       "run_label": "baseline_physics_only_K3",
-      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/01_baseline_physics_only/training_run/DNN2_100_100_4_tanh.pickle",
       "checkpoint_exists": true,
-      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/01_baseline_physics_only/training_run/NN_functions.py",
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/01_baseline_physics_only/training_run/NN_functions.py",
       "nn_functions_exists": true,
       "settings": {
         "nmodes": 4,
@@ -30,11 +30,11 @@
       }
     },
     "wake_biased_random_collocation": {
-      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_06_wake_biased_random",
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_06_wake_biased_random",
       "run_label": "wake_biased_random",
-      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_06_wake_biased_random/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_06_wake_biased_random/training_run/DNN2_100_100_4_tanh.pickle",
       "checkpoint_exists": true,
-      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/arm_06_wake_biased_random/training_run/NN_functions.py",
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_06_wake_biased_random/training_run/NN_functions.py",
       "nn_functions_exists": true,
       "settings": {
         "nmodes": 4,
@@ -55,11 +55,11 @@
       }
     },
     "wake_biased_grid_collocation": {
-      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/07_wake_biased_grid",
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/07_wake_biased_grid",
       "run_label": "wake_biased_grid",
-      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/07_wake_biased_grid/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/07_wake_biased_grid/training_run/DNN2_100_100_4_tanh.pickle",
       "checkpoint_exists": true,
-      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms/07_wake_biased_grid/training_run/NN_functions.py",
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/07_wake_biased_grid/training_run/NN_functions.py",
       "nn_functions_exists": true,
       "settings": {
         "nmodes": 4,
