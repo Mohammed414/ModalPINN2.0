@@ -58,8 +58,8 @@ CONFIGS = {
         None,
     ),
     "wake_biased_random_collocation": (
-        ARMS / "arm_06_wake_biased_random" / "training_run" / "NN_functions.py",
-        ARMS / "arm_06_wake_biased_random" / "training_run" / "DNN2_100_100_4_tanh.pickle",
+        ARMS / "06_wake_biased_random" / "training_run" / "NN_functions.py",
+        ARMS / "06_wake_biased_random" / "training_run" / "DNN2_100_100_4_tanh.pickle",
         None,
     ),
     "wake_biased_grid_collocation": (

@@ -87,17 +87,17 @@ def lab(name, text, xy_text, ha='left'):
 
 
 lab('NEW re-run (cycle 1)', 'baseline, attempt 2', (1450, 33), 'left')
-lab('arm_13_prior_noise_10pct', 'prior + 10% noise', (5200, 21), 'left')
+lab('13_prior_noise_10pct', 'prior + 10% noise', (5200, 21), 'left')
 # These two runs stopped within 55 iterations and 0.4x of each other, so their
 # markers nearly coincide; separate the labels vertically and lead to each.
 lab('01_baseline_physics_only', 'baseline, attempt 1', (9200, 14.0), 'left')
-lab('arm_11_prior_noise_01pct', 'prior + 1% noise', (9200, 3.6), 'left')
+lab('11_prior_noise_01pct', 'prior + 1% noise', (9200, 3.6), 'left')
 lab('09_taps_16', '16 taps', (16000, 0.48), 'center')
 lab('08_taps_08', '8 taps', (31000, 0.48), 'center')
 # Right-hand cluster: label into the gutter beyond the last point (41,171),
 # stacked vertically so the leaders stay short and never cross the axes edge.
 lab('05_dense_reference', 'dense (hit 40k cap)', (62000, 2.80), 'left')
-lab('arm_06_wake_biased_random', 'wake-biased random', (62000, 1.30), 'left')
+lab('06_wake_biased_random', 'wake-biased random', (62000, 1.30), 'left')
 lab('07_wake_biased_grid', 'wake-biased grid', (62000, 0.62), 'left')
 
 ax.text(900, 8.0, 'violent exits: line search\nfails mid gradient spike',

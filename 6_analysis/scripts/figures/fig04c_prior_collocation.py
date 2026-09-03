@@ -32,7 +32,7 @@ STRATEGIES = [
     ("prior_uniform_collocation", "uniform sampling", COLORS["prior_network"],
      ARMS_ROOT / "15_karman_prior_fluct_off", "uniform"),
     ("prior_wake_biased_grid", "wake-biased grid", COLORS["accent"],
-     ARMS_ROOT / "arm_10_prior_wake_biased_grid", "wake_biased_grid"),
+     ARMS_ROOT / "10_prior_wake_biased_grid", "wake_biased_grid"),
 ]
 REGIONS = ["near-cylinder", "near-wake", "far-core", "far-wake"]
 REGION_TICKS = {

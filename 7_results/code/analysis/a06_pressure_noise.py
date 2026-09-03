@@ -31,9 +31,9 @@ from prior_arm_metrics import ARMS_ROOT, evaluate  # noqa: E402
 
 ARMS = {
     "prior_noise_00pct": ARMS_ROOT / "15_karman_prior_fluct_off",
-    "prior_noise_01pct": ARMS_ROOT / "arm_11_prior_noise_01pct",
-    "prior_noise_05pct": ARMS_ROOT / "arm_12_prior_noise_05pct",
-    "prior_noise_10pct": ARMS_ROOT / "arm_13_prior_noise_10pct",
+    "prior_noise_01pct": ARMS_ROOT / "11_prior_noise_01pct",
+    "prior_noise_05pct": ARMS_ROOT / "12_prior_noise_05pct",
+    "prior_noise_10pct": ARMS_ROOT / "13_prior_noise_10pct",
 }
 NOISE_PCT = {"prior_noise_00pct": 0.0, "prior_noise_01pct": 1.0,
              "prior_noise_05pct": 5.0, "prior_noise_10pct": 10.0}

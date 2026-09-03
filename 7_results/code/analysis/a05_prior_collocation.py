@@ -23,7 +23,7 @@ from prior_arm_metrics import ARMS_ROOT, evaluate  # noqa: E402
 
 ARMS = {
     "prior_uniform_collocation": ARMS_ROOT / "15_karman_prior_fluct_off",
-    "prior_wake_biased_grid": ARMS_ROOT / "arm_10_prior_wake_biased_grid",
+    "prior_wake_biased_grid": ARMS_ROOT / "10_prior_wake_biased_grid",
 }
 WAKE_REGIONS = ("near-wake", "far-core", "far-wake")
 

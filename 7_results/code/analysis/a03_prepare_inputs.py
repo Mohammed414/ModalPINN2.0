@@ -12,7 +12,7 @@ OUT = ROOT / "derived" / "a03_input_manifest.json"
 
 RUNS = {
     "uniform_collocation": ("01_baseline_physics_only", "uniform"),
-    "wake_biased_random_collocation": ("arm_06_wake_biased_random", "wake_biased_random"),
+    "wake_biased_random_collocation": ("06_wake_biased_random", "wake_biased_random"),
     "wake_biased_grid_collocation": ("07_wake_biased_grid", "wake_biased_grid"),
 }
 

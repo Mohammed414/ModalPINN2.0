@@ -252,9 +252,9 @@
         }
       },
       "metadata": {
-        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_10_prior_wake_biased_grid/training_run/DNN2_100_100_4_tanh.pickle",
-        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_10_prior_wake_biased_grid/training_run/NN_functions.py",
-        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_10_prior_wake_biased_grid/street_prior_used.npz",
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/10_prior_wake_biased_grid/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/10_prior_wake_biased_grid/training_run/NN_functions.py",
+        "prior_for_v1_radial": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/10_prior_wake_biased_grid/street_prior_used.npz",
         "one_sided_mode_conversion": "network_v1 / 2"
       },
       "v1_mode_metrics_window_convention": {
@@ -314,10 +314,10 @@
         "objective_at_exit": "4.428D-04"
       },
       "provenance": {
-        "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_10_prior_wake_biased_grid",
+        "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/10_prior_wake_biased_grid",
         "checkpoint_sha256": "1955e52f37a14c5a5680b1d2ba70acb024ed3a19e368ca4d87ae666431a07dc6",
         "nn_functions_sha256": "d31374885d4458f1330e41eabb7909cddf9f0efc5fb43dcba8d1e142db4b4503",
-        "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_10_prior_wake_biased_grid/street_prior_used.npz"
+        "street_prior": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/10_prior_wake_biased_grid/street_prior_used.npz"
       }
     }
   }

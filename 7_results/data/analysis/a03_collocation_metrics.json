@@ -184,8 +184,8 @@
         }
       },
       "metadata": {
-        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_06_wake_biased_random/training_run/DNN2_100_100_4_tanh.pickle",
-        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_06_wake_biased_random/training_run/NN_functions.py",
+        "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/06_wake_biased_random/training_run/DNN2_100_100_4_tanh.pickle",
+        "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/06_wake_biased_random/training_run/NN_functions.py",
         "prior_for_v1_radial": null,
         "one_sided_mode_conversion": "network_v1 / 2"
       },

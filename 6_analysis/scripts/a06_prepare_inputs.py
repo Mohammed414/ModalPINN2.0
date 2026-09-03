@@ -40,9 +40,9 @@ from arm_inputs import build_manifest  # noqa: E402
 # the 1 % level (x5 and x10), which is asserted below.
 RUNS = {
     "prior_noise_00pct": ARMS / "15_karman_prior_fluct_off",
-    "prior_noise_01pct": ARMS / "arm_11_prior_noise_01pct",
-    "prior_noise_05pct": ARMS / "arm_12_prior_noise_05pct",
-    "prior_noise_10pct": ARMS / "arm_13_prior_noise_10pct",
+    "prior_noise_01pct": ARMS / "11_prior_noise_01pct",
+    "prior_noise_05pct": ARMS / "12_prior_noise_05pct",
+    "prior_noise_10pct": ARMS / "13_prior_noise_10pct",
 }
 NOISE_LABELS = {
     "prior_noise_00pct": 0.0,

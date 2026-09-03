@@ -25,7 +25,7 @@ from arm_inputs import build_manifest  # noqa: E402
 
 RUNS = {
     "prior_uniform_collocation": ARMS / "15_karman_prior_fluct_off",
-    "prior_wake_biased_grid": ARMS / "arm_10_prior_wake_biased_grid",
+    "prior_wake_biased_grid": ARMS / "10_prior_wake_biased_grid",
 }
 
 

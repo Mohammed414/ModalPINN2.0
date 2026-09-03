@@ -18,8 +18,8 @@ and the analysis that produced every number in the dissertation.
 |---|---|---|
 | **`1_data/`** | what we measure | the Re = 100 DNS dataset, its parsed cache, and the 4/8/16/32-tap sensor layouts |
 | **`2_source/`** | what we run | the ModalPINN implementation. `as_run/` is the exact modified copy the sixteen arms trained with; `bvf_verification/` proves the one code change is behaviour-preserving to 1.1e-14 |
-| **`3_notebooks/`** | how we ran it | one notebook per arm, plus the effort-matched re-run in `matched_effort/` |
-| **`4_runs/`** | what came out | sixteen run folders — weights, `run_record.json`, `train_log.txt`. `arm_matrix.csv` defines the arms; `arms_master_results.csv` is their headline metrics |
+| **`3_notebooks/`** | how we ran it | one notebook per arm, plus the effort-matched re-run in `matched_effort/`. `arm_matrix.csv` is the design table: what each arm changes and why |
+| **`4_runs/`** | what came out | sixteen run folders — weights, `run_record.json`, `train_log.txt`. `arms_master_results.csv` carries their headline metrics |
 | **`5_baselines/`** | what to compare against | the analytical Kármán prior alone (0.8082, no network), and the Gappy POD reconstruction diagnostic |
 | **`6_analysis/`** | what it means | the analysis workspace. `results_master.csv` and `findings.md` carry the accepted numbers; `evaluator/` rebuilds a trained arm exactly as it was trained |
 | **`7_results/`** | what the report uses | the sealed deliverable: figures, data and the code that made them. Eleven of the dissertation's thirteen figures come from `7_results/figures/` |

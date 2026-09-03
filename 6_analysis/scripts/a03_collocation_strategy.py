@@ -34,8 +34,8 @@ CONFIGS = {
         "uniform",
     ),
     "wake_biased_random_collocation": (
-        ARMS_ROOT / "arm_06_wake_biased_random" / "training_run" / "NN_functions.py",
-        ARMS_ROOT / "arm_06_wake_biased_random" / "training_run" / "DNN2_100_100_4_tanh.pickle",
+        ARMS_ROOT / "06_wake_biased_random" / "training_run" / "NN_functions.py",
+        ARMS_ROOT / "06_wake_biased_random" / "training_run" / "DNN2_100_100_4_tanh.pickle",
         "wake_biased_random",
     ),
     "wake_biased_grid_collocation": (

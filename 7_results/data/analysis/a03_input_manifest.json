@@ -30,11 +30,11 @@
       }
     },
     "wake_biased_random_collocation": {
-      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_06_wake_biased_random",
+      "run_directory": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/06_wake_biased_random",
       "run_label": "wake_biased_random",
-      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_06_wake_biased_random/training_run/DNN2_100_100_4_tanh.pickle",
+      "checkpoint": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/06_wake_biased_random/training_run/DNN2_100_100_4_tanh.pickle",
       "checkpoint_exists": true,
-      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/arm_06_wake_biased_random/training_run/NN_functions.py",
+      "checkpoint_local_nn_functions": "/Users/mohammedhilal/Desktop/try/ModalPINN2.0/4_runs/06_wake_biased_random/training_run/NN_functions.py",
       "nn_functions_exists": true,
       "settings": {
         "nmodes": 4,

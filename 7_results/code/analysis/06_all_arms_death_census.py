@@ -95,7 +95,7 @@ for it, a, nt in sorted(clean, reverse=True):
 
 print("\n--- decisive counter-example: two 32-tap arms differing from the")
 print("    baseline ONLY in collocation placement ---")
-for a in ('arm_06_wake_biased_random', '07_wake_biased_grid'):
+for a in ('06_wake_biased_random', '07_wake_biased_grid'):
     base_cmd = [str(x) for x in json.loads((ARMS / '01_baseline_physics_only' / 'run_record.json').read_text())['command']]
     F_base = parse_flags(base_cmd)
     F = parse_flags([str(x) for x in json.loads((ARMS / a / 'run_record.json').read_text())['command']])

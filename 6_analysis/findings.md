@@ -206,7 +206,7 @@ by accident.
    traced the failure to the ftol/float32 pathology and the 17-arm
    gradient-blow-up census, and ruled out tap count as the cause: two other
    32-tap arms differing from arm 01 only in collocation placement
-   (`arm_06_wake_biased_random`, `07_wake_biased_grid`) ran 43,676 and
+   (`06_wake_biased_random`, `07_wake_biased_grid`) ran 43,676 and
    37,713 evaluations — 7-8x arm 01's mileage at the identical tap count —
    which is direct evidence against "32 taps breaks the optimizer."
 
@@ -479,7 +479,7 @@ not a causal tap-count effect.
 **Question:** does wake-biased collocation recover information absent from the
 wall measurements? Three pressure-only + physics arms at 32 taps, differing in
 where the interior collocation points are placed: uniform
-(`01_baseline_physics_only`), wake-biased random (`arm_06_wake_biased_random`),
+(`01_baseline_physics_only`), wake-biased random (`06_wake_biased_random`),
 and wake-biased regular grid (`07_wake_biased_grid`). All three checkpoints
 exist and the manifest reports `verified_inputs`
 (`derived/a03_input_manifest.json`).

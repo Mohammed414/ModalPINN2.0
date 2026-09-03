@@ -3,7 +3,7 @@
 This folder holds the runs. For the repository layout see the root `README.md`;
 for what the numbers mean see `6_analysis/findings.md`.
 
-`arm_matrix.csv` defines the sixteen arms; `arms_master_results.csv` carries
+`3_notebooks/arm_matrix.csv` defines the sixteen arms; `arms_master_results.csv` carries
 their headline metrics. Dissertation figures are in `7_results/figures/`.
 
 Three training runs at the **source paper's mode truncation**, using the **original ModalPINN
