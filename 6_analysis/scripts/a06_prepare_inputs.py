@@ -29,7 +29,7 @@ import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent
-ARMS = ROOT.parents[1] / "4_runs"
+ARMS = ROOT.parents[0] / "4_runs"
 OUT = ROOT / "derived" / "a06_input_manifest.json"
 
 sys.path.insert(0, str(HERE))

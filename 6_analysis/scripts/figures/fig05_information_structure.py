@@ -18,7 +18,7 @@ from figure_common import COLORS, check_text_overlaps, new_figure, save_figure
 
 
 MASTER = ROOT / "results_master.csv"
-GAPPY_VALUES = ROOT.parent / "gappy_pod_final" / "results" / "chapter4_values.csv"
+GAPPY_VALUES = ROOT.parent / "5_baselines" / "gappy_pod_final" / "results" / "chapter4_values.csv"
 OUTPUT = ROOT / "figures" / "final" / "F05_information_structure"
 
 

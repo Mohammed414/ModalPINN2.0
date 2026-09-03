@@ -10,7 +10,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent
 RESULT = ROOT / "derived" / "a04_prior_attribution_metrics.json"
 OUT = ROOT / "derived" / "a04_validation.json"
-ARMS = ROOT.parents[1] / "4_runs"
+ARMS = ROOT.parents[0] / "4_runs"
 
 
 def main() -> None:

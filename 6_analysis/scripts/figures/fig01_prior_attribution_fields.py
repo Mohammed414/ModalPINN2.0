@@ -28,7 +28,7 @@ from street_prior import cf_modes_uv  # noqa: E402
 
 SNAP = np.load(ROOT / "derived" / "a04_snapshot_fields.npz")
 PRIOR = np.load(
-    ROOT.parents[1] / "4_runs" /
+    ROOT.parents[0] / "4_runs" /
     "15_karman_prior_fluct_off" / "street_prior_used.npz"
 )
 X, Y = np.asarray(SNAP["x"], float), np.asarray(SNAP["y"], float)

@@ -25,7 +25,7 @@ from figure_common import COLORS, REGION_COLORS, check_text_overlaps, new_figure
 
 METRICS = json.loads((ROOT / "derived" / "a05_prior_collocation_metrics.json").read_text())
 PRIOR = json.loads((ROOT / "derived" / "a04_prior_only_metrics.json").read_text())
-ARMS_ROOT = ROOT.parents[1] / "4_runs"
+ARMS_ROOT = ROOT.parents[0] / "4_runs"
 
 # The two strategies, named by what they are rather than by run label.
 STRATEGIES = [
