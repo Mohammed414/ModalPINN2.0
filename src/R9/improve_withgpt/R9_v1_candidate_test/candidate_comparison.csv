@@ -1,3 +1,0 @@
-candidate,xstart,eta,rho,prior_corr,truth_reachable_frac,hard_zero_blocked,collapse_gradient,permanent_constraint
-soft_annealed_v1,3.5,0.2,,0.9841390566963722,1.0,False,-2.439747191206727,False
-radial_v1_trust,3.5,0.03,0.6000000000000002,0.9845248933837565,0.9915730337078652,True,,True
