@@ -16,7 +16,7 @@ REPO_ROOT = FRESH_ROOT.parents[1]
 WORKSPACE_ROOT = REPO_ROOT.parent
 
 DEFAULT_RAW = REPO_ROOT / "data" / "fixed_cylinder_atRe100"
-DEFAULT_CACHE = WORKSPACE_ROOT / "GappyPOD" / "data" / "flow_cache.npz"
+DEFAULT_CACHE = REPO_ROOT / "data" / "flow_cache.npz"
 DEFAULT_DERIVED = FRESH_ROOT / "derived"
 
 XMIN, XMAX = -4.0, 8.0

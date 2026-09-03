@@ -10,7 +10,7 @@ Example (from the repository root)::
 
     python modes_experiment/prior_only_evaluation/evaluate_prior_only.py \
       --Prior modes_experiment/runs/arms/15_karman_prior_fluct_off/street_prior_used.npz \
-      --Data GappyPOD/data/flow_cache.npz
+      --Data data/flow_cache.npz
 
 The pressure is the prior's Bernoulli-like surrogate
 ``p=-0.5*((u-Uc)**2+v**2)``; it is not a pressure solution of a separate
@@ -78,7 +78,7 @@ def complex_metrics(pred, true, mask):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--Prior", required=True, help="street_prior_used.npz")
-    ap.add_argument("--Data", default=str(WORKSPACE_ROOT / "GappyPOD/data/flow_cache.npz"),
+    ap.add_argument("--Data", default=str(REPO_ROOT / "data/flow_cache.npz"),
                     help="flow_cache.npz or fixed_cylinder_atRe100")
     ap.add_argument("--Out", default=str(HERE / "prior_only_metrics.json"))
     ap.add_argument("--Figure", default=str(HERE / "prior_only_fields.png"))

@@ -63,8 +63,7 @@ def prior_field(x: np.ndarray, y: np.ndarray, t: float, prm: Dict[str, float],
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--Prior", required=True)
-    ap.add_argument("--Data", default=str(REPO_ROOT.parent / "GappyPOD" /
-                                             "data" / "flow_cache.npz"))
+    ap.add_argument("--Data", default=str(REPO_ROOT / "data" / "flow_cache.npz"))
     ap.add_argument("--Geometry", default=str(FRESH_ROOT / "derived" /
                                                  "a00_geometry.npz"))
     ap.add_argument("--Out", default=str(FRESH_ROOT / "derived" /

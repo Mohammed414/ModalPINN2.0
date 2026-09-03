@@ -19,6 +19,7 @@ import sys
 from pathlib import Path
 
 import numpy as np
+from matplotlib.patches import Arc
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "code"))
@@ -59,11 +60,17 @@ for n, colour, _ in TIERS:
 axr.set_title(f"Pressure taps at $r$ = 0.5\nnested $8 \\subset 16 \\subset 32$",
               fontsize=8.6, loc="left")
 
-# Bracket showing which quadrant is unrolled below.
-axr.annotate("", xy=(0.0, 0.53), xytext=(0.53, 0.0),
-             arrowprops=dict(arrowstyle="-", color="#111111", linewidth=0.9,
-                             connectionstyle="arc3,rad=0.15"), zorder=8)
-axr.text(0.40, 0.40, "unrolled\nbelow", fontsize=6.4, ha="left", va="bottom",
+# Bracket showing which quadrant is unrolled below.  Concentric with the tap
+# ring and outside it, so it never crosses a tap.
+R_BRACKET = 0.615
+axr.add_patch(Arc((0.0, 0.0), 2 * R_BRACKET, 2 * R_BRACKET, theta1=0.0,
+                  theta2=90.0, edgecolor="#111111", linewidth=0.9, zorder=8))
+for ang in (0.0, 90.0):
+    a = np.radians(ang)
+    axr.plot([0.585 * np.cos(a), 0.645 * np.cos(a)],
+             [0.585 * np.sin(a), 0.645 * np.sin(a)],
+             color="#111111", linewidth=0.9, solid_capstyle="butt", zorder=8)
+axr.text(0.20, 0.15, "unrolled\nbelow", fontsize=6.4, ha="center", va="center",
          color="#111111", linespacing=1.2, zorder=8)
 
 # --------------------------------------------------- bottom: unrolled strip

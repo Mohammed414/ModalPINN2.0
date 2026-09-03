@@ -33,7 +33,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent
 REPO = ROOT.parents[1]
 ARMS_ROOT = REPO / "modes_experiment" / "runs" / "arms"
-DEFAULT_DATA = REPO.parent / "GappyPOD" / "data" / "flow_cache.npz"
+DEFAULT_DATA = REPO / "data" / "flow_cache.npz"
 
 sys.path.insert(0, str(HERE))
 import a04_prior_attribution as inference  # noqa: E402

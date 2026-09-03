@@ -80,7 +80,7 @@ def main() -> None:
         raise AssertionError("Arm-15 and prior-only prior files differ")
 
     data = REPO_ROOT / "data" / "fixed_cylinder_atRe100"
-    cache = REPO_ROOT.parent / "GappyPOD" / "data" / "flow_cache.npz"
+    cache = REPO_ROOT / "data" / "flow_cache.npz"
     geometry = FRESH_ROOT / "derived" / "a00_geometry.npz"
     for path in (data, cache, geometry):
         if not path.is_file():

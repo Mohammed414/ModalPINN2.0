@@ -20,7 +20,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 FRESH_ROOT = HERE.parent
 REPO_ROOT = FRESH_ROOT.parents[1]
 ARMS_ROOT = REPO_ROOT / "modes_experiment" / "runs" / "arms"
-DEFAULT_DATA = REPO_ROOT.parent / "GappyPOD" / "data" / "flow_cache.npz"
+DEFAULT_DATA = REPO_ROOT / "data" / "flow_cache.npz"
 DEFAULT_OUT = FRESH_ROOT / "derived" / "a04_prior_attribution_metrics.json"
 
 sys.path.insert(0, str(HERE))

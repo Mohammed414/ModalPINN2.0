@@ -316,7 +316,7 @@ def audit(rows: List[dict], correction_rows: List[dict]) -> dict:
     learned_max_diff = max(learned_differences, default=float("inf"))
 
     config = json.loads(GAPPY_CONFIG.read_text())
-    data_path = WORKSPACE / "GappyPOD" / config["data_file"]
+    data_path = REPO / config["data_file"]
     key_values = {
         "pressure_only_far_core_v1_relative_L2": value(
             rows, analysis_id="A04", method_id="pressure_only_physics",

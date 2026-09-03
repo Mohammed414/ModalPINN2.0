@@ -24,7 +24,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from figure_common import COLORS, new_figure, save_figure, check_text_overlaps  # noqa: E402
 from evaluate_common import OMEGA_0, strict_crop_indices  # noqa: E402
 
-DATA = ROOT.parents[1].parent / "GappyPOD" / "data" / "flow_cache.npz"
+DATA = ROOT.parents[1] / "data" / "flow_cache.npz"
 
 
 def main() -> None:
