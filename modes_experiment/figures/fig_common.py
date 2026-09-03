@@ -19,7 +19,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-CSV = os.path.join(HERE, "arms_master_results.csv")
+# Canonical copy lives at the experiment root; this file used to hold a
+# byte-identical duplicate of it.
+CSV = os.path.join(HERE, os.pardir, "arms_master_results.csv")
 
 # ----------------------------------------------------------------------------
 # Regime definitions. These are the rules the figures' category labels encode.

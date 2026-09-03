@@ -18,7 +18,7 @@ write the analysis script and run it. A result is not added to
 - `TODO.md` — the execution checklist and checkpoint dashboard. Completed tasks
   always include the location of their result.
 - `figure_blueprint.md` — visual wireframes for each planned figure.
-- `arm_matrix.csv` — a fresh plan of analyses/arms; status starts as `planned`.
+- `analysis_matrix.csv` — a fresh plan of analyses/arms; status starts as `planned`.
 - `results_master.csv` — an empty long-form results table. Each row will carry
   one metric, its region, source, and review status.
 - `data_contract.md` — the data paths, variables, units, and preprocessing we

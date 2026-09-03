@@ -24,10 +24,10 @@ prior-assisted result and must always be compared with the prior alone.
 - Question: does a sparse-measurement ModalPINN reconstruct the wake, and if so
   which part of the answer comes from the network rather than the prior?
 - Comparison set: prior only, network only, and prior + network, evaluated
-  under one protocol. Definitions in `arm_matrix.csv`.
+  under one protocol. Definitions in `analysis_matrix.csv`.
 - Excluded and why: Arms 2, 3, 14, 16 — see `decisions.md`. State the exclusions
   explicitly rather than silently omitting them.
-- **Evidence:** `arm_matrix.csv`, `decisions.md`.
+- **Evidence:** `analysis_matrix.csv`, `decisions.md`.
 
 ### M2. Dataset and preprocessing
 

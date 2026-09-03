@@ -9,7 +9,7 @@ This file answers four questions:
 3. What must be checked before an analysis is accepted?
 4. Where can every completed result be found?
 
-The experiment definitions remain in `arm_matrix.csv`. Numerical values belong
+The experiment definitions remain in `analysis_matrix.csv`. Numerical values belong
 in `results_master.csv`. Scope decisions belong in `decisions.md`.
 Interpretation and writing notes belong in `findings.md`.
 
@@ -18,7 +18,7 @@ Interpretation and writing notes belong in `findings.md`.
 - `[ ]` means unfinished; `[x]` means completed and verified.
 - Never tick a task without adding its exact result path.
 - Generated but unapproved work stays `WAITING FOR REVIEW`.
-- Keep arm statuses semantically synchronized with `arm_matrix.csv` (`planned`
+- Keep arm statuses semantically synchronized with `analysis_matrix.csv` (`planned`
   means `NOT STARTED`; `draft` means `WAITING FOR REVIEW`).
 - Keep figure statuses semantically synchronized with
   `design/figure_manifest.csv`.
@@ -206,7 +206,7 @@ An arm can be marked `COMPLETE` only when all of these are true:
   canvas boundary, catching text cut off at the figure edge that a
   window-extent collision check alone misses.
 - [x] Copy approved figures to `figures/final/`.
-- [x] Mark A00 `COMPLETE` in `arm_matrix.csv` and F0a/F0b `COMPLETE` in
+- [x] Mark A00 `COMPLETE` in `analysis_matrix.csv` and F0a/F0b `COMPLETE` in
   `design/figure_manifest.csv`.
 
 ### Verified during review
