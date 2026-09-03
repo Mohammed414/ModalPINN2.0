@@ -3,8 +3,9 @@ L-BFGS effort, final loss components, and the checkpoint history."""
 import json
 import pathlib
 
-R = pathlib.Path('zx/baseline_physics_only_K3_matched')
-ARMS = pathlib.Path('/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms')
+REPO = pathlib.Path(__file__).resolve().parents[4]
+ARMS = REPO / 'modes_experiment' / 'runs' / 'arms'
+R = REPO / 'modes_experiment' / 'experiment' / 'notebooks' / 'matched_effort' / 'zx' / 'baseline_physics_only_K3_matched'
 
 rec = json.loads((R / 'run_record.json').read_text())
 lsum = json.loads((R / 'training_run' / 'training_loss_summary.json').read_text())

@@ -5,7 +5,8 @@ claim was false (0 of 16 arms warm-started) and was corrected."""
 import json
 import pathlib
 
-ARMS = pathlib.Path('/Users/mohammedhilal/Desktop/try/ModalPINN2.0/modes_experiment/runs/arms')
+REPO = pathlib.Path(__file__).resolve().parents[3]
+ARMS = REPO / 'modes_experiment' / 'runs' / 'arms'
 
 allarms = sorted(p.name for p in ARMS.iterdir() if p.is_dir())
 print(f"{'arm':32s} {'warm_started':>13s} {'restore_model':>14s}")

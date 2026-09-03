@@ -5,7 +5,8 @@ precision, and every call ends with the same scipy line-search warning."""
 import pathlib
 import re
 
-R = pathlib.Path('zx/baseline_physics_only_K3_matched')
+REPO = pathlib.Path(__file__).resolve().parents[3]
+R = REPO / 'modes_experiment' / 'experiment' / 'notebooks' / 'matched_effort' / 'zx' / 'baseline_physics_only_K3_matched'
 
 
 def fort(x):
