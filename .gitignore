@@ -1,4 +1,6 @@
-/Data/
+# The CFD dataset and its caches - never in git (was /Data/ before the
+# 2026-09-03 restructure renamed data/ to 1_data/)
+/1_data/
 __pycache__/
 .DS_Store
 *.zip
