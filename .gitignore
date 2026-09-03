@@ -8,30 +8,23 @@ PROJECT_LOG.md
 PLAN_E3_pressure_only.md
 R3 fluctuation inlet bc plan.md
 R5 measured best candidates plan.md
-
 # Large, regenerable gappy-POD intermediates (re-run build_pod_basis.py /
 # gappy_reconstruct.py to recreate - pod_basis.npz is ~33MB,
 # gappy_reconstructions.npz is ~1.2GB, neither belongs in git)
-src/gappy_pod/pod_basis.npz
-src/gappy_pod/gappy_reconstructions.npz
-
+# (src/gappy_pod archived 2026-09-03)
 # Large, regenerable parsed-flow cache (re-run extras/parse_flow.py against
 # data/fixed_cylinder_atRe100 to recreate - ~170MB, not source data)
 extras/flow_cache.npz
-
 # Same cache, shared by src/pressure_only/audit_r7_*.py (re-run either to
 # recreate via src/fast_flow_parser.py - ~180MB, not source data)
-src/pressure_only/_flow_cache.npz
-
-# Same cache again, at the path modes_experiment/gappy_pod_final/run_analysis.py
-# resolves to. Hardlinked to src/pressure_only/_flow_cache.npz, so it is one
+# (src/pressure_only archived 2026-09-03)
+# Same cache again, at the path 5_baselines/gappy_pod_final/run_analysis.py
+# resolves to. Hardlinked to # (src/pressure_only archived 2026-09-03), so it is one
 # copy on disk, not two - but it must never enter git either way.
-data/flow_cache.npz
-
+1_data/flow_cache.npz
 # R9_wake_rescue: regenerable truth-field cache (re-run any script that
 # calls src/common.py::load_truth_fields() to recreate)
 R9_wake_rescue/cache/
-
-# modes_experiment: large regenerable figure cache (the source scripts and
+# 6_analysis: large regenerable figure cache (the source scripts and
 # rendered figures remain tracked; recreate this cache with figures/parse_dns.py)
-modes_experiment/figures/dns_raw.npz
+6_analysis/evaluator/dns_raw.npz

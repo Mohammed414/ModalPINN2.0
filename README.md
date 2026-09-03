@@ -1,3 +1,82 @@
+# ModalPINN 2.0 — reconstructing a cylinder wake from surface pressure alone
+
+Can a physics-informed neural network recover the full unsteady flow past a
+circular cylinder at Re = 100 from **32 pressure taps on the cylinder wall and
+nothing else**?
+
+Trained on the physics residual alone it cannot: the wake dies. The far-core
+first-harmonic amplitude ratio collapses to **0.019** against the DNS. Wrapping
+the oscillating modes in a bounded trust region around a Kármán street prior
+derived from the same 32 taps recovers it to **0.84**.
+
+This repository holds the code, the sixteen controlled runs behind that result,
+and the analysis that produced every number in the dissertation.
+
+## Read it in order
+
+| | | |
+|---|---|---|
+| **`1_data/`** | what we measure | the Re = 100 DNS dataset, its parsed cache, and the 4/8/16/32-tap sensor layouts |
+| **`2_source/`** | what we run | the ModalPINN implementation. `as_run/` is the exact modified copy the sixteen arms trained with; `bvf_verification/` proves the one code change is behaviour-preserving to 1.1e-14 |
+| **`3_notebooks/`** | how we ran it | one notebook per arm, plus the effort-matched re-run in `matched_effort/` |
+| **`4_runs/`** | what came out | sixteen run folders — weights, `run_record.json`, `train_log.txt`. `arm_matrix.csv` defines the arms; `arms_master_results.csv` is their headline metrics |
+| **`5_baselines/`** | what to compare against | the analytical Kármán prior alone (0.8082, no network), and the Gappy POD reconstruction diagnostic |
+| **`6_analysis/`** | what it means | the analysis workspace. `results_master.csv` and `findings.md` carry the accepted numbers; `evaluator/` rebuilds a trained arm exactly as it was trained |
+| **`7_results/`** | what the report uses | the sealed deliverable: figures, data and the code that made them. Eleven of the dissertation's thirteen figures come from `7_results/figures/` |
+
+## The headline numbers
+
+Far-core first-harmonic amplitude ratio against the DNS, from
+`4_runs/arms_master_results.csv` (column `amp_far_core`). 1.0 is perfect;
+below about 0.10 the wake is dead.
+
+| | ratio |
+|---|---:|
+| arm 1 — physics only, 32 taps | 0.019 |
+| arm 2 — boundary vorticity flux | 0.089 |
+| analytical Kármán prior alone, no network | 0.808 |
+| **arm 15 — Kármán prior + physics** | **0.839** |
+| arm 4 — the paper's sparse probes (velocity, *not* pressure-only) | 0.866 |
+
+For context, the earlier pre-truncation-fix runs — archived under
+`../archive/modalpinn2.0_archive/` — reached 0.0078 without the freestream
+boundary condition and 0.0185 with it.
+
+The prior-assisted arms reach the prior's own accuracy; they do not exceed it.
+That distinction is argued in `6_analysis/findings.md`.
+
+## Running anything
+
+Every script resolves its own paths from the repository root, so they run from
+any working directory and on any machine:
+
+```bash
+python3 6_analysis/scripts/termination_census/06_all_arms_death_census.py
+python3 5_baselines/gappy_pod_final/run_analysis.py
+```
+
+Dependencies are in `requirements.txt` (`requirements-colab.txt` for Colab).
+Nothing outside this repository is needed — the parsed CFD cache lives in
+`1_data/`.
+
+## Provenance
+
+`7_results/` duplicates parts of `6_analysis/` on purpose: it is a sealed bundle
+that can be handed over on its own. The two are kept byte-identical.
+
+Files under any `training_run/` directory are frozen records of what actually
+executed in that job. They are never edited, even when a comment inside them
+names a path that has since moved.
+
+Superseded work — the pre-truncation-fix R-series, the R9 study that invented
+the prior, the earlier Gappy POD generations — is preserved under
+`../archive/`, each folder with a README explaining why it was set aside.
+
+---
+
+<details>
+<summary>Original upstream README (Raynaud et al., ModalPINN)</summary>
+
 # Python code for ModalPINN
 
 [![DOI](https://zenodo.org/badge/382448585.svg)](https://zenodo.org/badge/latestdoi/382448585)
@@ -95,3 +174,5 @@ instead of these:
 ## License
 
 Codes are provided under license MIT
+
+</details>
