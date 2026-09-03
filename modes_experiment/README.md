@@ -10,8 +10,9 @@
 | `baselines/` | **what to compare against** — `prior_only_evaluation/` (the analytical Kármán prior alone, 0.8082) and `gappy_pod_final/` (the frozen Gappy POD diagnostic) |
 | `figures/` | **evaluation machinery** — `modalpinn_eval.py` evaluates a trained arm exactly as it was trained; `dns_raw.npz` is the parsed DNS cache. `viva/build.py` imports both |
 
-Loose files at this level: `arm_matrix.csv` (the 16 arms), `arms_master_results.csv`
-(their headline metrics), `FORCE_ERROR.md` and `force_error_summary.csv`.
+Loose files at this level: `arm_matrix.csv` (the 16 arms) and
+`arms_master_results.csv` (their headline metrics). Those two are the current
+tables — earlier partial summaries were archived, see below.
 
 Dissertation-facing figures are **not** here — they are in `ModalPINN2.0/results/figures/`.
 
@@ -148,3 +149,11 @@ arms 1 and 2 (prior off) that evaluator is skipped rather than run with a wrap t
 trained with, which would rebuild a different function and report a meaningless residual. The
 regional metrics from `evaluate_regions.py` are the comparable numbers for those arms. Patching
 that evaluator is a separate change and was not made here.
+
+## Archived out of this folder
+
+| what | where | why |
+|---|---|---|
+| `runs/INDEX.md`, `runs/arms_1_to_16_results.csv`, `runs/ARMS_4_7_15_RESULTS.md`, `runs/arms_4_7_15.png` | `archive/modalpinn2.0_archive/superseded_summaries/` | mid-experiment snapshots. `INDEX.md` still said "seven arms done, nine queued" and the CSV covered 7 of 16. `arms_master_results.csv` and `fresh_analysis/results_master.csv` supersede them. |
+| `FORCE_ERROR.md`, `force_error_summary.csv`, `code/force_error.py` | `archive/modalpinn2.0_archive/force_analysis_out_of_scope/` | force and drag/lift analysis was removed from scope on 2026-08-27 (`fresh_analysis/decisions.md`). Nothing in the report or the live analysis reads them. The per-arm force columns remain in `arm_matrix.csv`. |
+| `experiment/notebooks/matched_effort/*.zip` | `archive/modalpinn2.0_archive/matched_effort_zips/` | the raw Colab downloads. `matched_effort/zx/` is the extracted copy, and six scripts read its `train_log.txt`. |
